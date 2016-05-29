@@ -14,6 +14,12 @@
 class HomeController extends AppController{
     //put your code here
     
+    public function beforeFilter() {
+            parent::beforeFilter();
+            // Allow non-auth users to access home.
+            $this->Auth->allow('index');
+    }
+    
     public function index(){
         
     }
