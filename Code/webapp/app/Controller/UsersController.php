@@ -60,6 +60,10 @@ class UsersController extends AppController {
 				$this->Flash->error(__('The user could not be saved. Please, try again.'));
 			}
 		}
+                
+                //populate the role_id input in view except for admin
+                $this->set('roles', $this->User->Role->find('list', array('conditions' => array('not' => array('Role.id' => 3)))));
+
 	}
 
 /**
