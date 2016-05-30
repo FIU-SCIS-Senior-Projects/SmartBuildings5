@@ -94,11 +94,11 @@ class User extends AppModel {
             if (isset($this->data[$this->alias]['role_id'])) {
                $chosen_role = $this->data[$this->alias]['role_id'];
                
-                if($chosen_role == $this->$MAPPER){
-                    $this->data[$this->alias]['account_status_id'] = $this->$ACTIVE;
+                if($chosen_role == $MAPPER){
+                    $this->data[$this->alias]['account_status_id'] = $ACTIVE;
                 }
-                else if($chosen_role == $this->$EVALUATOR){
-                    $this->data[$this->alias]['account_status_id'] = $this->$PENDING;
+                else if($chosen_role == $EVALUATOR){
+                    $this->data[$this->alias]['account_status_id'] = $PENDING;
                 }
                 
                 

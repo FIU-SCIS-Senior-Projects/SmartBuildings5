@@ -112,12 +112,30 @@ class UsersController extends AppController {
         }       
         
         
-        public function login() {
-            if ($this->request->is('post')) {
+        public function login() {            
+            
+            //if already logged-in, redirect
+            if($this->Auth->loggedIn()){
+                return $this->redirect($this->Auth->redirectUrl());      
+            }
+            
+            if ($this->request->is('post')) {        
+                
                 if ($this->Auth->login()) {
-                    return $this->redirect($this->Auth->redirectUrl());
+                    
+                    //check if acc status is pending for approval
+                    if($this->Auth->user('account_status_id') == 2){
+                        $this->Flash->error(__('This account is pending for approval'));
+                        return $this->Auth->logout();                       
+                    }else if($this->Auth->user('account_status_id') == 3){
+                        $this->Flash->error(__('This account is inactive'));
+                        return $this->Auth->logout();                       
+                    }
+                    return $this->redirect('/home/index');
                 }
+                
                 $this->Flash->error(__('Invalid username or password, try again'));
+                    
             }
         }
 
