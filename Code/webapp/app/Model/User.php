@@ -8,7 +8,6 @@ App::uses('BlowfishPasswordHasher', 'Controller/Component/Auth');
 class User extends AppModel {
     
         public $belongsTo = 'Role';
-        public $MAPPER=1,$EVALUATOR=2,$ADMIN=3,$ACTIVE=1,$PENDING=2,$INACTIVE=3;
 /**
  * Validation rules
  *
@@ -19,18 +18,26 @@ class User extends AppModel {
                     'required' => array(
                         'rule' => 'notBlank',
                         'message' => 'A username is required'
+                    ),
+                    'length' => array(
+                        'rule' => array('between', 5, 15),
+                        'message' => 'Your username must be between 5 and 15 characters long.'
+                    ),
+                    'unique' => array(
+                        'rule'    => 'isUnique',
+                        'message' => 'This username has already been taken.'
                     )
                 ),
                'password' => array(
                     'length' => array(
-                        'rule'      => array('between', 8, 40),
-                        'message'   => 'Your password must be between 8 and 40 characters.',
+                        'rule'      => array('minLength', 8),
+                        'message'   => 'Your password must be at least 8 characters.',
                     ),
                 ),
                 'password_repeat' => array(
                     'length' => array(
-                        'rule'      => array('between', 8, 40),
-                        'message'   => 'Your password must be between 8 and 40 characters.',
+                        'rule'      => array('minLength', 8),
+                        'message'   => 'Your password must be at least 8 characters.',
                     ),
                     'compare'    => array(
                         'rule'      => array('validate_passwords'),
@@ -57,6 +64,13 @@ class User extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
+                'email' => array(
+                    'email' => array(
+                        'rule'    => array('email'),
+                        'message' => 'Please enter a valid email address.'
+                    ),
+                ),            
+            
                 'role_id' => 'numeric'
 	);
         
@@ -76,14 +90,15 @@ class User extends AppModel {
             }
             
             //assign account status
+            $MAPPER=1;$EVALUATOR=2;$ADMIN=3;$ACTIVE=1;$PENDING=2;$INACTIVE=3;
             if (isset($this->data[$this->alias]['role_id'])) {
                $chosen_role = $this->data[$this->alias]['role_id'];
                
-                if($chosen_role == $MAPPER){
-                    $this->data[$this->alias]['account_status_id'] = $ACTIVE;
+                if($chosen_role == $this->$MAPPER){
+                    $this->data[$this->alias]['account_status_id'] = $this->$ACTIVE;
                 }
-                else if($chosen_role == $EVALUATOR){
-                    $this->data[$this->alias]['account_status_id'] = $PENDING;
+                else if($chosen_role == $this->$EVALUATOR){
+                    $this->data[$this->alias]['account_status_id'] = $this->$PENDING;
                 }
                 
                 

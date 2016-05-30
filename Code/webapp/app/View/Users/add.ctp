@@ -8,6 +8,7 @@
 		echo $this->Form->input('username');
 		echo $this->Form->input('password');
                 echo $this->Form->input('password_repeat',array('label' => __('Repeat-Password'),'type' => 'Password'));
+                echo $this->Form->input('email');
                 echo $this->Form->input('role_id');                
 	?>
 	</fieldset>
