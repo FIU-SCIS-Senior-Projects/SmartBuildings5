@@ -3,7 +3,7 @@
 <html>
 <body>
 
-<h>This is heading 1</h>
+<h2>This is heading</h2>
 
 </body>
 </html>

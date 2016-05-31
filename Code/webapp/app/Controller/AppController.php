@@ -48,8 +48,23 @@ class AppController extends Controller {
                 'Form' => array(                    
                     'passwordHasher' => 'Blowfish',                    
                 )
+            ),
+            'flash' => array(
+                    'element' => 'alert',
+                    'key' => 'auth',
+                    'params' => array(
+                            'plugin' => 'BoostCake',
+                            'class' => 'alert-error'
+                    )
             )
         )
+    );
+    
+    public $helpers = array(
+		'Session',
+		'Html' => array('className' => 'BoostCake.BoostCakeHtml'),
+		'Form' => array('className' => 'BoostCake.BoostCakeForm'),
+		'Paginator' => array('className' => 'BoostCake.BoostCakePaginator'),
     );
     
     public function beforeFilter() {

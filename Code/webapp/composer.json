@@ -25,6 +25,9 @@
 		"phpunit/phpunit": "3.7.*",
 		"cakephp/debug_kit" : "^2.2.0",
 		"cakephp/cakephp-codesniffer": "^1.0.0"
+	},        
+	"require": {
+		"slywalker/boost_cake": "*"
 	},
 	"bin": [
 		"lib/Cake/Console/cake"
