@@ -131,7 +131,7 @@ class UsersController extends AppController {
                         $this->Flash->error(__('This account is inactive'));
                         return $this->Auth->logout();                       
                     }
-                    return $this->redirect('/home/index');
+                    return $this->redirect('/home');
                 }
                 
                 $this->Flash->error(__('Invalid username or password, try again'));
@@ -141,5 +141,25 @@ class UsersController extends AppController {
 
         public function logout() {
             return $this->redirect($this->Auth->logout());
+        }
+        
+        public function profile(){
+            if($this->Auth->loggedIn()){
+                
+                if ($this->request->is(array('post', 'put'))) {
+                    //save info passed from view to db 
+                    
+                }else{
+                    //pass db info to view
+                    $uid = $this->Auth->user('id');
+                    $this->request->data = $this->User->findById($uid);
+                }
+                                
+            }else{
+                $this->Flash->error(__('Please login to view profile'));
+            }
+                
+            
+                        
         }
 }
