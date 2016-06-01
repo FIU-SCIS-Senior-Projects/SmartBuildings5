@@ -17,7 +17,7 @@ class UsersController extends AppController {
     
         public function beforeFilter() {
             parent::beforeFilter();
-            // Allow non-auth users to register and logout.
+//            Allow non-auth users to register and logout.
             $this->Auth->allow('add', 'logout');
         }
 /**
@@ -38,6 +38,7 @@ class UsersController extends AppController {
  * @return void
  */
 	public function view($id = null) {
+            $this->layout='logIn';
 		if (!$this->User->exists($id)) {
 			throw new NotFoundException(__('Invalid user'));
 		}

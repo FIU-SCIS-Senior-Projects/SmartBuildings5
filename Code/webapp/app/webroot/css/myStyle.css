@@ -1,0 +1,29 @@
+div {
+	font-family: "Times New Roman", Times, serif;
+        background-color: #B6DCF3;
+        
+        
+      
+}
+.box {
+    background-color: white;
+    width: 1250px;
+    padding: 25px;
+    border: 25px solid navy;
+    margin: 25px;
+}
+.hdr{
+    
+	font-family: "Times New Roman", Times, serif;
+	font-size: 150%;
+	color: navy;
+        text-align: center;
+	
+}
+
+.hdr2{
+    
+	font-family: "Times New Roman", Times, serif;
+	font-size: 120%;
+        color: navy;
+}
