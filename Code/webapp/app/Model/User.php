@@ -14,15 +14,12 @@ class User extends AppModel {
  * @var array
  */ 
 	public $validate = array(
-                'username' => array(
-                    'rule' => 'notEmpty',
-                    'message' => 'A username is required',
-                    
+                'username' => array(                    
                     'length' => array(
                         'rule' => array('between', 5, 15),
                         'message' => 'Your username must be between 5 and 15 characters long.'
                     ),
-                    'unique' => array(
+                    'isUnique' => array(
                         'rule'    => 'isUnique',
                         'message' => 'This username has already been taken.'
                     )
