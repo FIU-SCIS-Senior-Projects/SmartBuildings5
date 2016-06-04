@@ -4,6 +4,8 @@
  *
  * This file will render views from views/pages/
  *
+ * PHP 5
+ *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -17,7 +19,6 @@
  * @since         CakePHP(tm) v 0.2.9
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-
 App::uses('AppController', 'Controller');
 
 /**
@@ -40,6 +41,7 @@ class PagesController extends AppController {
 /**
  * Displays a view
  *
+ * @param mixed What page to display
  * @return void
  * @throws NotFoundException When the view file could not be found
  *	or MissingViewException in debug mode.

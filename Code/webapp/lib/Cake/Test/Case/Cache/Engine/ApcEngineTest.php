@@ -2,6 +2,8 @@
 /**
  * ApcEngineTest file
  *
+ * PHP 5
+ *
  * CakePHP(tm) Tests <http://book.cakephp.org/2.0/en/development/testing.html>
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -34,7 +36,7 @@ class ApcEngineTest extends CakeTestCase {
 		parent::setUp();
 		$this->skipIf(!function_exists('apc_store'), 'Apc is not installed or configured properly.');
 
-		if (PHP_SAPI === 'cli') {
+		if (php_sapi_name() === 'cli') {
 			$this->skipIf(!ini_get('apc.enable_cli'), 'APC is not enabled for the CLI.');
 		}
 
@@ -272,24 +274,5 @@ class ApcEngineTest extends CakeTestCase {
 		$this->assertTrue(Cache::write('test_groups', 'value2', 'apc_groups'));
 		$this->assertTrue(Cache::clearGroup('group_b', 'apc_groups'));
 		$this->assertFalse(Cache::read('test_groups', 'apc_groups'));
-	}
-
-/**
- * Test add method.
- *
- * @return void
- */
-	public function testAdd() {
-		Cache::delete('test_add_key', 'apc');
-
-		$result = Cache::add('test_add_key', 'test data', 'apc');
-		$this->assertTrue($result);
-
-		$expected = 'test data';
-		$result = Cache::read('test_add_key', 'apc');
-		$this->assertEquals($expected, $result);
-
-		$result = Cache::add('test_add_key', 'test data 2', 'apc');
-		$this->assertFalse($result);
 	}
 }

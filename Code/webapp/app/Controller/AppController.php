@@ -34,7 +34,7 @@ class AppController extends Controller {
     
     
     public $components = array(
-        'Flash',
+        'Session',
         'Auth' => array(
             'loginRedirect' => array(
                 'controller' => 'home',
@@ -57,15 +57,17 @@ class AppController extends Controller {
                             'class' => 'alert-error'
                     )
             )
-        )
+        ),
     );
     
     public $helpers = array(
-		'Session',
-		'Html' => array('className' => 'BoostCake.BoostCakeHtml'),
-		'Form' => array('className' => 'BoostCake.BoostCakeForm'),
-		'Paginator' => array('className' => 'BoostCake.BoostCakePaginator'),
+            'Session',
+            'Html' => array('className' => 'BoostCake.BoostCakeHtml'),
+            'Form' => array('className' => 'BoostCake.BoostCakeForm'),
+            'Paginator' => array('className' => 'BoostCake.BoostCakePaginator'),
     );
+
+
     
     public function beforeFilter() {
         //$this->Auth->allow('index', 'view');

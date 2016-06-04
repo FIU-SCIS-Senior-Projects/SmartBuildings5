@@ -2,6 +2,10 @@
 /**
  * Test App Comment Model
  *
+ *
+ *
+ * PHP 5
+ *
  * CakePHP : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -25,6 +29,8 @@ class PersisterOne extends AppModel {
 
 	public $useTable = 'posts';
 
+	public $name = 'PersisterOne';
+
 	public $actsAs = array('PersisterOneBehavior', 'TestPlugin.TestPluginPersisterOne');
 
 	public $hasMany = array('Comment', 'TestPlugin.TestPluginComment');
@@ -38,7 +44,7 @@ class PersisterOne extends AppModel {
 				'message' => 'Post title is required'
 			),
 			'between' => array(
-				'rule' => array('lengthBetween', 5, 15),
+				'rule' => array('between', 5, 15),
 				'message' => array('You may enter up to %s chars (minimum is %s chars)', 14, 6)
 			)
 		),

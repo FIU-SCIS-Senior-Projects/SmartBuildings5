@@ -1,20 +1,10 @@
 # User specific & automatically generated files #
 #################################################
-/Code/app/nbproject/private/
-/Code/webapp/nbproject/private/
 /app/tmp
 /lib/Cake/Console/Templates/skel/tmp/
-/plugins
-/vendors
 /build
 /dist
 /tags
-*.mo
-
-# IDE and editor specific files #
-#################################
-/nbproject
-.idea
 
 # OS generated files #
 ######################

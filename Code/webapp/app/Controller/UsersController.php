@@ -54,10 +54,16 @@ class UsersController extends AppController {
 		if ($this->request->is('post')) {
 			$this->User->create();
 			if ($this->User->save($this->request->data)) {
-				$this->Flash->success(__('The user has been saved.'));
+				$this->Session->setFlash(__('The user has been saved.'), 'alert', array(
+                                                        'plugin' => 'BoostCake',
+                                                        'class' => 'alert-success'
+                                                ));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Flash->error(__('The user could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The user could not be saved. Please, try again.'), 'alert', array(
+                                                        'plugin' => 'BoostCake',
+                                                        'class' => 'alert-danger'
+                                                ));
 			}
 		}
                 
@@ -79,38 +85,16 @@ class UsersController extends AppController {
 		}
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->User->save($this->request->data)) {
-				$this->Flash->success(__('The user has been saved.'));
+				$this->Session->setFlash(__('The user has been saved.'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Flash->error(__('The user could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The user could not be saved. Please, try again.'));
 			}
 		} else {
 			$options = array('conditions' => array('User.' . $this->User->primaryKey => $id));
 			$this->request->data = $this->User->find('first', $options);
 		}
 	}
-
-/**
- * delete method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function delete($id = null) {
-		$this->User->id = $id;
-		if (!$this->User->exists()) {
-			throw new NotFoundException(__('Invalid user'));
-		}
-		$this->request->allowMethod('post', 'delete');
-		if ($this->User->delete()) {
-			$this->Flash->success(__('The user has been deleted.'));
-		} else {
-			$this->Flash->error(__('The user could not be deleted. Please, try again.'));
-		}
-		return $this->redirect(array('action' => 'index'));
-        }       
-        
         
         public function login() {            
             
@@ -125,16 +109,25 @@ class UsersController extends AppController {
                     
                     //check if acc status is pending for approval
                     if($this->Auth->user('account_status_id') == 2){
-                        $this->Flash->error(__('This account is pending for approval'));
+                        $this->Session->setFlash(__('This account is pending for approval'), 'alert', array(
+                                                                                    'plugin' => 'BoostCake',
+                                                                                    'class' => 'alert-danger'
+                                                                            ));
                         return $this->Auth->logout();                       
                     }else if($this->Auth->user('account_status_id') == 3){
-                        $this->Flash->error(__('This account is inactive'));
+                        $this->Session->setFlash(__('This account is inactive'),'alert', array(
+                                                                        'plugin' => 'BoostCake',
+                                                                        'class' => 'alert-danger'
+                                                                ));                    
                         return $this->Auth->logout();                       
                     }
                     return $this->redirect('/home');
                 }
                 
-                $this->Flash->error(__('Invalid username or password, try again'));
+                $this->Session->setFlash(__('Invalid username or password, try again'), 'alert', array(
+                                                                                'plugin' => 'BoostCake',
+                                                                                'class' => 'alert-danger'
+                                                                        ));
                     
             }
         }
@@ -153,10 +146,14 @@ class UsersController extends AppController {
                     //pass db info to view
                     $uid = $this->Auth->user('id');
                     $this->request->data = $this->User->findById($uid);
+                    $this->set('roles', $this->User->Role->find('list'));
                 }
                                 
             }else{
-                $this->Flash->error(__('Please login to view profile'));
+                $this->Session->setFlash(__('Please login to view profile'), 'alert', array(
+                                                                    'plugin' => 'BoostCake',
+                                                                    'class' => 'alert-danger'
+                                                            ));
             }
                 
             

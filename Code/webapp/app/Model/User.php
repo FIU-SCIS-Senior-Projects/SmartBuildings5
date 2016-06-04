@@ -15,10 +15,9 @@ class User extends AppModel {
  */ 
 	public $validate = array(
                 'username' => array(
-                    'required' => array(
-                        'rule' => 'notBlank',
-                        'message' => 'A username is required'
-                    ),
+                    'rule' => 'notEmpty',
+                    'message' => 'A username is required',
+                    
                     'length' => array(
                         'rule' => array('between', 5, 15),
                         'message' => 'Your username must be between 5 and 15 characters long.'
@@ -45,24 +44,12 @@ class User extends AppModel {
                     )
                 ),
 		'last_name' => array(
-			'notBlank' => array(
-				'rule' => array('notBlank'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
+                            'rule' => 'notEmpty',
+                            'message' => 'A last name is required',
 		),
 		'first_name' => array(
-			'notBlank' => array(
-				'rule' => array('notBlank'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
+			'rule' => 'notEmpty',
+                        'message' => 'A first name is required',
 		),
                 'email' => array(
                     'email' => array(

@@ -1,10 +1,10 @@
 <div class="row">
     <div class="col-lg-6 col-lg-offset-3">
-
+        <!--?php echo $this->Session->flash();?-->
           <h2>Login</h2>
 
           <div class="well">
-              <div class="text-danger"><?php echo $this->Session->flash(); ?></div>                    
+              
               <?php echo $this->Form->create('User',array('class'=>'form-horizontal','inputDefaults'=>array('label'=>false)));?>
                     <div class="form-group">
                       <label for="username" class="col-sm-2 control-label">Username</label>

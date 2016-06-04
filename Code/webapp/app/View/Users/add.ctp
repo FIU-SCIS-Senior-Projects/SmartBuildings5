@@ -3,8 +3,7 @@
              
                 <h2>Registration</h2>
            
-                <div class="well">
-                    <div class="text-danger"><?php echo $this->Session->flash(); ?></div>                    
+                <div class="well">                   
                     <?php echo $this->Form->create('User',array('class'=>'form-horizontal','inputDefaults'=>array('label'=>false)));?>
                           <div class="form-group">
                             <label for="last_name" class="col-sm-2 control-label">Last Name</label>

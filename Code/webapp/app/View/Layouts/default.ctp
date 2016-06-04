@@ -9,6 +9,7 @@
         echo $this->Html->meta('icon');
  
         echo $this->Html->css('bootstrap.min');
+        //echo $this->Html->css('bootstrap-responsive.min');
  
         echo $this->fetch('meta');
         echo $this->fetch('css');

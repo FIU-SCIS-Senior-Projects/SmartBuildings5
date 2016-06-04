@@ -6,7 +6,8 @@ if (!isset($close)) {
 	$close = true;
 }
 ?>
-<div class="alert<?php echo ($class) ? ' ' . $class : null; ?>">
+<div class="alert<?php echo ($class) ? ' ' . $class : null; ?>" id="flash">
+    
 <?php if ($close): ?>
 	<a class="close" data-dismiss="alert" href="#">×</a>
 <?php endif; ?>
