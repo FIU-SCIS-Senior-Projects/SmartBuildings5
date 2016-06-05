@@ -7,9 +7,9 @@
               
               <?php echo $this->Form->create('User',array('class'=>'form-horizontal','inputDefaults'=>array('label'=>false)));?>
                     <div class="form-group">
-                      <label for="username" class="col-sm-2 control-label">Username</label>
+                      <label for="email" class="col-sm-2 control-label">Email</label>
                       <div class="col-sm-10">
-                        <?php echo $this->Form->input('username',array('class'=>'form-control'));?>
+                        <?php echo $this->Form->input('email',array('class'=>'form-control'));?>
                       </div>
                     </div>
                     <div class="form-group">

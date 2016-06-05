@@ -20,31 +20,7 @@ class UsersController extends AppController {
             // Allow non-auth users to register and logout.
             $this->Auth->allow('add', 'logout');
         }
-/**
- * index method
- *
- * @return void
- */
-	public function index() {
-		$this->User->recursive = 0;
-		$this->set('users', $this->Paginator->paginate());
-	}
-
-/**
- * view method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function view($id = null) {
-		if (!$this->User->exists($id)) {
-			throw new NotFoundException(__('Invalid user'));
-		}
-		$options = array('conditions' => array('User.' . $this->User->primaryKey => $id));
-		$this->set('user', $this->User->find('first', $options));
-	}
-
+       
 /**
  * add method
  *
@@ -53,12 +29,16 @@ class UsersController extends AppController {
 	public function add() {
 		if ($this->request->is('post')) {
 			$this->User->create();
+                        
 			if ($this->User->save($this->request->data)) {
 				$this->Session->setFlash(__('The user has been saved.'), 'alert', array(
                                                         'plugin' => 'BoostCake',
                                                         'class' => 'alert-success'
                                                 ));
-				return $this->redirect(array('action' => 'index'));
+                                
+                                //attempt to login user
+                                $this->login();
+				
 			} else {
 				$this->Session->setFlash(__('The user could not be saved. Please, try again.'), 'alert', array(
                                                         'plugin' => 'BoostCake',
@@ -72,29 +52,6 @@ class UsersController extends AppController {
 
 	}
 
-/**
- * edit method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function edit($id = null) {
-		if (!$this->User->exists($id)) {
-			throw new NotFoundException(__('Invalid user'));
-		}
-		if ($this->request->is(array('post', 'put'))) {
-			if ($this->User->save($this->request->data)) {
-				$this->Session->setFlash(__('The user has been saved.'));
-				return $this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The user could not be saved. Please, try again.'));
-			}
-		} else {
-			$options = array('conditions' => array('User.' . $this->User->primaryKey => $id));
-			$this->request->data = $this->User->find('first', $options);
-		}
-	}
         
         public function login() {            
             
@@ -107,19 +64,20 @@ class UsersController extends AppController {
                 
                 if ($this->Auth->login()) {
                     
+                    $ACTIVE=1;$PENDING=2;$INACTIVE=3;
                     //check if acc status is pending for approval
-                    if($this->Auth->user('account_status_id') == 2){
+                    if($this->Auth->user('account_status_id') == $PENDING){
                         $this->Session->setFlash(__('This account is pending for approval'), 'alert', array(
                                                                                     'plugin' => 'BoostCake',
                                                                                     'class' => 'alert-danger'
                                                                             ));
-                        return $this->Auth->logout();                       
-                    }else if($this->Auth->user('account_status_id') == 3){
+                        return $this->logout();                     
+                    }else if($this->Auth->user('account_status_id') == $INACTIVE){
                         $this->Session->setFlash(__('This account is inactive'),'alert', array(
                                                                         'plugin' => 'BoostCake',
                                                                         'class' => 'alert-danger'
                                                                 ));                    
-                        return $this->Auth->logout();                       
+                        return $this->logout();                      
                     }
                     return $this->redirect('/home');
                 }

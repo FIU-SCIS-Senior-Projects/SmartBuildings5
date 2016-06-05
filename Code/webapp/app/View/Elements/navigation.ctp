@@ -21,7 +21,7 @@
             <li><?php echo $this->Html->link(__('Login'),array('controller'=>'users','action'=>'login'))?></li>
             <?php else: ?>
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $this->Session->read('Auth.User.username');?> <b class="caret"></b></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $this->Session->read('Auth.User.first_name').', '. $this->Session->read('Auth.User.last_name');?> <b class="caret"></b></a>
               <ul class="dropdown-menu">
                  <li>
                     <?php echo $this->Html->link(__('Profile'),array('controller'=>'users','action'=>'profile'))?>
