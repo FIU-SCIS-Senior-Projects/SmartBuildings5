@@ -1,6 +1,9 @@
 <?php
 App::uses('AppModel', 'Model');
 App::uses('BlowfishPasswordHasher', 'Controller/Component/Auth');
+
+App::uses('Validation', 'Utility');
+
 /**
  * User Model
  *
@@ -14,16 +17,6 @@ class User extends AppModel {
  * @var array
  */ 
 	public $validate = array(
-                'username' => array(                    
-                    'length' => array(
-                        'rule' => array('between', 5, 15),
-                        'message' => 'Your username must be between 5 and 15 characters long.'
-                    ),
-                    'isUnique' => array(
-                        'rule'    => 'isUnique',
-                        'message' => 'This username has already been taken.'
-                    )
-                ),
                'password' => array(
                     'length' => array(
                         'rule'      => array('minLength', 8),
@@ -53,10 +46,65 @@ class User extends AppModel {
                         'rule'    => array('email'),
                         'message' => 'Please enter a valid email address.'
                     ),
-                ),            
+                    'isUnique' => array(
+                        'rule'    => 'isUnique',
+                        'message' => 'This email has already been taken.'
+                    )
+                ), 
             
-                'role_id' => 'numeric'
+                'role_id' => 'numeric',            
+                
 	);
+        
+        public function beforeValidate($options = array()) {
+            $MAPPER=1;$EVALUATOR=2;
+            $role_id = $this->data[$this->alias]['role_id'];
+            if($role_id == $MAPPER){
+                 $this->validator()
+                         ->add('company', 'required', array(
+                                'rule' => array('check_role'),
+                                'allowEmpty' => true,
+                              ))
+                         ->add('position', 'required', array(
+                                'rule' => array('check_role'),
+                                'allowEmpty' => true,
+                              ))
+                         ->add('company_url', 'required', array(
+                                'rule' => array('check_role'),
+                                'allowEmpty' => true,
+                              ))
+                         ->add('company_url','val_url',array(
+                                'rule' => array('url', true), 
+                                'message' => 'Please enter a valid URL'
+                              ));  
+            }else if($role_id == $EVALUATOR){
+                $this->validator()
+                         ->add('company', 'required', array(
+                                'rule' => 'notEmpty',
+                                'message' => 'A company is required',
+                              ))
+                        ->add('position', 'required', array(
+                                'rule' => 'notEmpty',
+                                'message' => 'A position is required',
+                              ))
+                        ->add('company_url', 'required', array(
+                                'rule' => 'notEmpty',
+                                'message' => 'A company is required',
+                                
+                              ))
+                        ->add('company_url','val_url',array(
+                                'rule' => array('url', true), 
+                                'message' => 'Please enter a valid URL'
+                              ));                
+            }
+        }
+
+
+        public function check_role()
+        {
+            $MAPPER=1;
+            return $this->data[$this->alias]['role_id'] == $MAPPER;
+        }
         
         public function validate_passwords() {
             return $this->data[$this->alias]['password'] === $this->data[$this->alias]['password_repeat'];

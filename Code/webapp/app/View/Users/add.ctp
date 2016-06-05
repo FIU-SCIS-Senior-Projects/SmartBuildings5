@@ -18,12 +18,6 @@
                             </div>
                           </div>
                           <div class="form-group">
-                            <label for="username" class="col-sm-2 control-label">Username</label>
-                            <div class="col-sm-10">
-                              <?php echo $this->Form->input('username',array('class'=>'form-control'));?>
-                            </div>
-                          </div>
-                          <div class="form-group">
                             <label for="password" class="col-sm-2 control-label">Password</label>
                             <div class="col-sm-10">
                               <?php echo $this->Form->input('password',array('class'=>'form-control'));?>
@@ -47,7 +41,24 @@
                               <?php echo $this->Form->input('role_id',array('class'=>'form-control'));?>
                             </div>
                           </div>
-                    
+                          <div class="form-group">
+                            <label for="company" class="col-sm-2 control-label">Company</label>
+                            <div class="col-sm-10">
+                              <?php echo $this->Form->input('company',array('class'=>'form-control'));?>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label for="position" class="col-sm-2 control-label">Position</label>
+                            <div class="col-sm-10">
+                              <?php echo $this->Form->input('position',array('class'=>'form-control'));?>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label for="company_url" class="col-sm-2 control-label">Company Url</label>
+                            <div class="col-sm-10">
+                              <?php echo $this->Form->input('company_url',array('class'=>'form-control'));?>
+                            </div>
+                          </div>                   
                           
                           <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
