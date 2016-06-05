@@ -37,7 +37,7 @@ class LoginIntegrationTest extends PHPUnit_Extensions_Selenium2TestCase{
         $password = 'Passw0rd';
         
         $form = $this->byTag('form');
-        $form->byName('data[User][username]')->value($email);
+        $form->byName('data[User][email]')->value($email);
         $form->byName('data[User][password]')->value($password);
         $form->submit();
         
