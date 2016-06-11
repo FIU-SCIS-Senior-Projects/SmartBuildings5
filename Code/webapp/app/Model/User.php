@@ -34,12 +34,18 @@ class User extends AppModel {
                     )
                 ),
 		'last_name' => array(
+                        'required' => array(
                             'rule' => 'notEmpty',
-                            'message' => 'A last name is required',
+                            'message' => 'A first name is required',
+                        ),
+                        //'on' => 'create',
 		),
 		'first_name' => array(
-			'rule' => 'notEmpty',
-                        'message' => 'A first name is required',
+                        'required' => array(
+                            'rule' => 'notEmpty',
+                            'message' => 'A first name is required',
+                        ),
+                        //'on' => 'create',
 		),
                 'email' => array(
                     'email' => array(
@@ -49,53 +55,61 @@ class User extends AppModel {
                     'isUnique' => array(
                         'rule'    => 'isUnique',
                         'message' => 'This email has already been taken.'
-                    )
+                    ),
+                    //'on' => 'create',
                 ), 
             
-                'role_id' => 'numeric',            
+                'role_id' => array(
+                    'required' => array(
+                        'rule' => 'numeric',
+                    ),
+                    //'on' => 'create',
+                ),
                 
 	);
         
         public function beforeValidate($options = array()) {
             $MAPPER=1;$EVALUATOR=2;
-            $role_id = $this->data[$this->alias]['role_id'];
-            if($role_id == $MAPPER){
-                 $this->validator()
-                         ->add('company', 'required', array(
-                                'rule' => array('check_role'),
-                                'allowEmpty' => true,
-                              ))
-                         ->add('position', 'required', array(
-                                'rule' => array('check_role'),
-                                'allowEmpty' => true,
-                              ))
-                         ->add('company_url', 'required', array(
-                                'rule' => array('check_role'),
-                                'allowEmpty' => true,
-                              ))
-                         ->add('company_url','val_url',array(
-                                'rule' => array('url', true), 
-                                'message' => 'Please enter a valid URL'
-                              ));  
-            }else if($role_id == $EVALUATOR){
-                $this->validator()
-                         ->add('company', 'required', array(
-                                'rule' => 'notEmpty',
-                                'message' => 'A company is required',
-                              ))
-                        ->add('position', 'required', array(
-                                'rule' => 'notEmpty',
-                                'message' => 'A position is required',
-                              ))
-                        ->add('company_url', 'required', array(
-                                'rule' => 'notEmpty',
-                                'message' => 'A company is required',
-                                
-                              ))
-                        ->add('company_url','val_url',array(
-                                'rule' => array('url', true), 
-                                'message' => 'Please enter a valid URL'
-                              ));                
+            if (isset($this->data[$this->alias]['role_id'])){
+                $role_id = $this->data[$this->alias]['role_id'];
+                if($role_id == $MAPPER){
+                     $this->validator()
+                             ->add('company', 'required', array(
+                                    'rule' => array('check_role'),
+                                    'allowEmpty' => true,
+                                  ))
+                             ->add('position', 'required', array(
+                                    'rule' => array('check_role'),
+                                    'allowEmpty' => true,
+                                  ))
+                             ->add('company_url', 'required', array(
+                                    'rule' => array('check_role'),
+                                    'allowEmpty' => true,
+                                  ))
+                             ->add('company_url','val_url',array(
+                                    'rule' => array('url', true), 
+                                    'message' => 'Please enter a valid URL'
+                                  ));  
+                }else if($role_id == $EVALUATOR){
+                    $this->validator()
+                             ->add('company', 'required', array(
+                                    'rule' => 'notEmpty',
+                                    'message' => 'A company is required',
+                                  ))
+                            ->add('position', 'required', array(
+                                    'rule' => 'notEmpty',
+                                    'message' => 'A position is required',
+                                  ))
+                            ->add('company_url', 'required', array(
+                                    'rule' => 'notEmpty',
+                                    'message' => 'A company is required',
+
+                                  ))
+                            ->add('company_url','val_url',array(
+                                    'rule' => array('url', true), 
+                                    'message' => 'Please enter a valid URL'
+                                  ));                
+                }
             }
         }
 
