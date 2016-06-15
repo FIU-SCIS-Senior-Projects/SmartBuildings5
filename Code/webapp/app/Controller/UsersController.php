@@ -20,7 +20,7 @@ class UsersController extends AppController {
         public function beforeFilter() {
             parent::beforeFilter();
             // Allow non-auth users to register and logout.
-            $this->Auth->allow('add', 'logout');
+            $this->Auth->allow('add', 'logout', 'forgot_password');
         }
        
 /**
@@ -30,9 +30,17 @@ class UsersController extends AppController {
  */
 	public function add() {
 		if ($this->request->is('post')) {
-			$this->User->create();
                         
-                        $this->request->data['User']['profile_image'] = 'image_placeholder.png';
+                        if($this->request->data['user_role'] == 'mapper')
+                        {
+                            $this->request->data['User']['role_id'] = 1;
+                        }else{
+                            $this->request->data['User']['role_id'] = 2;
+                        }
+                        
+                        $this->request->data['User']['profile_image'] = 'profile_placeholder.png';
+			$this->User->create();
+                        print_r($this->request->data);
 			if ($this->User->save($this->request->data)) {
 				$this->Session->setFlash(__('The user has been saved.'), 'alert', array(
                                                         'plugin' => 'BoostCake',
@@ -105,6 +113,11 @@ class UsersController extends AppController {
                 
                 if ($this->request->is(array('post', 'put'))) {
                     
+                    if(empty($this->request->data['User']['password']) &&
+                            empty($this->request->data['User']['password_repeat'])){
+                        
+                    }
+                    
                      
                     if(!empty($this->request->data['User']['profile_image']['name'])){
                         
@@ -140,7 +153,8 @@ class UsersController extends AppController {
                 }else{
                     //pass db info to view
                     
-                    $this->request->data = $this->User->findById($uid);
+                    $this->request->data = $this->User->find('first',array('conditions'=>array('User.id'=>$uid),
+                                                                          'fields'=>array('first_name','last_name','email','company','position','company_url')));
                     $this->set('user', $this->request->data);
                     //set role
                     $this->set('roles', $this->User->Role->find('list'));
@@ -235,5 +249,9 @@ class UsersController extends AppController {
                      
             
         }
+        
+        public function forgot_password() {
+
+	}
         
 }

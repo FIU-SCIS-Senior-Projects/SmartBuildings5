@@ -22,6 +22,7 @@ class User extends AppModel {
                         'rule'      => array('minLength', 8),
                         'message'   => 'Your password must be at least 8 characters.',
                     ),
+                   //'on' => 'create',
                 ),
                 'password_repeat' => array(
                     'length' => array(
@@ -31,7 +32,8 @@ class User extends AppModel {
                     'compare'    => array(
                         'rule'      => array('validate_passwords'),
                         'message' => 'The passwords you entered do not match.',
-                    )
+                    ),
+                    //'on' => 'create',
                 ),
 		'last_name' => array(
                         'required' => array(

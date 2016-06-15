@@ -1,15 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <!--[if IE]>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <![endif]-->
     <?php echo $this->Html->charset(); ?>
     <title>
         Disaster Helper
     </title>
     <?php
+    
         echo $this->Html->meta('icon');
+        
+        //use different bootstrap css for home
+        $action_request = $this->params['controller'] . $this->action;
+        if($action_request == 'mapmarkersindex'){
+            echo $this->Html->css('bootstrap.min.home');
+        }else{
+            echo $this->Html->css('bootstrap.min');
+        }
+        
+        
  
-        echo $this->Html->css('bootstrap.min');
-        //echo $this->Html->css('bootstrap-responsive.min');
+        
  
         echo $this->fetch('meta');
         echo $this->fetch('css');
@@ -40,7 +53,7 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <?php echo $this->Html->script('jquery.min'); ?>
     <?php echo $this->Html->script('bootstrap.min'); ?>
 </body>
 </html>
