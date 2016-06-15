@@ -15,7 +15,7 @@
         <div class="card card-container">
             <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
             <p id="profile-name" class="profile-name-card"></p>
-            <form class="form-signin" id="UserLoginForm" method="post" action="/users/login">
+            <form class="form-signin" id="UserLoginForm" method="post" action="login">
                 <span id="reauth-email" class="reauth-email"></span>
                 <input type="email" name="data[User][email]" id="UserEmail" class="form-control" placeholder="Email address" required autofocus>
                 <input type="password" name="data[User][password]" id="UserPassword" class="form-control" placeholder="Password" required>
@@ -23,7 +23,7 @@
                 <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Login</button>
                 
             </form><!-- /form -->
-            <form action="/users/add">
+            <form action="add">
                 <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Register</button>
             </form>
             
