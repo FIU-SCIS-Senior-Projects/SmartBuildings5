@@ -44,16 +44,16 @@ class EmailConfig {
 		//'headerCharset' => 'utf-8',
 	);
 
-	public $smtp = array(
+	public $gmail = array(
 		'transport' => 'Smtp',
-		'from' => array('site@localhost' => 'My Site'),
-		'host' => 'localhost',
-		'port' => 25,
+		'from' => array('smartbuildings5@gmail.com' => 'Disaster Helper'),
+		'host' => 'ssl://smtp.gmail.com',
+		'port' => 465,
 		'timeout' => 30,
-		'username' => 'user',
-		'password' => 'secret',
+		'username' => 'smartbuildings5@gmail.com',
+		'password' => 'Passw0rd1234',
 		'client' => null,
-		'log' => false,
+		'log' => true,
 		//'charset' => 'utf-8',
 		//'headerCharset' => 'utf-8',
 	);
