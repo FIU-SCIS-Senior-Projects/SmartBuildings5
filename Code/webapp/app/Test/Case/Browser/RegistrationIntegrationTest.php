@@ -35,11 +35,11 @@ class RegistrationIntegrationTest extends PHPUnit_Extensions_Selenium2TestCase{
         $this->byLinkText('Login')->click();
         
         //click register
-        $this->byLinkText('Register')->click();
+        $this->byId('Register')->click();
         
         //Assert tag is Registration
-        $content = $this->byTag('h2')->text();
-        $this->assertEquals('Registration', $content); 
+        $content = $this->byTag('h1')->text();
+        $this->assertEquals('Create an Account', $content); 
         
         //new user info
         $lastName='new user';
@@ -56,7 +56,8 @@ class RegistrationIntegrationTest extends PHPUnit_Extensions_Selenium2TestCase{
         $form->byName('data[User][password]')->value($password);
         $form->byName('data[User][password_repeat]')->value($repeat_password);
         $form->byName('data[User][email]')->value($email);
-        $form->byName('data[User][role_id]')->value($role);
+        //$form->byId('mapper')->click();
+        //$form->byName('data[User][role_id]')->value($role);
         $form->submit();
         
         //assert email is duplicate

@@ -40,7 +40,7 @@ class UsersController extends AppController {
                         
                         $this->request->data['User']['profile_image'] = 'profile_placeholder.png';
 			$this->User->create();
-                        print_r($this->request->data);
+//                        print_r($this->request->data);
 			if ($this->User->save($this->request->data)) {
 				$this->Session->setFlash(__('The user has been saved.'), 'alert', array(
                                                         'plugin' => 'BoostCake',
@@ -93,7 +93,7 @@ class UsersController extends AppController {
                     return $this->redirect('/home');
                 }
                 
-                $this->Session->setFlash(__('Invalid username or password, try again'), 'alert', array(
+                $this->Session->setFlash(__('Invalid username or password'), 'alert', array(
                                                                                 'plugin' => 'BoostCake',
                                                                                 'class' => 'alert-danger'
                                                                         ));
@@ -142,6 +142,9 @@ class UsersController extends AppController {
                                                         'class' => 'alert-success'
                                                 ));
                         
+                        $this->Session->write('Auth.User', array_merge(AuthComponent::User(), 
+                                                 $this->request->data['User']) ); //updating all user session data
+
                         return $this->redirect(array('users' => 'profile'));
                     } else {
                         $this->Session->setFlash(__('There was a problem updating the profile.'), 'alert', array(
@@ -185,7 +188,7 @@ class UsersController extends AppController {
 
             //check if image type fits one of allowed types
             $ext = substr(strtolower(strrchr($image['name'], '.')), 1); //get the extension
-            $arr_ext = array('jpg', 'jpeg', 'gif'); //set allowed extensions
+            $arr_ext = array('png','jpg', 'jpeg', 'gif'); //set allowed extensions
             
             if(!in_array($ext, $arr_ext)){           
                 $this->Session->setFlash(__('Unacceptable image type.'), 'alert', array(

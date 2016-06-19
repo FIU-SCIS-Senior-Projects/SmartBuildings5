@@ -25,7 +25,7 @@ class RegistrationUnitTest extends PHPUnit_Extensions_Selenium2TestCase{
         $this->stop();
     } 
     
-    public function testRegistrationLinkIsFunctional(){
+    public function testCreateAssessmentLinkIsFunctional(){
         $this->timeouts()->implicitWait(2000);
         //navigate to home
         $this->url('/');
@@ -33,12 +33,33 @@ class RegistrationUnitTest extends PHPUnit_Extensions_Selenium2TestCase{
         //click login
         $this->byLinkText('Login')->click();
         
-        //click register
-                //$this->click('Register');
-        $this->byId('Register')->click();
+        $first_name='admin';
+        $last_name='admin';
         
-        //Assert tag is Registration
+        $email = 'admin@admin.com';
+        $password = 'Passw0rd';
+        
+        $form = $this->byTag('form');
+        $form->byName('data[User][email]')->value($email);
+        $form->byName('data[User][password]')->value($password);
+        $form->submit();
+        
+        //first login assert: check username is displayed
+        $this->assertTrue($this->isTextPresent($first_name.', '.$last_name));
+        
+        $this->byLinkText('Create Assessment')->click();
+        
         $content = $this->byTag('h1')->text();
-        $this->assertEquals('Create an Account', $content);
+        $this->assertEquals('Create Assessment', $content);
+    }
+    
+     public function isTextPresent($search)
+    {
+        $source = $this->source();
+        if ( strpos((string)$source,$search) !== FALSE){
+            return true;
+        }else{ 
+            return false;
+        }
     }
 }

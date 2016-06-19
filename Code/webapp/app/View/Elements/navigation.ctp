@@ -22,7 +22,7 @@
                         <a></a>
                     </li>
                     <li>
-                        <a href="/reports/add">Create Report</a>
+                        <a href="/reports/add">Create Assessment</a>
                     </li>
                 </ul>
             </div>

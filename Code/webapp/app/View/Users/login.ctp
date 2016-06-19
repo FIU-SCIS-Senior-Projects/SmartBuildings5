@@ -8,11 +8,12 @@
         <div class="panel-heading">
             <div class="panel-title text-center">
                      <h1 class="title">Login</h1>
-                     <hr />
+                     <!--<hr />-->
              </div>
         </div>
-        <?php echo $this->Session->flash(); ?>
         <div class="card card-container">
+                    <?php echo $this->Session->flash(); ?>
+
             <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
             <p id="profile-name" class="profile-name-card"></p>
             <form class="form-signin" id="UserLoginForm" method="post" action="login">
@@ -20,11 +21,11 @@
                 <input type="email" name="data[User][email]" id="UserEmail" class="form-control" placeholder="Email address" required autofocus>
                 <input type="password" name="data[User][password]" id="UserPassword" class="form-control" placeholder="Password" required>
                 
-                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Login</button>
+                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" id="Login" >Login</button>
                 
             </form><!-- /form -->
             <form action="add">
-                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Register</button>
+                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" id="Register" >Register</button>
             </form>
             
             <a href="forgot_password" class="forgot-password">

@@ -25,13 +25,16 @@
         <div class="panel-heading">
             <div class="panel-title text-center">
                      <h1 class="title">Create an Account</h1>
-                     <hr />
+                     <!--<hr />-->
              </div>
         </div> 
         
-        <?php echo $this->Session->flash(); ?>
+
         
         <div class="card card-container">
+        <?php echo $this->Session->flash(); ?>
+
+
             <?php  echo $this->Form->create('User',array('class'=>'form-horizontal',));?>
 <!--            <form class="form-register" id="UserAddForm" method="post" action="/users/add">
             <input type="hidden" name="_method" value="POST"/>-->
@@ -65,39 +68,61 @@
                         <div class="col-md-6">-->
                         <?php if(isset($user_role)):?>
                             <?php if($user_role == 'mapper'):?>
+                            <div class="row">
+
                                 <div class="funkyradio">
                                     <div class="funkyradio-primary">
+                                        <div class="col-xs-6 ">
+                                        <input type="radio" name="user_role" id="mapper" value="mapper" checked/>
+                                        <label for="mapper">Mapper</label>
+                                        </div>                                    
+                                    </div>
+                                    <div class="funkyradio-primary">
+                                        <div class="col-xs-6 ">
+                                        <input type="radio" name="user_role" id="evaluator" value="evaluator" />
+                                        <label for="evaluator">Evaluator</label>
+                                        </div>                                    
+                                    </div>
+                                </div> 
+                            </div>
+
+                            <?php else: ?>
+                            <div class="row">
+                                <div class="funkyradio">
+                                    <div class="funkyradio-primary">
+                                        <div class="col-xs-6 ">
+                                        <input type="radio" name="user_role" id="mapper" value="mapper" />
+                                        <label for="mapper">Mapper</label>
+                                        </div>
+                                    </div>
+                                    <div class="funkyradio-primary">
+                                        <div class="col-xs-6 ">
+                                        <input type="radio" name="user_role" id="evaluator" value="evaluator" checked/>
+                                        <label for="evaluator">Evaluator</label>
+                                        </div>
+                                    </div>
+                                </div>                                
+                            </div>
+
+                            <?php endif;?>
+                        <?php else: ?>
+                        <div class="row">
+                            <div class="funkyradio">
+                                <div class="funkyradio-primary">
+                                    <div class="col-xs-6 ">
                                         <input type="radio" name="user_role" id="mapper" value="mapper" checked/>
                                         <label for="mapper">Mapper</label>
                                     </div>
-                                    <div class="funkyradio-primary">
-                                        <input type="radio" name="user_role" id="evaluator" value="evaluator" />
-                                        <label for="evaluator">Evaluator</label>
-                                    </div>
-                                </div>
-                            <?php else: ?>
-                                <div class="funkyradio">
-                                    <div class="funkyradio-primary">
-                                        <input type="radio" name="user_role" id="mapper" value="mapper" />
-                                        <label for="mapper">Mapper</label>
-                                    </div>
-                                    <div class="funkyradio-primary">
-                                        <input type="radio" name="user_role" id="evaluator" value="evaluator" checked/>
-                                        <label for="evaluator">Evaluator</label>
-                                    </div>
-                                </div>
-                            <?php endif;?>
-                        <?php else: ?>
-                            <div class="funkyradio">
-                                <div class="funkyradio-primary">
-                                    <input type="radio" name="user_role" id="mapper" value="mapper" checked/>
-                                    <label for="mapper">Mapper</label>
                                 </div>
                                 <div class="funkyradio-primary">
+                                    <div class="col-xs-6 ">
                                     <input type="radio" name="user_role" id="evaluator" value="evaluator"/>
                                     <label for="evaluator">Evaluator</label>
+                                    </div>
+
                                 </div>
                             </div>
+                        </div>
                         <?php endif;?>
                             
 <!--                        </div>

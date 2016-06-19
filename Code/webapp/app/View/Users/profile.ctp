@@ -1,3 +1,5 @@
+<?php echo $this->Html->css('profile'); ?>    
+
 <div class="container" >
   <h1 class="page-header">Edit Profile</h1>
   <div class="row">
@@ -12,6 +14,7 @@
         <?php echo $this->Form->input('profile_image', array('class'=>'text-center center-block well well-sm','type'=>'file'));?>
       </div>
     </div>
+            
     <!-- edit form column -->
     <div class="col-md-8 col-sm-6 col-xs-12 personal-info">
       <?php echo $this->Session->flash(); ?>
@@ -20,23 +23,23 @@
         <div class="form-group">
           <label class="col-lg-3 control-label">First name:</label>
           <div class="col-lg-8">
-            <?php echo $this->Form->input('first_name', array('class'=>'form-control','readonly' => 'readonly'));?>
+            <?php echo $this->Form->input('first_name', array('class'=>'form-control'));?>
           </div>
         </div>
         <div class="form-group">
           <label class="col-lg-3 control-label">Last name:</label>
           <div class="col-lg-8">
-            <?php echo $this->Form->input('last_name', array('class'=>'form-control','readonly' => 'readonly'));?>
+            <?php echo $this->Form->input('last_name', array('class'=>'form-control'));?>
           </div>
         </div>
         <div class="form-group">
           <label class="col-lg-3 control-label">Email:</label>
           <div class="col-lg-8">
-            <?php  echo $this->Form->input('email',array('class'=>'form-control','readonly' => 'readonly'));?>
+            <?php  echo $this->Form->input('email',array('class'=>'form-control','disabled' => 'disabled'));?>
           </div>
         </div>
         <div class="form-group">
-          <label class="col-lg-3 control-label">Email:</label>
+          <label class="col-lg-3 control-label">Role:</label>
           <div class="col-lg-8">
             <?php  echo $this->Form->input('role_id',array('class'=>'form-control','disabled' => 'disabled'));?>
           </div>
@@ -44,19 +47,19 @@
         <div class="form-group">
           <label class="col-lg-3 control-label">Company:</label>
           <div class="col-lg-8">
-            <?php  echo $this->Form->input('company',array('class'=>'form-control','disabled' => 'disabled'));?>
+            <?php  echo $this->Form->input('company',array('class'=>'form-control'));?>
           </div>
         </div>
         <div class="form-group">
           <label class="col-lg-3 control-label">Position:</label>
           <div class="col-lg-8">
-            <?php  echo $this->Form->input('position',array('class'=>'form-control','disabled' => 'disabled'));?>
+            <?php  echo $this->Form->input('position',array('class'=>'form-control'));?>
           </div>
         </div>
         <div class="form-group">
           <label class="col-lg-3 control-label">Company Url:</label>
           <div class="col-lg-8">
-            <?php  echo $this->Form->input('company_url',array('class'=>'form-control','disabled' => 'disabled'));?>
+            <?php  echo $this->Form->input('company_url',array('class'=>'form-control'));?>
           </div>
         </div>
 <!--        <div class="form-group">

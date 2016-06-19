@@ -18,7 +18,10 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 body {
-  margin: 0;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-image: linear-gradient(rgb(104, 145, 162), rgb(255,255,255));
+    margin: 0;
 }
 article,
 aside,

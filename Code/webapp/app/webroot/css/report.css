@@ -1,12 +1,14 @@
 
-h1{
-    color: white;
+.container-fluid {
+    width:800px;
 }
 
-.funkyradio div {
-  clear: both;
-  overflow: hidden;
-  
+hr {
+    border: none;
+    height: 2px;
+    /* Set the hr color */
+    color: #fff;  /*old IE */
+    background-color: #fff;  /*Modern Browsers */
 }
 
 .funkyradio label {
@@ -27,6 +29,7 @@ h1{
   line-height: 2.5em;
   text-indent: 3.25em;
   margin-top: 2em;
+  background: #fff; /*label color*/
   cursor: pointer;
   -webkit-user-select: none;
      -moz-user-select: none;
@@ -61,7 +64,7 @@ h1{
 
 .funkyradio input[type="radio"]:checked ~ label,
 .funkyradio input[type="checkbox"]:checked ~ label {
-  color: #777;
+  font-weight: bold;
 }
 
 .funkyradio input[type="radio"]:checked ~ label:before,

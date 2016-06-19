@@ -1,16 +1,19 @@
-<div> 
+<div class="container-fluid"> 
      
 <?php
     echo $this->Html->css('blueimp-gallery.min');
     echo $this->Html->css('blueimp-gallery-indicator');
     echo $this->Html->css('report-image');
     
-    echo $this->Form->create('ReportImage',array('inputDefaults'=>array('label'=>false),'enctype'=>'multipart/form-data'));
+    echo $this->Form->create('ReportImage',array('inputDefaults'=>array('label'=>false),'type' => 'file'));
 ?>
-            
-     
-
-<h1>Report Images</h1>
+    <div class="panel-heading">
+            <!--<div class="panel-title text-center">-->
+                     <h1 class="title">Assessment Images</h1>
+                     <!--<hr />-->
+             <!--</div>-->
+        </div>        
+        
 
 <!-- The container for the list of example images -->
 <div id="links" >
@@ -50,13 +53,13 @@
 
 <br>
 <div>
-    <div class="left"><?php echo $this->Form->input('report_image', array('type'=>'file'));?></div>
-    <div class="right"><?php echo $this->Form->submit(__('Upload'), array('name' => 'btn')); ?></div>
+    <div class="left"><?php echo $this->Form->input('report_image.', array('type'=>'file','multiple'=>true));?></div>
+    <div class="right"><?php echo $this->Form->submit(__('Upload'), array('id'=>'upload','name' => 'btn')); ?></div>
 </div>
 
 <br><br><br>
 <div class="r">
-    <?php echo $this->Form->submit(__('Complete'),array('name' => 'btn','class'=>'btn btn-primary')); ?>
+    <?php echo $this->Form->submit(__('Complete'),array('id'=>'complete','name' => 'btn','class'=>'btn btn-primary')); ?>
 </div>
     
     
