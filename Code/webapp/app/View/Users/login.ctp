@@ -29,7 +29,7 @@
             </form>
             
             <a href="forgot_password" class="forgot-password">
-                Forgot the password?
+                Forgot password?
             </a>
         </div><!-- /card-container -->
     </div><!-- /container -->
