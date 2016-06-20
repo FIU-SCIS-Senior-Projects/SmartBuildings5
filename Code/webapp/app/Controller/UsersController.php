@@ -1,5 +1,5 @@
 <?php
-
+App::uses('CakeEmail', 'Network/Email');
 App::uses('AppController', 'Controller');
 App::import('Vendor', 'ImageTool', array('file' => 'ImageTool' . DS . 'ImageTool.php'));
 /**
@@ -10,6 +10,11 @@ App::import('Vendor', 'ImageTool', array('file' => 'ImageTool' . DS . 'ImageTool
  */
 class UsersController extends AppController {
 
+    var $name = 'Users';
+    var $helpers = array('Html', 'Form', 'Time');
+    var $uses = array('User');
+    var $allowCookie = true;
+    var $cookieTerm = '0';
 /**
  * Components
  *
@@ -20,7 +25,7 @@ class UsersController extends AppController {
         public function beforeFilter() {
             parent::beforeFilter();
             // Allow non-auth users to register and logout.
-            $this->Auth->allow('add', 'logout', 'forgot_password');
+            $this->Auth->allow();//('add', 'logout', 'forgot_password','reset_password_token');
         }
        
 /**
@@ -40,7 +45,6 @@ class UsersController extends AppController {
                         
                         $this->request->data['User']['profile_image'] = 'profile_placeholder.png';
 			$this->User->create();
-//                        print_r($this->request->data);
 			if ($this->User->save($this->request->data)) {
 				$this->Session->setFlash(__('The user has been saved.'), 'alert', array(
                                                         'plugin' => 'BoostCake',
@@ -250,11 +254,144 @@ class UsersController extends AppController {
                 return false;
             }
                      
-            
+                
         }
         
         public function forgot_password() {
 
-	}
+	     if (!empty($this->data)) {
+                $user = $this->User->findByEmail($this->data['User']['email']);
+                if (empty($user)) {
+                    $this->Session->setflash('Sorry, the username entered was not found.');
+                    $this->redirect('/users/forgot_password');
+                } else {
+                    $user = $this->__generatePasswordToken($user);
+                    if ($this->User->save($user) && $this->__sendForgotPasswordEmail($user)) {
+                        $this->Session->setFlash(__('Password reset instructions have been sent to your email address.
+                                                    You have 24 hours to complete the request.'), 'alert', array(
+                                                            'plugin' => 'BoostCake',
+                                                            'class' => 'alert-warning'
+                                                    ));
+                        $this->redirect('/users/login');
+                    }
+                }
+        }
+    }
+
+    /**
+     * Allow user to reset password if $token is valid.
+     * @return
+     */
+    public function reset_password_token($reset_password_token = null) {
         
+        if ($this->request->is(array('post', 'put'))) {
+
+                
+
+                if ($this->User->save($this->request->data)) {
+                        $this->Session->setFlash(__('The user has been saved.'), 'alert', array(
+                                                'plugin' => 'BoostCake',
+                                                'class' => 'alert-warning'
+                                        ));
+
+                        //reset token in db for this user
+                        
+                        //attempt to login user 
+                       
+                $this->request->data['User']['reset_password_token'] = '';
+                $this->set('uid',$this->request->data['User']['id']);
+                        
+
+                        return $this->redirect('/users/login');
+
+                } else {
+                        $this->Session->setFlash(__('The password is incomplete or they do not match. Please, try again.'), 'alert', array(
+                                                'plugin' => 'BoostCake',
+                                                'class' => 'alert-danger'
+                                        ));
+                }
+        }
+          
+        if ($reset_password_token == null){
+            //put flash message token is null
+            echo 'token null';
+            return $this->redirect('/users/login');         
+            
+        }else{
+            $this->request->data = $this->User->findByResetPasswordToken($reset_password_token);
+            if(isset($this->request->data['User']['id'])){
+                $this->request->data['User']['password'] = '';
+                $this->set('uid',$this->request->data['User']['id']);
+                                
+                
+            }else{
+                //put flash message token is null
+                echo 'token does not exists';
+                return $this->redirect('/users/login');
+            }
+            
+
+        }
+        
+    }
+    /**
+     * Generate a unique hash / token.
+     * @param Object User
+     * @return Object User
+     */
+    function __generatePasswordToken($user) {
+        if (empty($user)) {
+            return null;
+        }
+        // Generate a random string 100 chars in length.
+        $token = "";
+        for ($i = 0; $i < 100; $i++) {
+            $d = rand(1, 100000) % 2;
+            $d ? $token .= chr(rand(33,79)) : $token .= chr(rand(80,126));
+        }
+        (rand(1, 100000) % 2) ? $token = strrev($token) : $token = $token;
+        // Generate hash of random string
+        $hash = Security::hash($token, 'sha256', true);;
+        for ($i = 0; $i < 20; $i++) {
+            $hash = Security::hash($hash, 'sha256', true);
+        }
+        $user['User']['reset_password_token'] = $hash;
+        $user['User']['token_created_at'] = date('Y-m-d H:i:s');
+        return $user;
+    }
+    /**
+     * Validate token created at time.
+     * @param String $token_created_at
+     * @return Boolean
+     */
+    function __validToken($token_created_at) {
+        $expired = strtotime($token_created_at) + 86400;
+        $time = strtotime("now");
+        if ($time < $expired) {
+            return true;
+        }
+        return false;
+    }
+    /**
+     * Sends password reset email to user's email address.
+     * @param $id
+     * @return
+     */
+    function __sendForgotPasswordEmail($user = null) {
+        if (!empty($user['User']['id'])) {
+            //print_r($user);
+            
+            $Email = new CakeEmail('gmail');
+            $Email->to ($user['User']['email']);
+            $Email->subject ('Password Reset Request - DO NOT REPLY');
+            $Email->viewVars(array('User' => $user));
+            $Email->template('reset_password_request');
+            $Email->emailFormat('html');
+            $Email->send();
+            return true;
+        }
+        return false;
+    }
+   
 }
+

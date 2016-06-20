@@ -1,21 +1,5 @@
 <?php echo $this->Html->css('register'); ?>
 
-<!--<div class="col-md-4">
-<div class="col-md-6">
-     <h4>Radio Buttons</h4>
-
-    <div class="funkyradio">
-        <div class="funkyradio-primary">
-            <input type="radio" name="radio" id="radio2" checked/>
-            <label for="radio2">Second Option primary</label>
-        </div>
-        <div class="funkyradio-primary">
-            <input type="radio" name="radio" id="radio" checked/>
-            <label for="radio">Second Option primary</label>
-        </div>
-    </div>
-</div>
-</div>-->
 
 <!--
     you can substitue the span of reauth email for a input with the email and
