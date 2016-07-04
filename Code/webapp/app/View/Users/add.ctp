@@ -9,7 +9,7 @@
         <div class="panel-heading">
             <div class="panel-title text-center">
                      <h1 class="title">Create an Account</h1>
-                     <!--<hr />-->
+                     <hr />
              </div>
         </div> 
         

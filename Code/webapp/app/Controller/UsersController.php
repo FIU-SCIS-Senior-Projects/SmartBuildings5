@@ -299,7 +299,7 @@ class UsersController extends AppController {
                         //attempt to login user 
                        
                 $this->request->data['User']['reset_password_token'] = '';
-                $this->set('uid',$this->request->data['User']['id']);
+                //$this->set('uid',$this->request->data['User']['id']);
                         
 
                         return $this->redirect('/users/login');
@@ -321,7 +321,7 @@ class UsersController extends AppController {
             $this->request->data = $this->User->findByResetPasswordToken($reset_password_token);
             if(isset($this->request->data['User']['id'])){
                 $this->request->data['User']['password'] = '';
-                $this->set('uid',$this->request->data['User']['id']);
+                //$this->set('uid',$this->request->data['User']['id']);
                                 
                 
             }else{
@@ -392,6 +392,7 @@ class UsersController extends AppController {
         }
         return false;
     }
+    
    
 }
 
