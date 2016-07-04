@@ -32,13 +32,112 @@ class ReportsController extends AppController {
  * @param string $id
  * @return void
  */
+        public  $comfirm = '';
+        
 	public function view($id = null) {
-		if (!$this->Report->exists($id)) {
+//          $comfirm = $this->Report->view();
+		
+                if ($this->request->is(array('get'))) {
+                    
+                    if (!$this->Report->exists($id)) {
 			throw new NotFoundException(__('Invalid report'));
-		}
-		$options = array('conditions' => array('Report.' . $this->Report->primaryKey => $id));
-		$this->set('report', $this->Report->find('first', $options));
-	}
+                    }
+                    
+                    $options = array('conditions' => array('Report.' . $this->Report->primaryKey => $id));
+                     $result = $this->Report->find('first', $options);
+
+
+                    if ($result['Report']['electricity'] == true) { 
+                        $result['Report']['electricity'] = 'Yes';
+                    } 
+                    else{
+                        $result['Report']['electricity'] = 'No';
+                    }
+                    
+                    if ($result['Report']['water'] == true) { 
+                        $result['Report']['water'] = 'Yes';
+                    } 
+                    else{
+                        $result['Report']['water'] = 'No';
+                    }
+                    if ($result['Report']['water'] == true) { 
+                        $result['Report']['water'] = 'Yes';
+                    } 
+                    else{
+                        $result['Report']['road_access'] = 'No';
+                    }
+                    if ($result['Report']['road_access'] == true) { 
+                        $result['Report']['road_access'] = 'Yes';
+                    } 
+                    else{
+                        $result['Report']['road_access'] = 'No';
+                    }
+                    if ($result['Report']['telecommunication'] == true) { 
+                        $result['Report']['telecommunication'] = 'Yes';
+                    } 
+                    else{
+                        $result['Report']['telecommunication'] = 'No';
+                    }
+                    if ($result['Report']['food'] == true) { 
+                        $result['Report']['food'] = 'Yes';
+                    } 
+                    else{
+                        $result['Report']['food'] = 'No';
+                    }
+                     if ($result['Report']['sanitation'] == true) { 
+                        $result['Report']['sanitation'] = 'Yes';
+                    } 
+                    else{
+                        $result['Report']['sanitation'] = 'No';
+                    }
+                     if ($result['Report']['first_aid'] == true) { 
+                        $result['Report']['first_aid'] = 'Yes';
+                    } 
+                    else{
+                        $result['Report']['first_aid'] = 'No';
+                    }
+                     if ($result['Report']['shelter'] == true) { 
+                        $result['Report']['shelter'] = 'Yes';
+                    } 
+                    else{
+                        $result['Report']['shelter'] = 'No';
+                    }
+                    
+                    $this->set('report',$result);
+                    
+                    //send images to view  
+                    $this->loadModel('ReportImage');
+                    $this->set('images',$this->ReportImage->find('all', array('conditions' => array('ReportImage.report_id' => $id))));
+                    $this->request->data['Report']['id']=$id;
+                    
+                }
+                
+                if ($this->request->is(array('post', 'put'))) {
+                    //$this->request->data['Report']
+//                    print_r($this->request->data);
+                    $this->loadModel('Evaluation');
+                     //save entry in db
+                    $this->Evaluation->create();
+                    $newEvaluation = array('Evaluation' => array(
+                        'report_id' => $this->request->data['Report']['id'],
+                        'evaluation' => $this->request->data['evaluation'],
+                    ));
+                    if(!$this->Evaluation->save($newEvaluation)){
+                        $this->Session->setFlash(__('There was a problem submitting evaluation.'), 'alert', array(
+                                                'plugin' => 'BoostCake',
+                                                'class' => 'alert-danger'
+                                        ));
+                    }
+                    
+                    $this->Session->setFlash(__('Evaluation successful.'), 'alert', array(
+                                                'plugin' => 'BoostCake',
+                                                'class' => 'alert-success'
+                                        ));
+                    return $this->redirect('/reports/view/'.$this->request->data['Report']['id']);
+                    
+                }
+        
+        }
 
 /**
  * add method
@@ -120,4 +219,10 @@ class ReportsController extends AppController {
 			$this->Session->setFlash(__('The report could not be deleted. Please, try again.'));
 		}
 		return $this->redirect(array('action' => 'index'));
-	}}
+	}
+        
+        
+        
+        
+        
+}

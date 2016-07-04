@@ -1,101 +1,202 @@
 <div class="reports view">
-<h2><?php echo __('Report'); ?></h2>
-	<dl>
-		<dt><?php echo __('Id'); ?></dt>
-		<dd>
-			<?php echo h($report['Report']['id']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('User'); ?></dt>
-		<dd>
-			<?php echo $this->Html->link($report['User']['id'], array('controller' => 'users', 'action' => 'view', $report['User']['id'])); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Building Condition'); ?></dt>
-		<dd>
-			<?php echo $this->Html->link($report['BuildingCondition']['id'], array('controller' => 'building_conditions', 'action' => 'view', $report['BuildingCondition']['id'])); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Electricity'); ?></dt>
-		<dd>
-			<?php echo h($report['Report']['electricity']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Water'); ?></dt>
-		<dd>
-			<?php echo h($report['Report']['water']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Road Block'); ?></dt>
-		<dd>
-			<?php echo h($report['Report']['road_block']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Telecommunication'); ?></dt>
-		<dd>
-			<?php echo h($report['Report']['telecommunication']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Comments'); ?></dt>
-		<dd>
-			<?php echo h($report['Report']['comments']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Created'); ?></dt>
-		<dd>
-			<?php echo h($report['Report']['created']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Modified'); ?></dt>
-		<dd>
-			<?php echo h($report['Report']['modified']); ?>
-			&nbsp;
-		</dd>
-	</dl>
-</div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
-		<li><?php echo $this->Html->link(__('Edit Report'), array('action' => 'edit', $report['Report']['id'])); ?> </li>
-		<li><?php echo $this->Form->postLink(__('Delete Report'), array('action' => 'delete', $report['Report']['id']), null, __('Are you sure you want to delete # %s?', $report['Report']['id'])); ?> </li>
-		<li><?php echo $this->Html->link(__('List Reports'), array('action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Report'), array('action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Users'), array('controller' => 'users', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New User'), array('controller' => 'users', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Building Conditions'), array('controller' => 'building_conditions', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Building Condition'), array('controller' => 'building_conditions', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Report Images'), array('controller' => 'report_images', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Report Image'), array('controller' => 'report_images', 'action' => 'add')); ?> </li>
-	</ul>
-</div>
-<div class="related">
-	<h3><?php echo __('Related Report Images'); ?></h3>
-	<?php if (!empty($report['ReportImage'])): ?>
-	<table cellpadding = "0" cellspacing = "0">
-	<tr>
-		<th><?php echo __('Id'); ?></th>
-		<th><?php echo __('Report Id'); ?></th>
-		<th><?php echo __('Report Image'); ?></th>
-		<th class="actions"><?php echo __('Actions'); ?></th>
-	</tr>
-	<?php foreach ($report['ReportImage'] as $reportImage): ?>
-		<tr>
-			<td><?php echo $reportImage['id']; ?></td>
-			<td><?php echo $reportImage['report_id']; ?></td>
-			<td><?php echo $reportImage['report_image']; ?></td>
-			<td class="actions">
-				<?php echo $this->Html->link(__('View'), array('controller' => 'report_images', 'action' => 'view', $reportImage['id'])); ?>
-				<?php echo $this->Html->link(__('Edit'), array('controller' => 'report_images', 'action' => 'edit', $reportImage['id'])); ?>
-				<?php echo $this->Form->postLink(__('Delete'), array('controller' => 'report_images', 'action' => 'delete', $reportImage['id']), null, __('Are you sure you want to delete # %s?', $reportImage['id'])); ?>
-			</td>
-		</tr>
-	<?php endforeach; ?>
-	</table>
-<?php endif; ?>
+ <?php 
+   echo $this->Html->css('reportView'); 
+   echo $this->Html->css('blueimp-gallery.min');
+    echo $this->Html->css('blueimp-gallery-indicator');
+    echo $this->Html->css('report-image');
+    echo $this->Html->css('register'); ?>
 
-	<div class="actions">
-		<ul>
-			<li><?php echo $this->Html->link(__('New Report Image'), array('controller' => 'report_images', 'action' => 'add')); ?> </li>
-		</ul>
-	</div>
+  <div class="container">
+        <div class="panel-heading">
+            <div class="panel-title text-center">
+                     <h1 class="title">View Report</h1>
+                     <hr />
+             </div>
+        </div> 
+     
+        <?php echo $this->Session->flash(); ?>
+          <h2 class="title text-center">Life Line Services Conditions: </h2> 
+           <div class="card card-container">
+               <?php echo __('Electricity:')  ?> <?php echo h($report['Report']['electricity']); ?>
+			&nbsp;
+                        <br>
+                <?php echo __('Water:') ?> <?php echo h($report['Report']['water']); ?>
+			&nbsp;
+                         <br>
+                 <?php echo __('Road Access:')  ?> <?php echo h($report['Report']['road_access']); ?>
+			&nbsp;
+                         <br>
+                 <?php echo __('Telecommunication:')  ?> <?php echo h($report['Report']['telecommunication']); ?>
+			&nbsp;  
+                         <br>
+                        
+                </div>
+          <hr />
+          <h2 class="title text-center">Emergency Response Needs:</h2> 
+           <div class="card card-container">
+          <?php echo __('Food:')  ?> <?php echo h($report['Report']['food']); ?>
+			&nbsp;
+                        <br>
+                <?php echo __('Sanitation:') ?> <?php echo h($report['Report']['sanitation']); ?>
+			&nbsp;
+                         <br>
+                 <?php echo __('First Aid:')  ?> <?php echo h($report['Report']['first_aid']); ?>
+			&nbsp;
+                         <br>
+                 <?php echo __('Shelter:')  ?> <?php echo h($report['Report']['shelter']); ?>
+			&nbsp;  
+                         <br>
+          
+                </div>
+          <hr />
+          <h2 class="title text-center">Comments:</h2> 
+           <div class="card card-container">
+               <?php echo h($report['Report']['comments']); ?>
+			&nbsp;
+                </div>
+          <h2 class="title text-center">Pictures:</h2> 
+           <div class="card card-container">
+               <?php
+
+?>
+       
+       
+
+<!-- The container for the list of example images -->
+<div id="links" >
+    
+    
+        <?php $cbr=0; foreach ($images as $image): ?>
+        <a href="<?php echo FULL_BASE_URL.'/img/Report/img/'.$image['ReportImage']['report_image']?>" title="<?php echo $image['ReportImage']['report_image'] ?>" data-gallery>
+            <img src="<?php echo FULL_BASE_URL.'/img/Report/thumbnail/'.$image['ReportImage']['report_image']?>" alt="<?php echo $image['ReportImage']['report_image'] ?>">
+        </a>
+        
+        <?php $cbr=$cbr+1; if($cbr == 6):?>
+            <br>
+            <?php $cbr=0; ?>
+        <?php endif;?>
+    <?php endforeach;?>
+        
+        
+            
 </div>
+<!-- The Gallery as lightbox dialog, should be a child element of the document body -->
+<!-- The Bootstrap Image Gallery lightbox, should be a child element of the document body -->
+<div id="blueimp-gallery" class="blueimp-gallery">
+    <!-- The container for the modal slides -->
+    <div class="slides"></div>
+    <!-- Controls for the borderless lightbox -->
+    <h3 class="title"></h3>
+    <a class="prev">‹</a>
+    <a class="next">›</a>
+    <a class="close">×</a>
+    <a class="play-pause"></a>
+    <ol class="indicator"></ol>
+    <!-- The modal dialog, which will be used to wrap the lightbox content -->    
+</div>
+
+    <style type="text/css">
+        div.left, div.right {
+            float: left;   
+        }  
+    </style>
+
+<?php 
+        echo $this->Html->script('blueimp-helper');
+        echo $this->Html->script('blueimp-gallery.min');
+        echo $this->Html->script('blueimp-gallery-fullscreen');
+        echo $this->Html->script('blueimp-gallery-indicator');
+        echo $this->Html->script('jquery.min');
+        echo $this->Html->script('jquery.blueimp-gallery.min');
+    ?>
+
+
+  
+</div>
+          <hr />     
+          <h2 class="title text-center">Evaluation:</h2> 
+           <div class="card card-container">
+
+</head>
+<body>
+<?php  echo $this->Form->create('Report');?> 
+    
+     <?php echo $this->Form->input('id', array('type' => 'hidden')); 
+     
+     ?>
+ <!--<input type="hidden" name="report_id">-->
+ <div class="row">
+    <div class="funkyradio">
+        <div class="funkyradio-success">
+            <div class="col-xs-6 ">
+                <input type="radio" name="evaluation" id="safe" value="safe" checked/>
+                <label for="safe">Safe</label>
+            </div>
+            <br><br><br><br>
+        </div>
+     
+        <div class="funkyradio-warning">
+            <div class="col-xs-6 ">
+            <input type="radio" name="evaluation" id="warning" value="warning"/>
+            <label for="warning">Warning</label>
+           
+            </div>
+ <br><br><br><br>
+        </div>
+        <div class="funkyradio-danger">
+            <div class="col-xs-6 ">
+            <input type="radio" name="evaluation" id="danger" value="danger"/>
+            <label for="danger">Danger</label>
+            </div>
+
+        </div>
+        <br><br><br><br><br><br>
+    </div>
+</div>
+
+</body>
+<div class="r">
+    <?php echo $this->Form->submit(__('Evaluate'),array('id'=>'evaluate','name' => 'btn','class'=>'btn btn-primary')); 
+          echo $this->Form->end();
+    ?>
+    
+</div>
+                </div>
+          <hr />
+          <h2 class="title text-center">Statistics:</h2> 
+           <div class="card card-container">
+               
+
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"> </script>
+    <script type="text/javascript">
+      google.charts.load("current", {packages:["corechart"]});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['id', 'Evaluation'],
+          ['Green',     11],
+          ['Red',      2],
+          ['Yellow',  2]
+          
+        ]);
+
+        var options = {
+//          title: '',
+          pieHole: 0.4
+          //colors: ['#00FF00', '#FFFF00', '#FF0000']
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+        chart.draw(data, options);
+      }
+    </script>
+ 
+  <body>
+    <div id="donutchart" style="width: 400px; height: 400px;"></div>
+  </body>
+</div>
+          </div>
+</div>
+
+
