@@ -77,6 +77,15 @@ CREATE TABLE map_markers
 	FOREIGN KEY (id) REFERENCES reports(id)
 );
 
+DROP TABLE IF EXISTS evaluations;
+CREATE TABLE evaluations
+(
+	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	report_id INT UNSIGNED,
+	evaluation VARCHAR(25),
+	FOREIGN KEY (report_id) REFERENCES reports(id)
+);
+
 INSERT INTO `roles`(`id`, `role_name`) VALUES (1,"Mapper"),(2,"Evaluator"),(3,"Admin");
 INSERT INTO `account_status`(`id`, `status`) VALUES (1,"Active"),(2,"Pending"),(3,"Inactive");
 INSERT INTO `building_conditions`(`id`, `condition_name`,`color`) VALUES (1,"Safe","green"),(2,"Partly Damaged","yellow"),(3,"Poor","red");

@@ -207,7 +207,7 @@
                     parseFloat(markers[i].getAttribute("lat")),
                     parseFloat(markers[i].getAttribute("lng")));
                 var html = "<b>" + name + "</b> <br/>" +
-                            "<a href=\"reportimages/add/" + markers[i].getAttribute("id") + "\"> View Assessment </a>";
+                            "<a href=\"reports/view/" + markers[i].getAttribute("id") + "\"> View Assessment </a>";
                 var icon = customIcons[type] || {};
                 var marker = new google.maps.Marker({
                   map: map,
