@@ -1,0 +1,3 @@
+class reportHelper extends AppHelper {
+
+}
