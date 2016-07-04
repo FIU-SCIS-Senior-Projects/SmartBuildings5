@@ -3,7 +3,7 @@
    echo $this->Html->css('reportView'); 
    echo $this->Html->css('blueimp-gallery.min');
     echo $this->Html->css('blueimp-gallery-indicator');
-    echo $this->Html->css('report-image');
+    echo $this->Html->css('report-image-view');
     echo $this->Html->css('register'); ?>
 
   <div class="container">

@@ -72,8 +72,10 @@ DROP TABLE IF EXISTS map_markers;
 CREATE TABLE map_markers
 (
 	id INT UNSIGNED PRIMARY KEY,
+        name VARCHAR( 60 ) NOT NULL ,
 	latitude FLOAT( 10, 6 ) NOT NULL ,
 	longitude FLOAT( 10, 6 ) NOT NULL,
+        type VARCHAR( 30 ) NOT NULL,
 	FOREIGN KEY (id) REFERENCES reports(id)
 );
 
