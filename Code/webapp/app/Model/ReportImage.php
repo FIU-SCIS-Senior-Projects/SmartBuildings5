@@ -15,13 +15,13 @@ class ReportImage extends AppModel {
  *
  * @var array
  */
-	public $belongsTo = array(
-		'Report' => array(
-			'className' => 'Report',
-			'foreignKey' => 'report_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
-	);
+//	public $belongsTo = array(
+//		'Report' => array(
+//			'className' => 'Report',
+//			'foreignKey' => 'report_id',
+//			'conditions' => '',
+//			'fields' => '',
+//			'order' => ''
+//		)
+//	);
 }

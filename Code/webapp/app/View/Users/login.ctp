@@ -4,6 +4,8 @@
     you can substitue the span of reauth email for a input with the email and
     include the remember me checkbox
     -->
+    
+    <?php echo $this->Session->flash(); ?>
     <div class="container">
         <div class="panel-heading">
             <div class="panel-title text-center">
@@ -12,7 +14,6 @@
              </div>
         </div>
         <div class="card card-container">
-                    <?php echo $this->Session->flash(); ?>
 
             <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
             <p id="profile-name" class="profile-name-card"></p>

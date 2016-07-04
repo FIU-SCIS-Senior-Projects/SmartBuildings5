@@ -41,7 +41,7 @@ CREATE TABLE building_conditions
 
 DROP TABLE IF EXISTS reports;
 CREATE TABLE reports (
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	user_id INT UNSIGNED,
 	building_condition_id INT UNSIGNED,	
 	electricity tinyint(1) DEFAULT 0,
@@ -53,8 +53,8 @@ CREATE TABLE reports (
         first_aid tinyint(1) DEFAULT 0,
         shelter tinyint(1) DEFAULT 0,        
 	comments VARCHAR(255),
-    created DATETIME DEFAULT NULL,
-    modified DATETIME DEFAULT NULL,
+        created DATETIME DEFAULT NULL,
+        modified DATETIME DEFAULT NULL,
 	FOREIGN KEY (user_id) REFERENCES users(id),
 	FOREIGN KEY (building_condition_id) REFERENCES building_conditions(id)
 );

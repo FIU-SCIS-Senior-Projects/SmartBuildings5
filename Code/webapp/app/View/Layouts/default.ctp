@@ -37,7 +37,16 @@
 </head>
 <body>
       
-    <?php echo $this->element('navigation');?>
+    <?php echo $this->element('top_navigation');?>
+    
+    <?php
+//    //use different bootstrap css for home
+//        $action_request = $this->params['controller'] . $this->action;
+//        if($action_request == 'mapmarkersindex'){
+//            echo $this->element('side_navigation');
+//        }else{
+//        }
+//    ?>
    
     <div class="container">
       <?php echo $this->Session->flash(); ?>

@@ -15,13 +15,13 @@ class MapMarker extends AppModel {
  *
  * @var array
  */
-	public $hasOne = array(
-		'reports' => array(
-			'className' => 'Report',
-			'foreignKey' => 'id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
-	);
+//	public $hasOne = array(
+//		'reports' => array(
+//			'className' => 'Report',
+//			'foreignKey' => 'id',
+//			'conditions' => '',
+//			'fields' => '',
+//			'order' => ''
+//		)
+//	);
 }

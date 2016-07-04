@@ -51,7 +51,7 @@ class ReportImagesController extends AppController {
             if ($report_id == NULL) {
                 throw new NotFoundException(__('Invalid request'));
             }else{
-             //check if reportid passed is in db. if not throw exception
+                //check if reportid passed is in db. if not throw exception
                 $this->loadModel('Report');
                 $report = $this->Report->findById($report_id);
                 if(empty($report['Report']['id'])){
@@ -62,9 +62,8 @@ class ReportImagesController extends AppController {
             
             if ($this->request->is('post') || $this->request->is('put')) {
                 if($this->request->data['btn'] == 'Complete'){
-                    //check if we need to create marker
-                    //check db in markers table:  
-                        //if an entry does not exist with $report_id, create marker
+                    
+                    $this->createMarker($report_id);
                     
                     return $this->redirect('/home');
                 }                
@@ -99,6 +98,34 @@ class ReportImagesController extends AppController {
             $this->set('report_id',$report_id);
 	}
         
+        private function createMarker($report_id) {
+            //check if we need to create marker
+            //check db in markers table:  
+                //if an entry does not exist with $report_id, create marker
+            /* validate user pos */
+            $this->loadModel('MapMarker');
+            $marker = $this->MapMarker->findById($report_id);
+            if(empty($marker['MapMarker']['id'])){
+                //save entry in db
+                $this->MapMarker->create();
+                $newmapmarker = array('MapMarker' => array(
+                    'id' => $report_id,
+                    'name' => $this->Session->read('Auth.User.first_name').' '.$this->Session->read('Auth.User.last_name'),
+                    'latitude' => $this->Session->read('Users.lat'),
+                    'longitude' => $this->Session->read('Users.lng'),
+                    'type' => 'not_rated',
+                ));
+                if(!$this->MapMarker->save($newmapmarker)){
+                    $this->Session->setFlash(__('There was a problem creating map marker.'), 'alert', array(
+                                            'plugin' => 'BoostCake',
+                                            'class' => 'alert-danger'
+                                    ));
+                }
+
+            }
+        }
+
+
         private function uploadImages($report_id=NULL){
             
             $images = $this->request->data['ReportImage']['report_image']; 

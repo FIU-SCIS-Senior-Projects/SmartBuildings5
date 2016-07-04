@@ -19,7 +19,6 @@ class MapMarkersController extends AppController {
             parent::beforeFilter();
             // Allow non-auth users to access home.
             $this->Auth->allow('index');
-            
     }
 
 /**
@@ -28,11 +27,126 @@ class MapMarkersController extends AppController {
  * @return void
  */
 	public function index() {
-		$this->MapMarker->recursive = 0;
-		$this->set('mapMarkers', $this->Paginator->paginate());
-	}
+//		$this->MapMarker->recursive = 0;
+//		$this->set('mapMarkers', $this->Paginator->paginate());
 
-/**
+                //save user position in session
+                if ($this->request->is('ajax')) {
+                    $this->Session->write('Users.lat', $this->request->data['lat']);
+                    $this->Session->write('Users.lng', $this->request->data['lng']);
+                }
+                
+                if ($this->request->is('post')) {   
+                    //getting filter request
+                    //print_r($this->request->data);
+                    $result = $this->processFilter($this->request->data['MapMarker']);
+//                    if(empty($result)){
+//                        $result = $this->MapMarker->find('all');
+//                    }
+                }else if($this->request->is('get')){
+                    // Select all the rows in the markers table
+                    $result = $this->MapMarker->find('all');
+                } 
+                
+                
+                // Start XML file, create parent node
+                $dom = new DOMDocument("1.0");
+                $node = $dom->createElement("markers");
+                $parnode = $dom->appendChild($node);
+                
+//                    print_r($mapmarkers);
+
+                header("Content-type: text/xml");
+
+                // Iterate through the rows, adding XML nodes for each
+
+                foreach ($result as $mapmarkers) {
+                    foreach ($mapmarkers as $mapmarker) {
+                        // ADD TO XML DOCUMENT NODE
+                        $node = $dom->createElement("marker");
+                        $newnode = $parnode->appendChild($node);
+                        $newnode->setAttribute("id", $mapmarker['id']);
+                        $newnode->setAttribute("name",$mapmarker['name']);
+                        $newnode->setAttribute("lat", $mapmarker['latitude']);
+                        $newnode->setAttribute("lng", $mapmarker['longitude']);
+                        $newnode->setAttribute("type", $mapmarker['type']);
+                        //$newnode->setAttribute("address", $row['address']);
+
+                    }
+                }
+
+                $this->set('xml_data',$dom->saveXML());
+
+	}
+        
+        public function processFilter($array) {
+            // this cycle echoes all associative array
+            $fieldsToQuery = array();
+            $markersToFind = array();
+            $checkImages = false;
+            $fieldsToQuery="";
+            foreach($array as $key => $value)
+            {
+              if ($value == true) {
+                    $field = $key;
+                    
+                    if($field == 'images'){
+                        //look for reports that have images...
+                        $checkImages = true;
+                        $this->loadModel('ReportImage');
+                        $imagesResult = $this->ReportImage->find('all',array(
+                        'fields'=>array('DISTINCT report_id')));
+                        foreach ($imagesResult as $key => $value) {
+                            if($key == 'report_id'){
+                                $markersToFind['id'] = $value;
+                            }
+
+                        }
+                    }else{
+                        $fieldsToQuery[$field] = 'true';
+                    }
+                    
+                }
+            }
+            
+            //if only selected images and there are no reports with images
+            if(empty($fieldsToQuery) && $checkImages && empty($markersToFind)){
+                return array();
+            }
+            //if nothing selected
+            if(empty($fieldsToQuery) && !$checkImages){
+                return array();
+            }
+            
+            $this->loadModel('Report');
+            $reportResult = $this->Report->find('all', array(
+                             'conditions' => array('or' => $fieldsToQuery)
+                             ));
+            
+                             //print_r($reportResult);
+            
+            foreach ($reportResult as $reports) {
+                foreach ($reports as $report) {
+                    foreach ($report as $key => $value) {
+                        if($key == 'id'){
+                            $markersToFind['id'] = $value;
+                        }
+
+                    }
+                }
+            }
+            
+            $markersToFind = array_unique($markersToFind);
+            
+            $result = $this->MapMarker->find('all', array(
+                             'conditions' => array('or' => $markersToFind)
+                             ));
+            
+            return $result;
+            
+        }
+
+        /**
  * view method
  *
  * @throws NotFoundException

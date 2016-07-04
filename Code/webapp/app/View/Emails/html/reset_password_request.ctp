@@ -1,4 +1,4 @@
-<p>Dear <?php echo $User['User']['email']; ?>,</p>
+<p>Dear <?php echo $User['User']['first_name'].' '.$User['User']['last_name']; ?>,</p>
 
 <p>You may change your password using the link below.</p>
 <?php $url = FULL_BASE_URL . '/users/reset_password_token/' . $User['User']['reset_password_token']; ?>

@@ -69,7 +69,7 @@ class ReportsController extends AppController {
 			} else {
 				$this->Session->setFlash(__('The report could not be saved. Please, try again.'));
 			}
-		}                
+		}              
                 
 	}
         

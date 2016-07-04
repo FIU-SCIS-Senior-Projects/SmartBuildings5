@@ -94,7 +94,9 @@ class UsersController extends AppController {
                                                                 ));                    
                         return $this->logout();                      
                     }
-                    return $this->redirect('/home');
+                   // return $this->redirect('/home');
+                    return $this->redirect($this->referer());
+
                 }
                 
                 $this->Session->setFlash(__('Invalid username or password'), 'alert', array(
@@ -106,6 +108,7 @@ class UsersController extends AppController {
         }
 
         public function logout() {
+            
             return $this->redirect($this->Auth->logout());
         }
         
@@ -176,6 +179,7 @@ class UsersController extends AppController {
                                                                     'plugin' => 'BoostCake',
                                                                     'class' => 'alert-danger'
                                                             ));
+                $this->redirect('/users/login');
             }                        
         }
         
@@ -203,15 +207,6 @@ class UsersController extends AppController {
             }            
             
             //file size limit needs to be set in php.ini, upload_max_filesize
-            
-//            $MAXSIZE = 20;
-//            if($image['size'] > $MAXSIZE*1000){
-//                $this->Session->setFlash(__('The image size is too large.'), 'alert', array(
-//                                                        'plugin' => 'BoostCake',
-//                                                        'class' => 'alert-danger'
-//                                                ));
-//                return false;
-//            }
             
             //check if there wasn't errors uploading file on server
             if ($image['error'] != UPLOAD_ERR_OK) {
@@ -351,7 +346,7 @@ class UsersController extends AppController {
         }
         (rand(1, 100000) % 2) ? $token = strrev($token) : $token = $token;
         // Generate hash of random string
-        $hash = Security::hash($token, 'sha256', true);;
+        $hash = Security::hash($token, 'sha256', true);
         for ($i = 0; $i < 20; $i++) {
             $hash = Security::hash($hash, 'sha256', true);
         }

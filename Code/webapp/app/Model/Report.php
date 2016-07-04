@@ -94,42 +94,42 @@ class Report extends AppModel {
  *
  * @var array
  */
-	public $belongsTo = array(
-		'User' => array(
-			'className' => 'User',
-			'foreignKey' => 'user_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		),
-		'BuildingCondition' => array(
-			'className' => 'BuildingCondition',
-			'foreignKey' => 'building_condition_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
-	);
+//	public $belongsTo = array(
+//		'User' => array(
+//			'className' => 'User',
+//			'foreignKey' => 'user_id',
+//			'conditions' => '',
+//			'fields' => '',
+//			'order' => ''
+//		),
+//		'BuildingCondition' => array(
+//			'className' => 'BuildingCondition',
+//			'foreignKey' => 'building_condition_id',
+//			'conditions' => '',
+//			'fields' => '',
+//			'order' => ''
+//		)
+//	);
 
 /**
  * hasMany associations
  *
  * @var array
  */
-	public $hasMany = array(
-		'ReportImage' => array(
-			'className' => 'ReportImage',
-			'foreignKey' => 'report_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		)
-	);
+//	public $hasMany = array(
+//		'ReportImage' => array(
+//			'className' => 'ReportImage',
+//			'foreignKey' => 'report_id',
+//			'dependent' => false,
+//			'conditions' => '',
+//			'fields' => '',
+//			'order' => '',
+//			'limit' => '',
+//			'offset' => '',
+//			'exclusive' => '',
+//			'finderQuery' => '',
+//			'counterQuery' => ''
+//		)
+//	);
 
 }

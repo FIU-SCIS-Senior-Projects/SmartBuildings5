@@ -115,3 +115,7 @@ hr {
   color: #fff;
   background-color: #5bc0de;
 }
+
+span.glyphicon {
+    font-size: 1.3em;
+}
