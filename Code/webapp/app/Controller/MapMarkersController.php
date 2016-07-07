@@ -83,7 +83,7 @@ class MapMarkersController extends AppController {
             // this cycle echoes all associative array
             $fieldsToQuery = array();
             $markersToFind = array();
-            $checkImages = false;
+//            $checkImages = false;
             $fieldsToQuery="";
             foreach($array as $key => $value)
             {
@@ -92,56 +92,79 @@ class MapMarkersController extends AppController {
                     
                     if($field == 'images'){
                         //look for reports that have images...
-                        $checkImages = true;
+//                        $checkImages = true;
                         $this->loadModel('ReportImage');
                         $imagesResult = $this->ReportImage->find('all',array(
                         'fields'=>array('DISTINCT report_id')));
-                        foreach ($imagesResult as $key => $value) {
-                            if($key == 'report_id'){
-                                $markersToFind['id'] = $value;
-                            }
+                        //print_r($imagesResult);
+                        foreach ($imagesResult as $images) {
+                            foreach ($images as $image) {
+                                foreach ($image as $key => $value) {
+                                    if($key == 'report_id'){
+                                        $markersToFind['id'] = $value;
+                                    }
 
+                                }
+                            }
                         }
                     }else{
-                        $fieldsToQuery[$field] = 'true';
+                        if($field == 'electricity' ||
+                           $field == 'water' ||
+                           $field == 'road_access' ||
+                           $field == 'telecommunication'){
+                            $fieldsToQuery[$field] = false;
+                        }else{
+                            $fieldsToQuery[$field] = true;
+                        }
+                        
                     }
                     
                 }
             }
             
-            //if only selected images and there are no reports with images
-            if(empty($fieldsToQuery) && $checkImages && empty($markersToFind)){
-                return array();
-            }
-            //if nothing selected
-            if(empty($fieldsToQuery) && !$checkImages){
-                return array();
-            }
+            print_r($fieldsToQuery);
+            print_r($markersToFind);
             
-            $this->loadModel('Report');
-            $reportResult = $this->Report->find('all', array(
-                             'conditions' => array('or' => $fieldsToQuery)
-                             ));
+//            //if only selected images and there are no reports with images
+//            if(empty($fieldsToQuery) && $checkImages && empty($markersToFind)){
+//                return array();
+//            }
+//            //if nothing selected
+//            if(empty($fieldsToQuery) && !$checkImages){
+//                return array();
+//            }
             
-                             //print_r($reportResult);
-            
-            foreach ($reportResult as $reports) {
-                foreach ($reports as $report) {
-                    foreach ($report as $key => $value) {
-                        if($key == 'id'){
-                            $markersToFind['id'] = $value;
-                        }
+            if(!empty($fieldsToQuery)){
+                $this->loadModel('Report');
+                $reportResult = $this->Report->find('all', array(//'conditions' => $fieldsToQuery//array('electricity'=>false)
+                                 'conditions' => array('or' => $fieldsToQuery)
+                                 ));
 
+                print_r($reportResult);
+
+                foreach ($reportResult as $reports) {
+                    foreach ($reports as $report) {
+                        foreach ($report as $key => $value) {
+                            if($key == 'id'){
+                                array_push($markersToFind,$value);
+                            }
+
+                        }
                     }
                 }
             }
             
-            $markersToFind = array_unique($markersToFind);
-            
-            $result = $this->MapMarker->find('all', array(
-                             'conditions' => array('or' => $markersToFind)
+            //$markersToFind = array_unique($markersToFind);
+            print_r($markersToFind);
+                
+            $result = array();
+            if(!empty($markersToFind)){
+                $result = $this->MapMarker->find('all', array(
+                             'conditions' => array('id' => $markersToFind)
                              ));
+            }
             
+            print_r($result);
             return $result;
             
         }

@@ -14,6 +14,13 @@ class ReportsController extends AppController {
  * @var array
  */
 	public $components = array('Paginator');
+        
+        
+        public function beforeFilter() {
+            parent::beforeFilter();
+            // Allow non-auth users to register and logout.
+            $this->Auth->allow('view');
+        }
 
 /**
  * index method
@@ -44,7 +51,9 @@ class ReportsController extends AppController {
                     }
                     
                     $options = array('conditions' => array('Report.' . $this->Report->primaryKey => $id));
-                     $result = $this->Report->find('first', $options);
+                    $result = $this->Report->find('first', $options);
+                    
+//                    print_r($result);
 
 
                     if ($result['Report']['electricity'] == true) { 
@@ -59,12 +68,6 @@ class ReportsController extends AppController {
                     } 
                     else{
                         $result['Report']['water'] = 'No';
-                    }
-                    if ($result['Report']['water'] == true) { 
-                        $result['Report']['water'] = 'Yes';
-                    } 
-                    else{
-                        $result['Report']['road_access'] = 'No';
                     }
                     if ($result['Report']['road_access'] == true) { 
                         $result['Report']['road_access'] = 'Yes';
@@ -84,7 +87,7 @@ class ReportsController extends AppController {
                     else{
                         $result['Report']['food'] = 'No';
                     }
-                     if ($result['Report']['sanitation'] == true) { 
+                    if ($result['Report']['sanitation'] == true) { 
                         $result['Report']['sanitation'] = 'Yes';
                     } 
                     else{
@@ -151,6 +154,8 @@ class ReportsController extends AppController {
                     while ($val = current($this->request->data['Report'])) {
                         if ($val == 'on') {
                             $this->request->data['Report'][key($this->request->data['Report'])] = true;
+                        }else{
+                            $this->request->data['Report'][key($this->request->data['Report'])] = false;
                         }
                         next($this->request->data['Report']);
                     }
