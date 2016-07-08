@@ -161,7 +161,7 @@
     ?>
     
 </div>
-                </div>
+</div>
           <hr />
           <h2 class="title text-center">Statistics:</h2> 
            <div class="card card-container">
