@@ -159,20 +159,25 @@ class ReportsController extends AppController {
                         }
                         next($this->request->data['Report']);
                     }
-                        
-			$this->Report->create();
-                        print_r($this->request->data);
-                        $uid = $this->Session->read('Auth.User.id');
-                        $this->request->data['Report']['user_id'] = $uid;
-			if ($this->Report->save($this->request->data)) {
-                               
-                                $rid = $this->Report->id;
-				return $this->redirect('/reportimages/add/'.$rid);
-                                
-                                
-			} else {
-				$this->Session->setFlash(__('The report could not be saved. Please, try again.'));
-			}
+                    
+                    //check date
+                    if(!empty($this->request->data("date"))){
+                        $this->request->data["Report"]["created"] = $this->request->data("date")." ".date("H:i:s");
+                    }    
+//			$this->Report->create();
+//                        echo ;
+//                        return;
+                    $uid = $this->Session->read('Auth.User.id');
+                    $this->request->data['Report']['user_id'] = $uid;
+                    if ($this->Report->save($this->request->data)) {
+
+                            $rid = $this->Report->id;
+                            return $this->redirect('/reportimages/add/'.$rid);
+
+
+                    } else {
+                            $this->Session->setFlash(__('The report could not be saved. Please, try again.'));
+                    }
 		}              
                 
 	}

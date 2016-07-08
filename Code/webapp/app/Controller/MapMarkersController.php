@@ -76,6 +76,7 @@ class MapMarkersController extends AppController {
                 }
 
                 $this->set('xml_data',$dom->saveXML());
+                echo $dom->saveXML();
 
 	}
         

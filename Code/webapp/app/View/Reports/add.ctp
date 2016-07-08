@@ -8,6 +8,8 @@
     
 ?>
 <?php echo $this->Form->create('Report', array('inputDefaults' => array('label' => false))); ?>
+
+
 <div class="container-fluid">
         <div class="panel-heading">
             <div class="panel-title text-center">
@@ -16,7 +18,10 @@
              </div>
         </div>
 
-    <h3>Life Services Conditions</h3>
+    <h3>Lifeline Services Conditions</h3>
+        <span >
+        Please select the conditions of your building
+        </span>
         <div class="row">
             <div class="funkyradio">
                 <div class="funkyradio-success">
@@ -62,6 +67,9 @@
         <hr/>
         
         <h3>Emergency Response Needs</h3>
+        <span >
+            Please select the emergency needs in your community
+        </span>
         <div class="row">
             <div class="funkyradio">
                 <div class="funkyradio-success">
@@ -108,45 +116,23 @@
         
         <hr/>
         
-        
-        <div class="row">
-            <div class='col-sm-6'>
-                <div class="form-group">
-                    <div class='input-group date' id='datetimepicker1'>
-                        
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
-                        
-                        <input type='text' class="form-control" />
-                    </div>
-                </div>
+        <!--<div class="bootstrap-iso">-->
+        <h3>Date of Occurrence</h3>
+        <span >
+            Select the date of the disaster (if applicable) 
+        </span>
+         <div class="row">
+          <div class="col-xs-6">
+             <div class="input-group">
+              <div class="input-group-addon">
+               <i class="glyphicon glyphicon-calendar">
+               </i>
+              </div>
+              <input class="form-control" id="date" name="date" placeholder="YYYY-MM-DD" type="text"/>
+             </div>
             </div>
-            <script type="text/javascript">
-                $(function () {
-                    $('.datetimepicker').datetimepicker()
-                });
-            </script>
-        </div>
-        
-                
-<!--<div class="well">
-  <div id="datetimepicker2" class="input-append">
-    <input data-format="MM/dd/yyyy HH:mm:ss PP" type="text"></input>
-    <span class="add-on">
-      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
-      </i>
-    </span>
-  </div>
-</div>
-<script type="text/javascript">
-  $(function() {
-    $('#datetimepicker2').datetimepicker({
-      language: 'en',
-      pick12HourFormat: true
-    });
-  });
-</script>-->
+            </div>
+         <!--</div>-->
         
         
         <hr/>
@@ -162,4 +148,21 @@
 </div>
 <?php echo $this->Form->end(); ?>
 
-<?php echo $this->Html->script('bootstrap-datetimepicker.min'); echo $this->Html->script('jquery.min');     ?>
+<?php echo $this->Html->script('jquery.min'); ?>
+<!-- Include Date Range Picker -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+
+<script>
+    $(document).ready(function(){
+        var date_input=$('input[name="date"]'); //our date input has the name "date"
+        var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+        date_input.datepicker({
+            format: 'yyyy-mm-dd',
+            container: container,
+            todayHighlight: true,
+            autoclose: true,
+        })
+    })
+</script>
+
