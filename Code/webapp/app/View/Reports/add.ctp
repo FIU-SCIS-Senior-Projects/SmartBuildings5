@@ -36,7 +36,7 @@
                     <div class="col-xs-6 ">
                             <input  type="checkbox" name="data[Report][water]" id="ReportWater"/>
                             <label for="ReportWater">
-                                <span class="glyphicon glyphicon-warning-sign"></span>
+                                <span class="glyphicon glyphicon glyphicon-tint"></span>
                                 Water</label>                                            
                         
                     </div>
@@ -85,7 +85,7 @@
                     <div class="col-xs-6 ">                
                     <input type="checkbox" name="data[Report][sanitation]" id="ReportSanitation"/>
                     <label for="ReportSanitation">
-                        <span class="glyphicon glyphicon-shower"></span>
+                        <span class="glyphicon glyphicon glyphicon-tint"></span>
                         Sanitation</label>
                     </div>
                 </div>

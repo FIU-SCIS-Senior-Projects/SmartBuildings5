@@ -48,6 +48,9 @@ class ReportImagesController extends AppController {
  */
 	public function add($report_id = NULL) {
             
+            //echo $this->Session->read('Users.lat');
+            //echo $this->Session->read('Users.lng');
+            
             if ($report_id == NULL) {
                 throw new NotFoundException(__('Invalid request'));
             }else{
@@ -63,9 +66,38 @@ class ReportImagesController extends AppController {
             if ($this->request->is('post') || $this->request->is('put')) {
                 if($this->request->data['btn'] == 'Complete'){
                     
-                    $this->createMarker($report_id);
+                    //check if user has manually entered location
+                    if(!empty($this->request->data['ReportImage']['lat']) && 
+                       !empty($this->request->data['ReportImage']['lng']))
+                    {
+                       $this->Session->write('Users.lat',$this->request->data['ReportImage']['lat']);
+                       $this->Session->write('Users.lng',$this->request->data['ReportImage']['lng']);
+                    }
+                            
                     
-                    return $this->redirect('/home');
+                    //check if location has been filled
+                    if($this->Session->read('Users.lat')==NULL &&
+                       $this->Session->read('Users.lng')==NULL)
+                    {
+                        $this->Session->setFlash(__('Plese submit a photo with geotag information Or manually enter the information bellow'), 'alert', array(
+                                            'plugin' => 'BoostCake',
+                                            'class' => 'alert-warning'
+                                    )); 
+                        $this->Session->write('Users.showLocForm',true);
+                    }else{
+                        
+                        if($this->createMarker($report_id)){
+                            
+                            $this->Session->write('Users.showLat',$this->Session->read('Users.lat'));
+                            $this->Session->write('Users.showLng',$this->Session->read('Users.lng'));
+                            $this->resetGpsInfo();
+                        
+                            return $this->redirect('/home');
+                        }
+                    }
+                    
+                    return $this->redirect('/reportimages/add/'.$report_id);
+                    
                 }                
                                 
                 if(!empty($this->request->data['ReportImage']['report_image'][0]['name'])){
@@ -98,7 +130,15 @@ class ReportImagesController extends AppController {
             $this->set('report_id',$report_id);
 	}
         
-        private function createMarker($report_id) {
+        private function resetGpsInfo() {
+             $this->Session->write('Users.lat',NULL);
+             $this->Session->write('Users.lng',NULL);
+             $this->Session->write('Users.showLocForm',NULL);
+        }
+        
+        private function createMarker($report_id) {            
+            
+            
             //check if we need to create marker
             //check db in markers table:  
                 //if an entry does not exist with $report_id, create marker
@@ -120,18 +160,28 @@ class ReportImagesController extends AppController {
                                             'plugin' => 'BoostCake',
                                             'class' => 'alert-danger'
                                     ));
+                    return false;
                 }
-
+                return true;
+            }else{
+                $this->Session->setFlash(__('This assessment already exists!.'), 'alert', array(
+                                            'plugin' => 'BoostCake',
+                                            'class' => 'alert-danger'
+                                    ));                
+                $this->resetGpsInfo();
+                return $this->redirect('/home');
             }
         }
 
 
         private function uploadImages($report_id=NULL){
             
+            
             $images = $this->request->data['ReportImage']['report_image']; 
             $this->request->data = '';
             $this->request->data['ReportImage'] = array();
             
+         
             foreach ($images as $image) {
 
                 //full path to upload folder
@@ -139,7 +189,7 @@ class ReportImagesController extends AppController {
                 $uploadThumbPath = IMAGES . 'Report/thumbnail';
                 $imageName = $image['name'];
 
-                echo $imageName;
+                //echo $imageName;
                 //filter uploaded image
 
                 //check if image type fits one of allowed types
@@ -164,6 +214,37 @@ class ReportImagesController extends AppController {
                                                     ));
                     return false; 
                 }
+                
+                //echo $imageName ." :<br />\n";
+                $exif = exif_read_data($image['tmp_name'], 'IFD0');
+                //echo $exif===false ? "No header data found.<br />\n" : "Image contains headers<br />\n";
+                
+                if($exif==true){
+                    $exif = exif_read_data($image['tmp_name'], 0, true);
+                    //echo $imageName." :<br />\n";
+                    foreach ($exif as $key => $section) {
+                        foreach ($section as $name => $val) {
+                            if($name == "GPSLatitude" || $name == "GPSLongitude"){
+                                foreach ($val as $GPSname => $GPSvalue) {
+                                    if($GPSname==2){
+                                        $Rvalue = $this->calculate($GPSvalue);
+                                        if($name == "GPSLatitude"){
+                                            $this->Session->write('Users.lat',$Rvalue);
+                                        } else {
+                                            $this->Session->write('Users.lng',$Rvalue);
+                                        }
+                                    }                                        
+                                    
+                                }
+                            }else{
+                               // echo "$key.$name: $val<br />\n";
+                            }
+                        }
+                    }
+                }
+                
+                //return false;
+                
 
                 //proccess image upload                     
 
@@ -175,6 +256,7 @@ class ReportImagesController extends AppController {
                 //create full path with image name
                 $full_image_path = $uploadImgPath . '/' . $imageName;
                 $full_thumb_path = $uploadThumbPath . '/' . $imageName;
+                
                 //upload image to upload folder
                 if (move_uploaded_file($image['tmp_name'], $full_image_path)) {
                     
@@ -208,11 +290,23 @@ class ReportImagesController extends AppController {
                                             ));
                     return false;
                 }
-            }
-            
+            }            
             $this->request->data['ReportImage']['report_id'] = '';
+            
+            //insert gis loc
             return true;                     
             
+        }
+        
+        private function calculate( $mathString )    {
+            
+            $mathString = trim($mathString);
+            $mathString = str_replace ('[^0-9\+-\*\/\(\) ]', '', $mathString); 
+
+            echo $mathString."\n";
+            $compute = create_function("", "return (" . $mathString . ");" );
+            
+            return 0 + @($compute());
         }
 
 /**

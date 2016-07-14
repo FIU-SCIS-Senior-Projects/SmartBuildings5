@@ -213,6 +213,7 @@
         ]);
 
         var options = {
+          backgroundColor: 'transparent',
 //          title: '',
           pieHole: 0.4
           //colors: ['#00FF00', '#FFFF00', '#FF0000']
