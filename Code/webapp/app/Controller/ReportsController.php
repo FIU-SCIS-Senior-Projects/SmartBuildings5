@@ -113,6 +113,22 @@ class ReportsController extends AppController {
                     $this->set('images',$this->ReportImage->find('all', array('conditions' => array('ReportImage.report_id' => $id))));
                     $this->request->data['Report']['id']=$id;
                     
+                    //get data for chart
+                    $this->loadModel('Evaluation');
+                     //$this->set('evaluations', 'arrayofdata');
+                   // $evaluations=$this->Evaluation->find('count', array( 'conditions' => array('Evaluation.report_id' => $id)));
+                    $safe=$this->Evaluation->find('count', array( 'conditions' => array('report_id' => $id ,'evaluation' => 'safe')));
+                    $minorDamage=$this->Evaluation->find('count', array( 'conditions' => array('report_id' => $id ,'evaluation' => 'minor damage')));
+                     $majorDamage=$this->Evaluation->find('count', array( 'conditions' => array('report_id' => $id ,'evaluation' => 'major damage')));
+                      $insufficient=$this->Evaluation->find('count', array( 'conditions' => array('report_id' => $id ,'evaluation' => 'insufficient information')));
+                    print_r($safe);
+                      
+                    $this->set('safe', $safe);
+                    $this->set('minorDamage', $minorDamage);
+                    $this->set('majorDamage', $majorDamage);
+                    $this->set('insufficient', $insufficient);
+                    
+                    
                 }
                 
                 if ($this->request->is(array('post', 'put'))) {

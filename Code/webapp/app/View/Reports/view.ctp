@@ -16,17 +16,18 @@
      
         <?php echo $this->Session->flash(); ?>
           <h2 class="title text-center">Life Line Services Conditions: </h2> 
-           <div class="card card-container">
-               <?php echo __('Electricity:')  ?> <?php echo h($report['Report']['electricity']); ?>
+           <div class="card card-container" >
+                 
+            <strong> <?php echo __('Electricity:')   ?></strong> <?php echo h($report['Report']['electricity']); ?>
 			&nbsp;
                         <br>
-                <?php echo __('Water:') ?> <?php echo h($report['Report']['water']); ?>
+                <strong> <?php echo __('Water:') ?> </strong> <?php echo h($report['Report']['water']); ?>
 			&nbsp;
                          <br>
-                 <?php echo __('Road Access:')  ?> <?php echo h($report['Report']['road_access']); ?>
+                <strong>  <?php echo __('Road Access:')  ?>  </strong><?php echo h($report['Report']['road_access']); ?>
 			&nbsp;
                          <br>
-                 <?php echo __('Telecommunication:')  ?> <?php echo h($report['Report']['telecommunication']); ?>
+                <strong>  <?php echo __('Telecommunication:')  ?>  </strong><?php echo h($report['Report']['telecommunication']); ?>
 			&nbsp;  
                          <br>
                         
@@ -34,16 +35,16 @@
           <hr />
           <h2 class="title text-center">Emergency Response Needs:</h2> 
            <div class="card card-container">
-          <?php echo __('Food:')  ?> <?php echo h($report['Report']['food']); ?>
+          <strong> <?php echo __('Food:')  ?> </strong> <?php echo h($report['Report']['food']); ?>
 			&nbsp;
                         <br>
-                <?php echo __('Sanitation:') ?> <?php echo h($report['Report']['sanitation']); ?>
+               <strong>  <?php echo __('Sanitation:') ?>  </strong><?php echo h($report['Report']['sanitation']); ?>
 			&nbsp;
                          <br>
-                 <?php echo __('First Aid:')  ?> <?php echo h($report['Report']['first_aid']); ?>
+              <strong>    <?php echo __('First Aid:')  ?>  </strong><?php echo h($report['Report']['first_aid']); ?>
 			&nbsp;
                          <br>
-                 <?php echo __('Shelter:')  ?> <?php echo h($report['Report']['shelter']); ?>
+              <strong>    <?php echo __('Shelter:')  ?>  </strong><?php echo h($report['Report']['shelter']); ?>
 			&nbsp;  
                          <br>
           
@@ -128,56 +129,86 @@
  <div class="row">
     <div class="funkyradio">
         <div class="funkyradio-success">
-            <div class="col-xs-6 ">
+            <div class="col-xs-10 ">
                 <input type="radio" name="evaluation" id="safe" value="safe" checked/>
-                <label for="safe">Safe</label>
+                <label for="safe"> <span class="glyphicon glyphicon-ok-circle"></span>Safe</label>
             </div>
             <br><br><br><br>
         </div>
      
         <div class="funkyradio-warning">
-            <div class="col-xs-6 ">
-            <input type="radio" name="evaluation" id="warning" value="warning"/>
-            <label for="warning">Warning</label>
+            <div class="col-xs-10 ">
+            <input type="radio" name="evaluation" id="minor damage" value="minor damage"/>
+            <label for="minor damage"> <span class="glyphicon glyphicon-warning-sign"></span>Minor Damage</label>
            
             </div>
- <br><br><br><br>
-        </div>
-        <div class="funkyradio-danger">
-            <div class="col-xs-6 ">
-            <input type="radio" name="evaluation" id="danger" value="danger"/>
-            <label for="danger">Danger</label>
+             <br><br><br><br>
+             </div>
+            
+            <div class="funkyradio-danger">
+            <div class="col-xs-10 ">
+            <input type="radio" name="evaluation" id="major damage" value="major damage"/>
+            <label for="major damage"> <span class="glyphicon glyphicon-ban-circle"></span>Major Damage</label>
+           
+            </div>
+                 <br><br><br><br>
+                </div>
+
+        
+        <div class="funkyradio-primary">
+            <div class="col-xs-10 ">
+            <input type="radio" name="evaluation" id="insufficient information" value="insufficient information"/>
+            <label for="insufficient information"> <span class="glyphicon glyphicon-question-sign"></span>Insufficient Information </label>
             </div>
 
         </div>
-        <br><br><br><br><br><br>
-    </div>
+           
+        
+   
+   <br><br><br><br>     
 </div>
 
-</body>
-<div class="r">
+     <div class="r">
+         <br><br>
     <?php echo $this->Form->submit(__('Evaluate'),array('id'=>'evaluate','name' => 'btn','class'=>'btn btn-primary')); 
           echo $this->Form->end();
     ?>
     
 </div>
+      
 </div>
-          <hr />
-          <h2 class="title text-center">Statistics:</h2> 
-           <div class="card card-container">
-               
+   
+    </div>
+          </div>
+    
+</body>
+<div>
 
-
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"> </script>
+<hr />
+          <h2 class="title text-center">Statistics:</h2>
+          
+          <div class="card card-container">
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"> </script>
     <script type="text/javascript">
       google.charts.load("current", {packages:["corechart"]});
       google.charts.setOnLoadCallback(drawChart);
+  
+      
       function drawChart() {
+         // print_r($safe);
+         var safe =  <?php echo $safe ?>;
+          var minorDamage =  <?php echo $minorDamage ?>;
+           var majorDamage =  <?php echo $majorDamage ?>;
+            var insufficient =  <?php echo $insufficient ?>;
+            
         var data = google.visualization.arrayToDataTable([
+            
           ['id', 'Evaluation'],
-          ['Green',     11],
-          ['Red',      2],
-          ['Yellow',  2]
+          ['Unsuffient Information',insufficient],
+        ['Major Damage',majorDamage],
+          ['Minor Damage',minorDamage],
+           ['Safe ',safe]
+         
           
         ]);
 
@@ -197,6 +228,12 @@
   </body>
 </div>
           </div>
-</div>
+ </div>
+ 
+
+
+
+
+
 
 
