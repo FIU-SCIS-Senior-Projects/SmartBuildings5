@@ -27,13 +27,65 @@ class MapMarkersController extends AppController {
  * @return void
  */
 	public function index() {
-//		$this->MapMarker->recursive = 0;
-//		$this->set('mapMarkers', $this->Paginator->paginate());
 
-                //save user position in session
+                //getting ajax request
                 if ($this->request->is('ajax')) {
-                    $this->Session->write('Users.lat', $this->request->data['lat']);
-                    $this->Session->write('Users.lng', $this->request->data['lng']);
+                    $this->autoRender = false; // We don't render a view
+                    $empty = array();
+//
+//                    return json_encode($data);
+                    $reportsToFind = array();
+                    if (isset($this->request->data['reports'])){
+                        foreach ($this->request->data['reports'] as $reportId) {
+                            array_push($reportsToFind,$reportId);
+                        }
+                    }
+                    
+//                    
+                    $this->loadModel('Report');
+                    if(!empty($reportsToFind)){
+                        $reportResult = $this->Report->find('all', array(
+                                     'conditions' => array('id' => $reportsToFind),
+                                     ));
+                        $result = array();
+                        
+                        $result['electricity'] = 0; $result['water'] = 0; $result['road_access'] = 0; $result['telecommunication'] = 0;
+                        foreach ($reportResult as $reports) {
+                            foreach ($reports as $report) {
+                                foreach ($report as $key => $value) {
+                                    if($key == 'electricity'){
+                                        if ($value == false){
+                                           $result[$key] = $result[$key] + 1;
+
+                                        }
+                                    }
+                                    if($key == 'water'){
+                                        if ($value == false){
+                                           $result[$key] = $result[$key] + 1;
+
+                                        }
+                                    }
+                                    if($key == 'road_access'){
+                                        if ($value == false){
+                                           $result[$key] = $result[$key] + 1;
+
+                                        }
+                                    }
+                                    if($key == 'telecommunication'){
+                                        if ($value == false){
+                                           $result[$key] = $result[$key] + 1;
+
+                                        }
+                                    }
+
+                                }
+                            }
+                        }
+                        return json_encode($result);
+                    }
+                    
+                    return json_encode($empty);
+                    
                 }
                 
                 if ($this->request->is('post')) {   
@@ -54,7 +106,7 @@ class MapMarkersController extends AppController {
                 $node = $dom->createElement("markers");
                 $parnode = $dom->appendChild($node);
                 
-//                    print_r($mapmarkers);
+//                    print_r($result);
 
                 header("Content-type: text/xml");
 
@@ -75,8 +127,8 @@ class MapMarkersController extends AppController {
                     }
                 }
 
-                $this->set('xml_data',$dom->saveXML());
-                echo $dom->saveXML();
+                $this->set('xml_markers',$dom->saveXML());
+                //echo $dom->saveXML();
 
 	}
         
@@ -123,8 +175,8 @@ class MapMarkersController extends AppController {
                 }
             }
             
-            print_r($fieldsToQuery);
-            print_r($markersToFind);
+//            print_r($fieldsToQuery);
+//            print_r($markersToFind);
             
 //            //if only selected images and there are no reports with images
 //            if(empty($fieldsToQuery) && $checkImages && empty($markersToFind)){
@@ -141,7 +193,7 @@ class MapMarkersController extends AppController {
                                  'conditions' => array('or' => $fieldsToQuery)
                                  ));
 
-                print_r($reportResult);
+                //print_r($reportResult);
 
                 foreach ($reportResult as $reports) {
                     foreach ($reports as $report) {
@@ -156,7 +208,7 @@ class MapMarkersController extends AppController {
             }
             
             //$markersToFind = array_unique($markersToFind);
-            print_r($markersToFind);
+            //print_r($markersToFind);
                 
             $result = array();
             if(!empty($markersToFind)){
@@ -165,7 +217,7 @@ class MapMarkersController extends AppController {
                              ));
             }
             
-            print_r($result);
+            //print_r($result);
             return $result;
             
         }

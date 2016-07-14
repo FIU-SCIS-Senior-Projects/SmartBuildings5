@@ -43,6 +43,19 @@
       #legend img {
         vertical-align: middle;
       }
+/*      
+      #selectionModal {
+        
+    padding:9px 15px;
+    border-bottom:1px solid #eee;
+    background-color: #0480be;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+     border-top-left-radius: 5px;
+     border-top-right-radius: 5px;
+     }*/
 
   
     </style>
@@ -71,9 +84,16 @@
           icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
         }
       };
-      
+      var markerList=[];
       var map;
       var center_loc = {lat: 25.844639, lng: -80.307648};
+      var selectionData = {electricity:1, water:2, road_access:3,telecommunication:4};
+      var circleSelector = null;
+      var circleSelectorInfo = {
+          radius: 0,
+          lat: 0,
+          lng: 0
+      };
       
             /**
        * The CenterControl adds a control to the map that recenters the map on
@@ -109,7 +129,7 @@
         // Setup the click event listeners: simply set the map to center.
         controlUI.addEventListener('click', function() {   
             
-            $('#myModal').modal('show');
+            $('#filterModal').modal('show');
           
         });
 
@@ -126,7 +146,7 @@
         controlUI.style.cursor = 'pointer';
         controlUI.style.marginBottom = '22px';
         controlUI.style.textAlign = 'center';
-        controlUI.title = 'Click to filter map';
+        controlUI.title = 'Click to center map';
         controlDiv.appendChild(controlUI);
 
         // Set CSS for the control interior.
@@ -137,7 +157,7 @@
         controlText.style.lineHeight = '38px';
         controlText.style.paddingLeft = '5px';
         controlText.style.paddingRight = '5px';
-        controlText.innerHTML = 'Filter Markers';
+        controlText.innerHTML = 'Center';
         controlUI.appendChild(controlText);
 
         // Setup the click event listeners: simply set the map to center.
@@ -149,52 +169,141 @@
         });
 
       }
+      
+      function ApplySelectionControl(controlDiv, map) {
+
+        // Set CSS for the control border.
+        var controlUI = document.createElement('div');        
+        controlUI.setAttribute('id','applySelectionControlDiv');
+        controlUI.style.backgroundColor = '#E67164';
+        controlUI.style.border = '2px solid #E67164';
+        controlUI.style.borderRadius = '3px';
+        controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
+        controlUI.style.cursor = 'pointer';
+        controlUI.style.marginBottom = '22px';
+        controlUI.style.textAlign = 'center';
+        controlUI.title = 'Click to apply selection';
+        controlDiv.appendChild(controlUI);
+
+        // Set CSS for the control interior.
+        var controlText = document.createElement('div');
+        controlText.style.color = 'rgb(255,255,255)';
+        controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
+        controlText.style.fontSize = '16px';
+        controlText.style.lineHeight = '38px';
+        controlText.style.paddingLeft = '5px';
+        controlText.style.paddingRight = '5px';
+        controlText.innerHTML = 'Apply Selection';
+        controlUI.appendChild(controlText);
+
+        // Setup the click event listeners: simply set the map to center.
+        controlUI.addEventListener('click', function() {
+
+            circleSelector.setMap(null);
+            circleSelector = null;            
+            var applySelControlDiv = document.getElementById('applySelectionControlDiv');
+            map.controls[google.maps.ControlPosition.TOP_CENTER].pop(applySelControlDiv);
+                        
+            var reports=[];
+            for (var i = 0; i < markerList.length; i++) {
+                var latLng = new google.maps.LatLng(
+                    markerList[i].loc.getPosition().lat(),
+                    markerList[i].loc.getPosition().lng());
+                if(isInSelectionRadius(latLng)){
+                    reports.push(markerList[i].id);
+                }                
+            }
+            
+            $.ajax({
+              type: 'POST',
+              url: 'home',
+              data: {reports: reports},
+              success: function(result) {
+                var data = JSON.parse(result);
+                //alert(data.lng + " " + data.lat);
+                if(!jQuery.isEmptyObject(data)){
+                    selectionData = data;
+//                    var head = document.getElementById("clip-wrapper");
+//                    var script= document.createElement('script');
+//                    script.type= 'text/javascript';
+//                    script.src= '<?php echo FULL_BASE_URL.'/js/load-graph.js'?>';
+//                    head.appendChild(script);
+                    drawChart();
+                    $('#selectionModal').modal('show');
+                }else
+                {
+                    alert("Nothing returned");
+                }
+              }
+            });
+        });
+
+      }
 
       function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {            
         center: center_loc,
-        zoom: 8
+        zoom: 8,
+        disableDoubleClickZoom: true
           
         });
-        var infoWindow = new google.maps.InfoWindow({map: map});
+        var infoWindow = new google.maps.InfoWindow;
 
         // Try HTML5 geolocation.
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function(position) {
-            var pos = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude            
-
-            };
+//            var pos = {
+//              lat: position.coords.latitude,
+//              lng: position.coords.longitude            
+//
+//            };
             
             //infoWindow.setPosition(pos);
-            //infoWindow.setContent('Location found.');
+            //infoWindow.setContent('Location found.');           
+            
+            
             map.setCenter(pos);
             
             var latitude = pos.lat;
             var longitude = pos.lng;
             
+            
             center_loc = {lat: latitude, lng: longitude};
              
-            $.ajax({
-              type: 'POST',
-              url: 'home',
-              data: {lat: latitude, lng: longitude},
-              success: function(data) {
-                //alert(data);
-              }
-            });
+//            $.ajax({
+//              type: 'POST',
+//              url: 'home',
+//              data: {lat: latitude, lng: longitude},
+//              success: function(data) {
+//                //alert(data);
+//              }
+//            });
 
           }, function() {
-            handleLocationError(true, infoWindow, map.getCenter());
+            //handleLocationError(true, infoWindow, map.getCenter());
           });
         } else {
           // Browser doesn't support Geolocation
-          handleLocationError(false, infoWindow, map.getCenter());
+          //handleLocationError(false, infoWindow, map.getCenter());
         }     
         
+            //center map on recently created marker
+            <?php if(!empty($this->Session->read('Users.showLat'))&&
+                     !empty($this->Session->read('Users.showLng'))):?>
+                var pos = {
+                    lat: <?php echo $this->Session->read('Users.showLat'); ?>,
+                    lng: <?php echo $this->Session->read('Users.showLng'); ?>         
+
+                };
+                <?php // $this->Session->write('Users.showLat',"dd");
+                      // $this->Session->write('Users.showLng',"dd");?>
+                              
+                map.setCenter(pos);
+            <?php endif;?>               
+            
+        
           //load map markers
-            var xmlStr = <?php echo json_encode($xml_data) ?>;
+            var xmlStr = <?php echo json_encode($xml_markers) ?>;
             xmlDoc = new DOMParser().parseFromString(xmlStr, 'text/xml');
             
             var markers = xmlDoc.getElementsByTagName("marker");
@@ -217,6 +326,8 @@
                   
                 });
                 bindInfoWindow(marker, map, infoWindow, html);
+                markerList.push({loc: marker, id: markers[i].getAttribute("id")});
+
             }
             
             
@@ -224,28 +335,80 @@
             // constructor passing in this DIV.
             var centerControlDiv = document.createElement('div');
             var filterControlDiv = document.createElement('div');
+            
+            
             CenterControl(centerControlDiv, map);
             FilterControl(filterControlDiv, map);
+            
 
-
-            centerControlDiv.index = 1;
-            centerControlDiv.index = 1;
+            //centerControlDiv.index = 1;
+            //centerControlDiv.index = 1;
             //map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(centerControlDiv);
             map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(filterControlDiv);
+           
 
-//            var legend = document.getElementById('legend');
-//            for (var key in customIcons) {
-//              var type = customIcons[key];
-//              var name = "name";//type.name;
-//              var icon = type.icon;
-//              var div = document.createElement('div');
-//              div.innerHTML = '<img src="' + icon + '"> ' + name;
-//              legend.appendChild(div);
-//            }
-//    
-//            map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend);
+
+//            google.maps.event.addListener(map, "doubleclick", function(event) {
+//                var lat = event.latLng.lat();
+//                var lng = event.latLng.lng();
+//                // populate yor box/field with lat, lng
+//                alert("Lat=" + lat + "; Lng=" + lng);
+//            });
+            
+            map.addListener("dblclick", function(event) {
+                if(circleSelector == null){
+                    var lat = event.latLng.lat();
+                    var lng = event.latLng.lng();
+
+                    circleSelector = new google.maps.Circle({
+                        strokeColor: '#FF0000',
+                        strokeOpacity: 0.8,
+                        strokeWeight: 2,
+                        fillColor: '#FF0000',
+                        fillOpacity: 0.35,
+                        editable: true,
+                        map: map,
+                        center: {lat: lat, lng: lng},
+                        radius: 100000
+                    }); 
+                    
+                    circleSelectorInfo.radius = 100000;
+                    circleSelectorInfo.lat = lat;
+                    circleSelectorInfo.lng = lng;
+                        
+                    var applySelControlDiv = document.createElement('div');
+                    ApplySelectionControl(applySelControlDiv,map);
+                    map.controls[google.maps.ControlPosition.TOP_CENTER].push(applySelControlDiv);
+                    
+                    
+                    circleSelector.addListener("radius_changed", function() {
+                        circleSelectorInfo.radius = circleSelector.getRadius();
+                    });
+                    
+                    circleSelector.addListener("center_changed", function() {
+                        circleSelectorInfo.lat = circleSelector.getCenter().lat();
+                        circleSelectorInfo.lng = circleSelector.getCenter().lng();
+                    });
+                    
+                    
+                }
+            });        
+            
+             google.maps.Circle.prototype.contains = function(latLng) {
+            return this.getBounds().contains(latLng) && 
+                   google.maps.geometry.spherical.computeDistanceBetween(this.getCenter(), latLng) <= this.getRadius();
+        }
               
       } 
+      
+        
+      
+        function isInSelectionRadius(latLng) {
+            var center = new google.maps.LatLng(
+                    circleSelectorInfo.lat,
+                    circleSelectorInfo.lng);
+            return google.maps.geometry.spherical.computeDistanceBetween(center, latLng) <= circleSelectorInfo.radius;
+        }
       
       function bindInfoWindow(marker, map, infoWindow, html) {
         google.maps.event.addListener(marker, 'click', function() {
@@ -253,6 +416,28 @@
           infoWindow.open(map, marker);
         });        
         
+      }
+      
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['id', "Data"], 
+          ['Electricity', selectionData.electricity],
+          ['Water', selectionData.water],
+          ['Road Access', selectionData.road_access],
+          ['Telecommunication', selectionData.telecommunication]
+
+        ]);
+
+        var options = {
+            backgroundColor: 'transparent',
+          title: 'Life Line Systems Disruption', //humatarian needs
+          pieHole: 0.4
+          //is3D: true
+      //                      colors: ['#00FF00', '#FFFF00', '#FF0000']
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+        chart.draw(data, options);
       }
 
 
@@ -268,7 +453,7 @@
  <body>
    
     <!-- Modal -->
-    <div id="myModal" class="modal fade" role="dialog">
+    <div id="filterModal" class="modal fade" role="dialog">
         <?php echo $this->Form->create('MapMarker'); ?> 
       <div class="modal-dialog">
 
@@ -316,21 +501,6 @@
                 </div>
 
             </div>
-    <!--            <li><input type="checkbox" name="text2" value="value2" /><label for="text2">Text 2</label></li>
-                <li><input type="checkbox" name="text3" value="value3" /><label for="text3">Text 3</label></li>
-                <li><input type="checkbox" name="text4" value="value4" /><label for="text4">Text 4</label></li>-->
-                <!--<hr>-->
-                <!--<div class="panel-title text-center">-->
-
-                         <!--<hr />-->
-                 <!--</div>-->
-    <!--            <li><input type="checkbox" name="text5" value="value5" /><label for="text5">Text 5</label></li>
-                <li><input type="checkbox" name="text6" value="value6" /><label for="text6">Text 6</label></li>
-                <li><input type="checkbox" name="text7" value="value7" /><label for="text7">Text 7</label></li>
-                <li><input type="checkbox" name="text8" value="value8" /><label for="text8">Text 8</label></li>
-                <br>
-                <br>-->
-            <!--</ul>-->
               </div>
           </div>
           <div class="modal-footer">
@@ -341,14 +511,39 @@
       </div>
         <?php echo $this->Form->end(); ?>
 
-    </div>    
+    </div>   
+    
+    <!-- Modal -->
+    <div id="selectionModal" class="modal fade" role="dialog" >
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Data Statistics</h4>
+          </div>
+          <div class="modal-body" id="clip-wrapper">   
+                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"/> </script>
+                <script>
+                    google.charts.load("current", {packages:["corechart"]});
+                    google.charts.setOnLoadCallback(drawChart);
+                </script>
+                <div id="donutchart" style="width: 200px; height: 200px;"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal" >Close</button>
+          </div>
+        </div>
+
+      </div>
+    </div> 
    
     <div id="map"> </div>
    <script async defer
      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBNdRsx6x8pcf9Ie90WCrzkk1k8pROMRYI&callback=initMap"> 
 	
     </script> 
-    
 <!--    <div id="legend"><h3>Legend</h3></div>-->
     </body>
    
