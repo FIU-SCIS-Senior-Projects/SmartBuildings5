@@ -73,7 +73,7 @@
         </a>
         
         <?php $cbr=$cbr+1; if($cbr == 6):?>
-            <br>
+            <!--<br>-->
             <?php $cbr=0; ?>
         <?php endif;?>
     <?php endforeach;?>
@@ -114,74 +114,80 @@
 
   
 </div>
-          <hr />     
+        <!--Only allow logged in user to view the evaluation section-->
+<?php if($this->Session->check('Auth.User')):?>    
+          <!--Only allow evaluator user to view the evaluation section-->
+    <?php if($this->Session->read('Auth.User.role_id') == 2):?> 
+          
+            <hr />     
           <h2 class="title text-center">Evaluation:</h2> 
            <div class="card card-container">
 
-</head>
-<body>
-<?php  echo $this->Form->create('Report');?> 
-    
-     <?php echo $this->Form->input('id', array('type' => 'hidden')); 
-     
-     ?>
- <!--<input type="hidden" name="report_id">-->
- <div class="row">
-    <div class="funkyradio">
-        <div class="funkyradio-success">
-            <div class="col-xs-10 ">
-                <input type="radio" name="evaluation" id="safe" value="safe" checked/>
-                <label for="safe"> <span class="glyphicon glyphicon-ok-circle"></span>Safe</label>
-            </div>
-            <br><br><br><br>
-        </div>
-     
-        <div class="funkyradio-warning">
-            <div class="col-xs-10 ">
-            <input type="radio" name="evaluation" id="minor damage" value="minor damage"/>
-            <label for="minor damage"> <span class="glyphicon glyphicon-warning-sign"></span>Minor Damage</label>
-           
-            </div>
-             <br><br><br><br>
-             </div>
-            
-            <div class="funkyradio-danger">
-            <div class="col-xs-10 ">
-            <input type="radio" name="evaluation" id="major damage" value="major damage"/>
-            <label for="major damage"> <span class="glyphicon glyphicon-ban-circle"></span>Major Damage</label>
-           
-            </div>
-                 <br><br><br><br>
+        </head>
+        <body>
+        <?php  echo $this->Form->create('Report');?> 
+
+        <?php echo $this->Form->input('id', array('type' => 'hidden')); 
+
+        ?>
+         <div class="row">
+            <div class="funkyradio">
+                <div class="funkyradio-success">
+                    <div class="col-xs-10 ">
+                        <input type="radio" name="evaluation" id="safe" value="safe" checked/>
+                        <label for="safe"> <span class="glyphicon glyphicon-ok-circle"></span>Safe</label>
+                    </div>
+                    <br><br><br><br>
                 </div>
 
-        
-        <div class="funkyradio-primary">
-            <div class="col-xs-10 ">
-            <input type="radio" name="evaluation" id="insufficient information" value="insufficient information"/>
-            <label for="insufficient information"> <span class="glyphicon glyphicon-question-sign"></span>Insufficient Information </label>
-            </div>
+                <div class="funkyradio-warning">
+                    <div class="col-xs-10 ">
+                    <input type="radio" name="evaluation" id="minor damage" value="minor damage"/>
+                    <label for="minor damage"> <span class="glyphicon glyphicon-warning-sign"></span>Minor Damage</label>
+
+                    </div>
+                     <br><br><br><br>
+                     </div>
+
+                    <div class="funkyradio-danger">
+                    <div class="col-xs-10 ">
+                    <input type="radio" name="evaluation" id="major damage" value="major damage"/>
+                    <label for="major damage"> <span class="glyphicon glyphicon-ban-circle"></span>Major Damage</label>
+
+                    </div>
+                         <br><br><br><br>
+                        </div>
+
+
+                <div class="funkyradio-primary">
+                    <div class="col-xs-10 ">
+                    <input type="radio" name="evaluation" id="insufficient information" value="insufficient information"/>
+                    <label for="insufficient information"> <span class="glyphicon glyphicon-question-sign"></span>Insufficient Information </label>
+                    </div>
+
+                </div>
+
+
+
+           <br><br><br><br>     
+        </div>
+
+             <div class="r">
+                 <br><br>
+            <?php echo $this->Form->submit(__('Evaluate'),array('id'=>'evaluate','name' => 'btn','class'=>'btn btn-primary')); 
+                  echo $this->Form->end();
+            ?>
 
         </div>
-           
-        
-   
-   <br><br><br><br>     
-</div>
 
-     <div class="r">
-         <br><br>
-    <?php echo $this->Form->submit(__('Evaluate'),array('id'=>'evaluate','name' => 'btn','class'=>'btn btn-primary')); 
-          echo $this->Form->end();
-    ?>
-    
-</div>
-      
-</div>
-   
-    </div>
-          </div>
-    
-</body>
+        </div>
+
+            </div>
+                  </div>
+
+        </body>
+    <?php endif;?>
+<?php endif;?>
 <div>
 
 <hr />
