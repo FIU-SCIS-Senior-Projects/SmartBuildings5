@@ -121,7 +121,7 @@ class ReportsController extends AppController {
                     $minorDamage=$this->Evaluation->find('count', array( 'conditions' => array('report_id' => $id ,'evaluation' => 'minor damage')));
                      $majorDamage=$this->Evaluation->find('count', array( 'conditions' => array('report_id' => $id ,'evaluation' => 'major damage')));
                       $insufficient=$this->Evaluation->find('count', array( 'conditions' => array('report_id' => $id ,'evaluation' => 'insufficient information')));
-                    print_r($safe);
+                    //print_r($safe);
                       
                     $this->set('safe', $safe);
                     $this->set('minorDamage', $minorDamage);

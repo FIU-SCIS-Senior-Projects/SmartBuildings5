@@ -89,3 +89,27 @@ span.glyphicon {
   color: #fff;
   background-color: #f0ad4e;
 }
+div.containerview {
+    width: 100%;
+    border: 1px solid blue;
+}
+
+
+
+nav {
+    float: left;
+    max-width: 50%;
+    margin: 0;
+    padding: 1em;
+}
+
+
+   
+
+
+article {
+    margin-left: 50%;
+    border-left: 1px solid white;
+    padding: 1em;
+    overflow: hidden;
+}

@@ -1,4 +1,4 @@
-<div class="reports view">
+<font face="Times New Roman"><div class="reports view">
  <?php 
    echo $this->Html->css('reportView'); 
    echo $this->Html->css('blueimp-gallery.min');
@@ -9,12 +9,19 @@
   <div class="container">
         <div class="panel-heading">
             <div class="panel-title text-center">
-                     <h1 class="title">View Report</h1>
+                   <h1 class="title">View Report</h1>
                      <hr />
              </div>
         </div> 
      
         <?php echo $this->Session->flash(); ?>
+      
+      
+      
+      
+      
+      
+     <nav> 
           <h2 class="title text-center">Life Line Services Conditions: </h2> 
            <div class="card card-container" >
                  
@@ -32,7 +39,8 @@
                          <br>
                         
                 </div>
-          <hr />
+          </nav>
+          <article>
           <h2 class="title text-center">Emergency Response Needs:</h2> 
            <div class="card card-container">
           <strong> <?php echo __('Food:')  ?> </strong> <?php echo h($report['Report']['food']); ?>
@@ -49,12 +57,17 @@
                          <br>
           
                 </div>
+          </article>
           <hr />
+          <nav>
           <h2 class="title text-center">Comments:</h2> 
            <div class="card card-container">
                <?php echo h($report['Report']['comments']); ?>
 			&nbsp;
                 </div>
+                    </nav>
+
+          <article>
           <h2 class="title text-center">Pictures:</h2> 
            <div class="card card-container">
                <?php
@@ -114,12 +127,17 @@
 
   
 </div>
+          </article>
+            <hr /> 
+     
+        
         <!--Only allow logged in user to view the evaluation section-->
 <?php if($this->Session->check('Auth.User')):?>    
           <!--Only allow evaluator user to view the evaluation section-->
     <?php if($this->Session->read('Auth.User.role_id') == 2):?> 
           
-            <hr />     
+          
+         <div>
           <h2 class="title text-center">Evaluation:</h2> 
            <div class="card card-container">
 
@@ -181,18 +199,19 @@
         </div>
 
         </div>
-
-            </div>
-                  </div>
+ </div>
+            </div>  
+          
+                  </div> 
 
         </body>
     <?php endif;?>
 <?php endif;?>
         
-<?php if($safe!==0 || $minorDamage!==0 || $majorDamage!==0 || $insufficient!==0):?>            
-<div>
-
-<hr />
+<?php if($safe!==0 || $minorDamage!==0 || $majorDamage!==0 || $insufficient!==0):?> 
+<div> 
+    
+<hr /> 
           <h2 class="title text-center">Statistics:</h2>
           
           <div class="card card-container">
@@ -235,11 +254,10 @@
   <body>
     <div id="donutchart" style="width: 400px; height: 400px;"></div>
   </body>
-</div>
+</div>  
           </div>
-<?php endif;?>        
- 
- </div>
+<?php endif;?>    
+</div> </font>
  
 
 
