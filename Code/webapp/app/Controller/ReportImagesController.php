@@ -222,30 +222,21 @@ class ReportImagesController extends AppController {
                 if($exif==true){
                     $exif = exif_read_data($image['tmp_name'], 0, true);
                     //echo $imageName." :<br />\n";
-                    foreach ($exif as $key => $section) {
-                        foreach ($section as $name => $val) {
-                            if($name == "GPSLatitude" || $name == "GPSLongitude"){
-                                foreach ($val as $GPSname => $GPSvalue) {
-                                    if($GPSname==2){
-                                        $Rvalue = $this->calculate($GPSvalue);
-                                        if($name == "GPSLatitude"){
-                                            $this->Session->write('Users.lat',$Rvalue);
-                                        } else {
-                                            $this->Session->write('Users.lng',$Rvalue);
-                                        }
-                                    }                                        
-                                    
-                                }
-                            }else{
-                               // echo "$key.$name: $val<br />\n";
-                            }
-                        }
-                    }
-                }
-                
-                //return false;
-                
-
+                    if(isset($exif['GPS'])) {
+                        //print_r($exif['GPS']);
+                        $egeoLong = $exif['GPS']['GPSLongitude'];
+                        $egeoLat = $exif['GPS']['GPSLatitude'];
+                        $egeoLongR = $exif['GPS']['GPSLongitudeRef'];
+                        $egeoLatR = $exif['GPS']['GPSLatitudeRef'];
+                        
+                        $lat = $this->getLatLng($egeoLat[0], $egeoLat[1], $egeoLat[2], $egeoLatR);
+                        $lng = $this->getLatLng($egeoLong[0], $egeoLong[1], $egeoLong[2], $egeoLongR);
+                        $this->Session->write('Users.lat',$lat);
+                        $this->Session->write('Users.lng',$lng);
+                    } 
+                }                   
+//                print_r($exif['GPS']);
+//                return;
                 //proccess image upload                     
 
                 //check if file exists in upload folder
@@ -298,14 +289,21 @@ class ReportImagesController extends AppController {
             
         }
         
-        private function calculate( $mathString )    {
+        function getLatLng($deg, $min, $sec, $hem) 
+        {
+            $d = $this->toDecimal($deg) + (($this->toDecimal($min)/60) + ($this->toDecimal($sec)/3600));
+            //echo $d."\n";
+            return ($hem=='S' || $hem=='W') ? $d*=-1 : $d;
+        }
+        
+        function toDecimal( $mathString )    {
             
             $mathString = trim($mathString);
             $mathString = str_replace ('[^0-9\+-\*\/\(\) ]', '', $mathString); 
 
-            echo $mathString."\n";
+            //echo $mathString."\n";
             $compute = create_function("", "return (" . $mathString . ");" );
-            
+            //echo 0 + @($compute())."\n";
             return 0 + @($compute());
         }
 

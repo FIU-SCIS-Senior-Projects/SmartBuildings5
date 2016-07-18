@@ -122,7 +122,7 @@ function startLoading() {
 <br><br><br>
 
 <?php echo $this->Form->end()?>
-
+ 
     <?php 
         echo $this->Html->script('blueimp-helper');
         echo $this->Html->script('blueimp-gallery.min');

@@ -117,7 +117,7 @@
         <hr/>
         
         <!--<div class="bootstrap-iso">-->
-        <h3>Date of Occurrence</h3>
+        <h3>Date of Mapping</h3>
         <span >
             Select the date of the disaster (if applicable) 
         </span>

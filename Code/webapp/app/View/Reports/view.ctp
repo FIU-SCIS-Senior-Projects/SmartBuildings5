@@ -188,6 +188,8 @@
         </body>
     <?php endif;?>
 <?php endif;?>
+        
+<?php if($safe!==0 || $minorDamage!==0 || $majorDamage!==0 || $insufficient!==0):?>            
 <div>
 
 <hr />
@@ -235,6 +237,8 @@
   </body>
 </div>
           </div>
+<?php endif;?>        
+ 
  </div>
  
 

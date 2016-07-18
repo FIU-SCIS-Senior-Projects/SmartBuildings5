@@ -50,6 +50,7 @@ class MapMarkersController extends AppController {
                         $result = array();
                         
                         $result['electricity'] = 0; $result['water'] = 0; $result['road_access'] = 0; $result['telecommunication'] = 0;
+                        $result['food'] = 0; $result['sanitation'] = 0; $result['first_aid'] = 0; $result['shelter'] = 0;
                         foreach ($reportResult as $reports) {
                             foreach ($reports as $report) {
                                 foreach ($report as $key => $value) {
@@ -73,6 +74,30 @@ class MapMarkersController extends AppController {
                                     }
                                     if($key == 'telecommunication'){
                                         if ($value == false){
+                                           $result[$key] = $result[$key] + 1;
+
+                                        }
+                                    }
+                                    if($key == 'food'){
+                                        if ($value == true){
+                                           $result[$key] = $result[$key] + 1;
+
+                                        }
+                                    }
+                                    if($key == 'sanitation'){
+                                        if ($value == true){
+                                           $result[$key] = $result[$key] + 1;
+
+                                        }
+                                    }
+                                    if($key == 'first_aid'){
+                                        if ($value == true){
+                                           $result[$key] = $result[$key] + 1;
+
+                                        }
+                                    }
+                                    if($key == 'shelter'){
+                                        if ($value == true){
                                            $result[$key] = $result[$key] + 1;
 
                                         }

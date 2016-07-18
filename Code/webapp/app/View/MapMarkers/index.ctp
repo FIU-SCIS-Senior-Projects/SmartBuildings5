@@ -8,10 +8,10 @@
 
     <style>
       html, body {
-        height: 100%;
+/*        height: 100%;
         margin: 0;
         padding: 0;
-        width: 100%;
+        width: 100%;*/
         
       }
       #map {        
@@ -21,7 +21,7 @@
         top: 60px;
         width: 100%;
         bottom: 0px;
-       padding-right: 1px;
+        padding-right: 1px;
       }
       
       .checkbox-grid li {
@@ -30,7 +30,7 @@
         width: 25%;
     }
     
-    #legend {
+/*    #legend {
         font-family: Arial, sans-serif;
         background: #fff;
         padding: 10px;
@@ -42,7 +42,7 @@
       }
       #legend img {
         vertical-align: middle;
-      }
+      }*/
 /*      
       #selectionModal {
         
@@ -87,7 +87,8 @@
       var markerList=[];
       var map;
       var center_loc = {lat: 25.844639, lng: -80.307648};
-      var selectionData = {electricity:1, water:2, road_access:3,telecommunication:4};
+      var selectionData = {electricity:0, water:0, road_access:0,telecommunication:0,
+                           food:0,sanitation:0,first_aid:0,shelter:0};
       var circleSelector = null;
       var circleSelectorInfo = {
           radius: 0,
@@ -228,6 +229,12 @@
 //                    script.type= 'text/javascript';
 //                    script.src= '<?php echo FULL_BASE_URL.'/js/load-graph.js'?>';
 //                    head.appendChild(script);
+//                    setTimeout(
+//                    function() 
+//                    {
+//                      drawChart();
+//                    }, 200);
+
                     drawChart();
                     $('#selectionModal').modal('show');
                 }else
@@ -359,7 +366,28 @@
                 if(circleSelector == null){
                     var lat = event.latLng.lat();
                     var lng = event.latLng.lng();
-
+                                        
+                    var rad;
+                    var zoomVal = map.getZoom();
+                    if(zoomVal<4){
+                        rad = 1000000;
+                    }else if(zoomVal<6){
+                        rad = 500000;
+                    }else if(zoomVal<9){
+                        rad = 100000;
+                    }else if(zoomVal<10){
+                        rad = 30000;
+                    }else if(zoomVal<11){
+                        rad = 20000;
+                    }else if(zoomVal<12){
+                        rad = 10000;
+                    }else if(zoomVal<12){
+                        rad = 8000;
+                    }
+                    else if(zoomVal<15){
+                        rad = 5000;
+                    }
+                    
                     circleSelector = new google.maps.Circle({
                         strokeColor: '#FF0000',
                         strokeOpacity: 0.8,
@@ -369,10 +397,10 @@
                         editable: true,
                         map: map,
                         center: {lat: lat, lng: lng},
-                        radius: 100000
+                        radius: rad
                     }); 
                     
-                    circleSelectorInfo.radius = 100000;
+                    circleSelectorInfo.radius = rad;
                     circleSelectorInfo.lat = lat;
                     circleSelectorInfo.lng = lng;
                         
@@ -419,7 +447,7 @@
       }
       
       function drawChart() {
-        var data = google.visualization.arrayToDataTable([
+        var data_services = google.visualization.arrayToDataTable([
           ['id', "Data"], 
           ['Electricity', selectionData.electricity],
           ['Water', selectionData.water],
@@ -427,17 +455,72 @@
           ['Telecommunication', selectionData.telecommunication]
 
         ]);
+        
+        var data_needs = google.visualization.arrayToDataTable([
+          ['id', "Data"], 
+          ['Food', selectionData.food],
+          ['Sanitation', selectionData.sanitation],
+          ['First Aid', selectionData.first_aid],
+          ['Shelter', selectionData.shelter]
 
-        var options = {
+        ]);
+
+        var options_services = {
             backgroundColor: 'transparent',
-          title: 'Life Line Systems Disruption', //humatarian needs
-          pieHole: 0.4
+            title: 'Life Line Systems Disruption', //humatarian needs
+            pieHole: 0.4,
+            width:500,
+            height:400,
+            pieSliceText: "none"
+          //is3D: true
+      //                      colors: ['#00FF00', '#FFFF00', '#FF0000']
+        };
+        
+        var options_needs = {
+            backgroundColor: 'transparent',
+            title: 'Humatarian Needs', //humatarian needs
+            pieHole: 0.4,
+            width:500,
+            height:400,
+            pieSliceText: "none"
           //is3D: true
       //                      colors: ['#00FF00', '#FFFF00', '#FF0000']
         };
 
-        var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
-        chart.draw(data, options);
+//        var chart_services = new google.visualization.PieChart(document.getElementById('donutchart_services'));
+//
+//                     chart_services.draw(data_services, options_services);
+//                     
+//          var chart_needs = new google.visualization.PieChart(document.getElementById('donutchart_needs'));
+//
+//                     chart_needs.draw(data_needs, options_needs);
+        var chart_services = new google.visualization.PieChart(document.getElementById('donutchart_services'));
+        var chart_needs = new google.visualization.PieChart(document.getElementById('donutchart_needs'));
+        
+        if(selectionData.electricity==0 && selectionData.water==0 &&
+           selectionData.road_access==0 && selectionData.telecommunication==0){
+            options_services.title = "No service disruptions in this area";
+            chart_services.draw(data_services, options_services);
+        }else{                    
+
+            chart_services.draw(data_services, options_services);
+
+        }
+        
+        if(selectionData.food==0 && selectionData.sanitation==0 &&
+           selectionData.first_aid==0 && selectionData.shelter==0){
+           options_needs.title = "No needs in this area"
+           chart_needs.draw(data_needs, options_needs);
+//            $("#donutchart_needs").append("There are no needs in this area");
+        }else{
+                    
+
+            chart_needs.draw(data_needs, options_needs);
+
+        }
+            
+        
+        
       }
 
 
@@ -529,7 +612,8 @@
                     google.charts.load("current", {packages:["corechart"]});
                     google.charts.setOnLoadCallback(drawChart);
                 </script>
-                <div id="donutchart" style="width: 200px; height: 200px;"></div>
+                <div id="donutchart_services" style="width: 200px; height: 300px;"></div>
+                <div id="donutchart_needs" style="width: 200px; height: 300px;"></div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-primary" data-dismiss="modal" >Close</button>
