@@ -166,3 +166,12 @@
     })
 </script>
 
+//create mapping report
+//please select life line services are disrupted
+//please upload pictures of the building or damaged fascilities related to this assessment
+//Photos should have gps information
+//uploaded phots should be from a single building fascilities
+//if you wish to report other areas or building create a separed assesment
+//about page
+/add date to view report
+//add modal window at landing page
