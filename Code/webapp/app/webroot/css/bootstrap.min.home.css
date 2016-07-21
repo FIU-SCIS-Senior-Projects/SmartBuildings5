@@ -5952,6 +5952,13 @@ button.close {
   position: relative;
   padding: 20px;
 }
+
+.modal-body-chart {
+  position: relative;
+  padding: 20px;
+  height: 400px;
+  overflow-y: auto;
+}
 .modal-footer {
   padding: 20px;
   text-align: right;

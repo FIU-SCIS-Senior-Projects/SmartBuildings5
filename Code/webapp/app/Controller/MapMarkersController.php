@@ -144,6 +144,7 @@ class MapMarkersController extends AppController {
                         $newnode = $parnode->appendChild($node);
                         $newnode->setAttribute("id", $mapmarker['id']);
                         $newnode->setAttribute("name",$mapmarker['name']);
+                        $newnode->setAttribute("date",date('F j, Y',strtotime(str_replace('-','/', $mapmarker['date']))));
                         $newnode->setAttribute("lat", $mapmarker['latitude']);
                         $newnode->setAttribute("lng", $mapmarker['longitude']);
                         $newnode->setAttribute("type", $mapmarker['type']);

@@ -318,11 +318,13 @@
               
               //var address = markers[i].getAttribute("address");
                 var name = markers[i].getAttribute("name");
+                var date = markers[i].getAttribute("date");
                 var type = markers[i].getAttribute("type");              
                 var point = new google.maps.LatLng(
                     parseFloat(markers[i].getAttribute("lat")),
                     parseFloat(markers[i].getAttribute("lng")));
-                var html = "<b>" + name + "</b> <br/>" +
+                var html = "<b>" + date + "</b> <br/>" +
+                            name + "<br/>" +
                             "<a href=\"reports/view/" + markers[i].getAttribute("id") + "\"> View Assessment </a>";
                 var icon = customIcons[type] || {};
                 var marker = new google.maps.Marker({
@@ -606,7 +608,7 @@
             <button type="button" class="close" data-dismiss="modal">&times;</button>
             <h4 class="modal-title">Data Statistics</h4>
           </div>
-          <div class="modal-body" id="clip-wrapper">   
+          <div class="modal-body-chart" id="clip-wrapper">   
                 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"/> </script>
                 <script>
                     google.charts.load("current", {packages:["corechart"]});
