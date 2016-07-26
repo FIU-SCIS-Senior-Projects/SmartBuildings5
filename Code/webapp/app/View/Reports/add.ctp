@@ -13,14 +13,14 @@
 <div class="container-fluid">
         <div class="panel-heading">
             <div class="panel-title text-center">
-                     <h1 class="title">Create Assessment</h1>
+                     <h1 class="title">Create Mapping Report</h1>
                      <!--<hr />-->
              </div>
         </div>
 
     <h3>Lifeline Services Conditions</h3>
         <span >
-        Please select the conditions of your building
+        Please select life line services disrupted
         </span>
         <div class="row">
             <div class="funkyradio">
@@ -121,7 +121,7 @@
         <span >
             Select the date of the disaster (if applicable) 
         </span>
-         <div class="row">
+        <div class="row">
           <div class="col-xs-6">
              <div class="input-group">
               <div class="input-group-addon">
@@ -131,7 +131,7 @@
               <input class="form-control" id="date" name="date" placeholder="YYYY-MM-DD" type="text"/>
              </div>
             </div>
-            </div>
+        </div>
          <!--</div>-->
         
         
@@ -150,8 +150,10 @@
 
 <?php echo $this->Html->script('jquery.min'); ?>
 <!-- Include Date Range Picker -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+<?php echo $this->Html->css('bootstrap-datetimepicker');?>
+<?php echo $this->Html->script('bootstrap-datetimepicker.min'); ?>
+<!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>-->
 
 <script>
     $(document).ready(function(){
@@ -166,12 +168,3 @@
     })
 </script>
 
-//create mapping report
-//please select life line services are disrupted
-//please upload pictures of the building or damaged fascilities related to this assessment
-//Photos should have gps information
-//uploaded phots should be from a single building fascilities
-//if you wish to report other areas or building create a separed assesment
-//about page
-/add date to view report
-//add modal window at landing page

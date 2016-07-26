@@ -9,12 +9,6 @@ App::import('Vendor', 'ImageTool', array('file' => 'ImageTool' . DS . 'ImageTool
  * @property PaginatorComponent $Paginator
  */
 class UsersController extends AppController {
-
-    var $name = 'Users';
-    var $helpers = array('Html', 'Form', 'Time');
-    var $uses = array('User');
-    var $allowCookie = true;
-    var $cookieTerm = '0';
 /**
  * Components
  *
@@ -53,12 +47,12 @@ class UsersController extends AppController {
                                 
                                 //attempt to login user
                                 $this->login();
-				
 			} else {
 				$this->Session->setFlash(__('The user could not be saved. Please, try again.'), 'alert', array(
                                                         'plugin' => 'BoostCake',
                                                         'class' => 'alert-danger'
                                                 ));
+                                $this->set('user_role',$this->request->data['user_role']);
 			}
 		}
                 

@@ -2,7 +2,7 @@
 <html>
   <head>
       
-    <title>Disaster Helper</title>
+    <title>DRAMA</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
 
@@ -29,6 +29,13 @@
         float: right;
         width: 25%;
     }
+    .datepicker{z-index:1151 !important;}
+    
+    .addspace{
+        /*padding-left:50px;*/
+        /*padding-right:50px;*/
+    }
+    
     
 /*    #legend {
         font-family: Arial, sans-serif;
@@ -57,12 +64,23 @@
      border-top-right-radius: 5px;
      }*/
 
+/*.modal-header-primary {
+	color:#fff;
+    padding:9px 15px;
+    border-bottom:1px solid #eee;
+    background-color: #428bca;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+     border-top-left-radius: 5px;
+     border-top-right-radius: 5px;
+}*/
+
   
     </style>
   </head>
-   
-
-    
+  
     <script>
   
       // Note: This example requires that you consent to location sharing when
@@ -86,7 +104,7 @@
       };
       var markerList=[];
       var map;
-      var center_loc = {lat: 25.844639, lng: -80.307648};
+      var center_loc = {lat: 27.675491, lng: 85.429840};
       var selectionData = {electricity:0, water:0, road_access:0,telecommunication:0,
                            food:0,sanitation:0,first_aid:0,shelter:0};
       var circleSelector = null;
@@ -131,7 +149,6 @@
         controlUI.addEventListener('click', function() {   
             
             $('#filterModal').modal('show');
-          
         });
 
       }
@@ -428,7 +445,10 @@
             return this.getBounds().contains(latLng) && 
                    google.maps.geometry.spherical.computeDistanceBetween(this.getCenter(), latLng) <= this.getRadius();
         }
-              
+        
+        <?php if(isset($landing_about)):?>
+            $('#aboutModal').modal('show');
+        <?php endif;?>      
       } 
       
         
@@ -524,6 +544,17 @@
         
         
       }
+      
+      function date(){
+          var date_input=$('input[name="date"]'); //our date input has the name "date"
+                var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "modal-body";
+                date_input.datepicker({
+                    format: 'yyyy-mm-dd',
+                    container: container,
+                    todayHighlight: true,
+                    autoclose: true,
+                })            
+      }
 
 
 //      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
@@ -540,61 +571,144 @@
     <!-- Modal -->
     <div id="filterModal" class="modal fade" role="dialog">
         <?php echo $this->Form->create('MapMarker'); ?> 
+<!--        <style>
+        .datepicker{z-index:1151 !important;}
+        </style>-->
       <div class="modal-dialog">
 
         <!-- Modal content-->
         <div class="modal-content">
-          <div class="modal-header">
+          <div class="modal-header modal-header-info">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Filter Markers By</h4>
+            <h3 class="modal-title">Filter Markers By</h3>
           </div>
           <div class="modal-body">
-              <div class="form-group">
+              
+            <div class="form-group addspace">
+                <div class="row">
+                    <div class="col-xs-3 ">
+                        <h4 class="title">Lack of</h4>           
+                        <?php echo $this->Form->input('electricity',array('type'=>'checkbox'));?>
+                        <?php echo $this->Form->input('water',array('type'=>'checkbox'));?>
+                        <?php echo $this->Form->input('road_access',array('type'=>'checkbox'));?>
+                        <?php echo $this->Form->input('telecommunication',array('type'=>'checkbox','label'=>'Telecom'));?>
+                    </div>
 
 
-            <!--<ul class="checkbox-grid">-->
-                <!--<div class="panel-heading">-->
-                <!--<div class="panel-title text-center">-->
+                    <div class="col-xs-3 ">                
+                        <h4 class="title">Need of</h4>
+                        <?php echo $this->Form->input('food',array('type'=>'checkbox'));?>
+                        <?php echo $this->Form->input('sanitation',array('type'=>'checkbox'));?>
+                        <?php echo $this->Form->input('first_aid',array('type'=>'checkbox'));?>
+                        <?php echo $this->Form->input('shelter',array('type'=>'checkbox'));?>
 
-                         <!--<hr />-->
-                 <!--</div>-->
-            <!--</div>-->
-                <!--<li><input type="checkbox" name="text1" value="value1" /><label for="text1">Text 1</label></li>-->
-            <div class="row">
-                <div class="col-xs-4 ">
-                    <h4 class="title">Lack of</h4>           
-                    <?php echo $this->Form->input('electricity',array('type'=>'checkbox'));?>
-                    <?php echo $this->Form->input('water',array('type'=>'checkbox'));?>
-                    <?php echo $this->Form->input('road_access',array('type'=>'checkbox'));?>
-                    <?php echo $this->Form->input('telecommunication',array('type'=>'checkbox'));?>
+                    </div>  
+                    
+                    <div class="col-xs-6">                
+                        <h4 class="title">Date</h4>
+                        <!--<div class="row">-->
+                            <!--<div class="col-xs-6">-->
+    <!--                           <div class="input-group">
+                                <div class="input-group-addon">
+                                 <i class="glyphicon glyphicon-calendar">
+                                 </i>
+                                </div>
+                                <input class="form-control form-date" id="date" name="date" placeholder="YYYY-MM-DD" type="text"/>
+                                   <input type="text" name="reportrange" />
+                               </div>-->
+                              <!--</div>-->
+                        <!--</div>-->
+                        <div class="input-group">
+                            <!--<i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;-->
+                            <!--<span class="glyphicon glyphicon-calendar fa fa-calendar"></span>-->
+                            <span class="input-group-addon">
+                                    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                                </span> 
+                            <input class="form-control" id="reportrange" name="reportrange" type="text"/>                                               
+                        </div>
+
+                    </div>
+
                 </div>
-
-
-                <div class="col-xs-4 ">                
-                    <h4 class="title">Need of</h4>
-                    <?php echo $this->Form->input('food',array('type'=>'checkbox'));?>
-                    <?php echo $this->Form->input('sanitation',array('type'=>'checkbox'));?>
-                    <?php echo $this->Form->input('first_aid',array('type'=>'checkbox'));?>
-                    <?php echo $this->Form->input('shelter',array('type'=>'checkbox'));?>
-
-                </div>
-
-                <div class="col-xs-4 ">                
-                    <h4 class="title">Media</h4>
-                    <?php echo $this->Form->input('images',array('type'=>'checkbox'));?>
-
-                </div>
-
             </div>
-              </div>
           </div>
           <div class="modal-footer">
-            <button type="submit" class="btn btn-primary" >Filter</button>
+              
+            <button type="button" class="btn btn-danger" data-dismiss="modal" >Close</button>
+            <button type="submit" class="btn btn-info" >Filter</button>
           </div>
-        </div>
+        </div>     
 
       </div>
         <?php echo $this->Form->end(); ?>
+        
+        <?php echo $this->Html->script('jquery.min'); ?>
+        <?php // echo $this->Html->script('bootstrap-datetimepicker.min'); ?>
+<!--        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>-->
+
+<!--        <script>
+            $(document).ready(function(){
+                var date_input=$('input[name="date"]'); //our date input has the name "date"
+                var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "modal-body";
+                date_input.datepicker({
+                    format: 'yyyy-mm-dd',
+                    container: container,
+                    todayHighlight: true,
+                    autoclose: true,
+                })
+            })
+        </script>-->
+        
+        <!--<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>-->
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+
+        <!-- Include Date Range Picker -->
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+        
+        <script type="text/javascript">
+        $(function() {
+            
+//            $('#reportrange').daterangepicker({
+//                autoUpdateInput: false,
+//                locale: {
+//                    cancelLabel: 'Clear'
+//                }
+//            });
+
+            var start = moment().subtract(29, 'days');
+            var end = moment();
+
+            function cb(start, end) {
+                $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+            }
+            
+            $('#reportrange').daterangepicker({
+                 autoUpdateInput: false,
+                locale: {
+                    cancelLabel: 'Clear'
+                },
+                startDate: start,
+                endDate: end,
+                ranges: {
+                   'This Month': [moment().startOf('month'), moment().endOf('month')],
+                   'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+                   'Last 2 Months': [moment().subtract(2, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+                   'Last 3 Months': [moment().subtract(3, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                }
+            }, cb);
+            
+             $('#reportrange').on('apply.daterangepicker', function(ev, picker) {
+                $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+            });
+
+            $('#reportrange').on('cancel.daterangepicker', function(ev, picker) {
+                $(this).val('');
+            });
+
+        });
+        </script>
 
     </div>   
     
@@ -604,9 +718,9 @@
 
         <!-- Modal content-->
         <div class="modal-content">
-          <div class="modal-header">
+          <div class="modal-header modal-header-info">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Data Statistics</h4>
+            <h3 class="modal-title">Data Statistics</h3>
           </div>
           <div class="modal-body-chart" id="clip-wrapper">   
                 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"/> </script>
@@ -618,18 +732,40 @@
                 <div id="donutchart_needs" style="width: 200px; height: 300px;"></div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal" >Close</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal" >Close</button>
           </div>
         </div>
 
       </div>
-    </div> 
-   
+    </div>    
+    
+    <!-- Modal -->
+    <div id="aboutModal" class="modal fade" role="dialog" >
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header modal-header-info" >
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h3 class="modal-title">How To Use</h3>
+          </div>
+          <div class="modal-body">
+
+          </div> 
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal" >Close</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+       
     <div id="map"> </div>
    <script async defer
      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBNdRsx6x8pcf9Ie90WCrzkk1k8pROMRYI&callback=initMap"> 
 	
-    </script> 
+    </script>     
+    
 <!--    <div id="legend"><h3>Legend</h3></div>-->
     </body>
    

@@ -127,6 +127,7 @@ class ReportImagesController extends AppController {
             $this->set('images',$this->ReportImage->find('all', array('conditions' => array('ReportImage.report_id' => $report_id))));
             
             $this->set('report_id',$report_id);
+            
 	}
         
         private function resetGpsInfo() {
