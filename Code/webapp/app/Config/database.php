@@ -7,7 +7,7 @@ class DATABASE_CONFIG {
 		'host' => 'localhost',
 		'login' => 'root',
 		'password' => '',
-		'database' => 'sb5',
+		'database' => 'drama_db',
 		'prefix' => '',
 		'encoding' => 'utf8'
 	);

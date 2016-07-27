@@ -188,7 +188,7 @@ class ReportsController extends AppController {
                     if ($this->Report->save($this->request->data)) {
 
                             $rid = $this->Report->id;
-                            return $this->redirect('/reportimages/add/'.$rid);
+                            return $this->redirect('/ReportImages/add/'.$rid);
 
 
                     } else {
