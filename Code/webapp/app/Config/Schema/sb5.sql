@@ -76,6 +76,7 @@ CREATE TABLE map_markers
 	latitude FLOAT( 10, 6 ) NOT NULL ,
 	longitude FLOAT( 10, 6 ) NOT NULL,
         type VARCHAR( 30 ) NOT NULL,
+        date DATETIME DEFAULT NULL,
 	FOREIGN KEY (id) REFERENCES reports(id)
 );
 

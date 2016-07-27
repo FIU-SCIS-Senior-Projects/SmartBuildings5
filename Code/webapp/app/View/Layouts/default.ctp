@@ -14,7 +14,7 @@
         
         //use different bootstrap css for home
         $action_request = $this->params['controller'] . $this->action;
-        if($action_request == 'mapmarkersindex'){
+        if($action_request == 'map_markersindex'){
             echo $this->Html->css('bootstrap.min.home');
         }else{
             echo $this->Html->css('bootstrap.min');
