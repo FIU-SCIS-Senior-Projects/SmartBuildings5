@@ -188,8 +188,7 @@ class ReportsController extends AppController {
                     if ($this->Report->save($this->request->data)) {
 
                             $rid = $this->Report->id;
-                            return $this->redirect('/ReportImages/add/'.$rid);
-
+                            return $this->redirect('/report_images/add/'.$rid);
 
                     } else {
                             $this->Session->setFlash(__('The report could not be saved. Please, try again.'));

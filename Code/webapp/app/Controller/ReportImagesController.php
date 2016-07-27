@@ -95,7 +95,7 @@ class ReportImagesController extends AppController {
                             return $this->redirect('/home');
                         }
                     }
-                    return $this->redirect('/reportimages/add/'.$report_id);
+                    return $this->redirect('/report_images/add/'.$report_id);
                     
                 }                
                                 
@@ -106,7 +106,7 @@ class ReportImagesController extends AppController {
                         if(!$success){ return; }
                 }else{
                     //if image not set, need to reassign image in the db in order to not crash the system
-                    return $this->redirect('/reportimages/add/'.$report_id);
+                    return $this->redirect('/report_images/add/'.$report_id);
                 }
 
                     
@@ -120,7 +120,7 @@ class ReportImagesController extends AppController {
                 }                
                 
                 
-                return $this->redirect('/reportimages/add/'.$report_id);
+                return $this->redirect('/report_images/add/'.$report_id);
             }
             
             //send images to view            
