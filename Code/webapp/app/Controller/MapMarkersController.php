@@ -168,6 +168,8 @@ class MapMarkersController extends AppController {
             $fromTo=array();      
             if(!empty($date)){
                 $fromTo = explode("-", $date);
+                $fromTo[0] = date('Y-m-d',strtotime($fromTo[0])).' 00:00:00';
+                $fromTo[1] = date('Y-m-d',strtotime($fromTo[1])).' 23:00:00';
             }
             // this cycle echoes all associative array
             $fieldsToQuery = array();
@@ -223,7 +225,27 @@ class MapMarkersController extends AppController {
             }else if(!empty($fieldsToQuery) && !empty($date)){
                 $this->loadModel('Report');
                 $reportResult = $this->Report->find('all', array(//'conditions' => $fieldsToQuery//array('electricity'=>false)
-                                 'conditions' => array('or' => $fieldsToQuery)
+                                 'conditions' => array('or' => $fieldsToQuery,'created >=' => $fromTo[0],'created <=' => $fromTo[1])
+                                 ));
+
+                print_r($reportResult);
+
+                foreach ($reportResult as $reports) {
+                    foreach ($reports as $report) {
+                        foreach ($report as $key => $value) {
+                            if($key == 'id'){
+                                array_push($markersToFind,$value);
+                            }
+
+                        }
+                    }
+                }
+            }else if(!empty($date)){
+//                print_r($fromTo);
+                
+                $this->loadModel('Report');
+                $reportResult = $this->Report->find('all', array(//'conditions' => $fieldsToQuery//array('electricity'=>false)
+                                 'conditions' => array('created >=' => $fromTo[0],'created <=' => $fromTo[1])
                                  ));
 
                 //print_r($reportResult);
@@ -238,27 +260,6 @@ class MapMarkersController extends AppController {
                         }
                     }
                 }
-            }else if(!empty($date)){
-                print_r($fromTo);
-                echo date('Y-m-d',strtotime($fromTo[0]))."\n";
-//                echo date('Y-m-d',strtotime($fromTo[1]));
-//                $this->loadModel('Report');
-//                $reportResult = $this->Report->find('all', array(//'conditions' => $fieldsToQuery//array('electricity'=>false)
-//                                 'conditions' => array('created'>=$fromTo[0],'created'<=$fromTo[1])
-//                                 ));
-//
-//                print_r($reportResult);
-//
-//                foreach ($reportResult as $reports) {
-//                    foreach ($reports as $report) {
-//                        foreach ($report as $key => $value) {
-//                            if($key == 'id'){
-//                                array_push($markersToFind,$value);
-//                            }
-//
-//                        }
-//                    }
-//                }
             }
             
             //$markersToFind = array_unique($markersToFind);

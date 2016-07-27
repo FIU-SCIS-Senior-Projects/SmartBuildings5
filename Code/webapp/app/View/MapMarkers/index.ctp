@@ -587,6 +587,32 @@
               
             <div class="form-group addspace">
                 <div class="row">
+                    <div class="col-xs-6">                
+                        <h4 class="title">Date</h4>
+                        <!--<div class="row">-->
+                            <!--<div class="col-xs-6">-->
+    <!--                           <div class="input-group">
+                                <div class="input-group-addon">
+                                 <i class="glyphicon glyphicon-calendar">
+                                 </i>
+                                </div>
+                                <input class="form-control form-date" id="date" name="date" placeholder="YYYY-MM-DD" type="text"/>
+                                   <input type="text" name="reportrange" />
+                               </div>-->
+                              <!--</div>-->
+                        <!--</div>-->
+                        <div class="pull-right">
+                        <div class="input-group">
+                            <!--<i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;-->
+                            <!--<span class="glyphicon glyphicon-calendar fa fa-calendar"></span>-->
+                            <span class="input-group-addon">
+                                    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                                </span> 
+                            <input class="form-control" id="reportrange" name="reportrange" type="text"/>                                               
+                            </div>
+                        </div>
+
+                    </div>
                     <div class="col-xs-3 ">
                         <h4 class="title">Lack of</h4>           
                         <?php echo $this->Form->input('electricity',array('type'=>'checkbox'));?>
@@ -605,30 +631,32 @@
 
                     </div>  
                     
-                    <div class="col-xs-6">                
+<!--                    <div class="col-xs-6">                
                         <h4 class="title">Date</h4>
-                        <!--<div class="row">-->
-                            <!--<div class="col-xs-6">-->
-    <!--                           <div class="input-group">
+                        <div class="row">
+                            <div class="col-xs-6">
+                               <div class="input-group">
                                 <div class="input-group-addon">
                                  <i class="glyphicon glyphicon-calendar">
                                  </i>
                                 </div>
                                 <input class="form-control form-date" id="date" name="date" placeholder="YYYY-MM-DD" type="text"/>
                                    <input type="text" name="reportrange" />
-                               </div>-->
-                              <!--</div>-->
-                        <!--</div>-->
+                               </div>
+                              </div>
+                        </div>
+                        <div class="pull-right">
                         <div class="input-group">
-                            <!--<i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;-->
-                            <!--<span class="glyphicon glyphicon-calendar fa fa-calendar"></span>-->
+                            <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
+                            <span class="glyphicon glyphicon-calendar fa fa-calendar"></span>
                             <span class="input-group-addon">
                                     <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
                                 </span> 
                             <input class="form-control" id="reportrange" name="reportrange" type="text"/>                                               
+                            </div>
                         </div>
 
-                    </div>
+                    </div>-->
 
                 </div>
             </div>
@@ -698,7 +726,7 @@
                    'Last 2 Months': [moment().subtract(2, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
                    'Last 3 Months': [moment().subtract(3, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
                 }
-            }, cb);
+            });
             
              $('#reportrange').on('apply.daterangepicker', function(ev, picker) {
                 $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));

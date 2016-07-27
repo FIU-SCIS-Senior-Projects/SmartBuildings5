@@ -5956,7 +5956,7 @@ button.close {
 .modal-body-chart {
   position: relative;
   padding: 20px;
-  height: 400px;
+  /*height: 400px;*/
   max-height: calc(100vh - 210px);
   overflow-y: auto;
 }
