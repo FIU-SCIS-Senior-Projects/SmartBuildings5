@@ -32,7 +32,7 @@
  */
 	Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
         
-        Router::connect('/home', array('controller' => 'mapmarkers', 'action' => 'index'));  
+        Router::connect('/home', array('controller' => 'map_markers', 'action' => 'index'));  
 
 /**
  * Load all plugin routes. See the CakePlugin documentation on

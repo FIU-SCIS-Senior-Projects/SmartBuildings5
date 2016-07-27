@@ -241,7 +241,7 @@ class MapMarkersController extends AppController {
             }else if(!empty($date)){
                 print_r($fromTo);
                 echo date('Y-m-d',strtotime($fromTo[0]))."\n";
-                echo date('Y-m-d',strtotime($fromTo[1]));
+//                echo date('Y-m-d',strtotime($fromTo[1]));
 //                $this->loadModel('Report');
 //                $reportResult = $this->Report->find('all', array(//'conditions' => $fieldsToQuery//array('electricity'=>false)
 //                                 'conditions' => array('created'>=$fromTo[0],'created'<=$fromTo[1])
