@@ -115,7 +115,7 @@ class MapMarkersController extends AppController {
                 
                 if ($this->request->is('post')) {   
                     //getting filter request
-                    print_r($this->request->data); 
+                    //print_r($this->request->data); 
                     $result = $this->processFilter($this->request->data['MapMarker'],
                                                    $this->request->data['reportrange']);
 //                    if(empty($result)){
@@ -228,7 +228,7 @@ class MapMarkersController extends AppController {
                                  'conditions' => array('or' => $fieldsToQuery,'created >=' => $fromTo[0],'created <=' => $fromTo[1])
                                  ));
 
-                print_r($reportResult);
+                //print_r($reportResult);
 
                 foreach ($reportResult as $reports) {
                     foreach ($reports as $report) {
