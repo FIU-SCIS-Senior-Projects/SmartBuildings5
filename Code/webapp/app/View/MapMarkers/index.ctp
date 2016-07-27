@@ -104,7 +104,7 @@
       };
       var markerList=[];
       var map;
-      var center_loc = {lat: 27.675491, lng: 85.429840};
+      var center_loc;
       var selectionData = {electricity:0, water:0, road_access:0,telecommunication:0,
                            food:0,sanitation:0,first_aid:0,shelter:0};
       var circleSelector = null;
@@ -265,9 +265,10 @@
       }
 
       function initMap() {
+        center_loc = new google.maps.LatLng(0, 0);
         map = new google.maps.Map(document.getElementById('map'), {            
         center: center_loc,
-        zoom: 8,
+        zoom: 2,
         disableDoubleClickZoom: true
           
         });
