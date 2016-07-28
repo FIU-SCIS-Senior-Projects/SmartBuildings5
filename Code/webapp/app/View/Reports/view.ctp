@@ -4,7 +4,7 @@
    echo $this->Html->css('blueimp-gallery.min');
     echo $this->Html->css('blueimp-gallery-indicator');
     echo $this->Html->css('report-image-view');
-//    echo $this->Html->css('register'); ?>
+    echo $this->Html->css('register'); ?>
 
   <div class="container">
         <div class="panel-heading">
