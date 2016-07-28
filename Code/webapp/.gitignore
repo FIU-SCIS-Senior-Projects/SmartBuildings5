@@ -6,7 +6,9 @@
 /dist
 /tags
 /nbproject/private/
-/app/webroot/img/User
+Code/webapp/app/webroot/img/User/
+Code/webapp/app/webroot/img/Report/thumbnail
+Code/webapp/app/webroot/img/Report/img
 
 # OS generated files #
 ######################
