@@ -55,15 +55,9 @@
                 <?php if($this->Session->check('Auth.User')):?>
            
                
-                   
                     <li>
-<<<<<<< HEAD
-                        <a href="/reports/add">Create Map Report</a>
-=======
                         <a href="/reports/add">Create Report</a>
->>>>>>> f6925f68d8a44c1a2806ab7294b141d0043065e1
                     </li>
-                    
              
            
         <?php endif;?>
