@@ -8,7 +8,7 @@
     <div class="col-md-4 col-sm-6 col-xs-12">
       <div class="text-center">
           <?php if(!empty($image['User']['profile_image'])):?>
-             <img src="<?php echo FULL_BASE_URL.'/img/'.$image['User']['profile_image']?>" class="avatar img-circle img-thumbnail" alt="avatar" >
+             <img src="<?php echo FULL_BASE_URL.'/img/User/'.$image['User']['profile_image']?>" class="avatar img-circle img-thumbnail" alt="avatar" >
           <?php endif;?>        
         <h6>Upload a different photo...</h6>
         <?php echo $this->Form->input('profile_image', array('class'=>'text-center center-block well well-sm','type'=>'file'));?>
