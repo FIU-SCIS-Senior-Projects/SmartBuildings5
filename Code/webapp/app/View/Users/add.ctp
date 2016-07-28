@@ -15,8 +15,8 @@
         
 
         
-        <div class="card card-container">
         <?php echo $this->Session->flash(); ?>
+        <div class="card card-container">
 
 
             <?php  echo $this->Form->create('User',array('class'=>'form-horizontal',));?>

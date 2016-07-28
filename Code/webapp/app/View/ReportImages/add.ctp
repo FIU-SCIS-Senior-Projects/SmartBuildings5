@@ -50,7 +50,13 @@
                      <!--<hr />-->
              <!--</div>-->
         </div> 
-    </center>           
+        <span >
+        Please upload photos with GPS information of the building or damaged facilities related to this report
+        </span>
+    </center>   
+    
+<?php // echo $this->Session->flash(); ?>   
+    
 
 <?php if(!empty($images)): ?>    
 <div class="card card-container">

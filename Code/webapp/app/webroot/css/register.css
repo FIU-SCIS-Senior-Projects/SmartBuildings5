@@ -8,8 +8,11 @@ body, html {
     height: 100%;
     width: 100%;
     background-repeat: no-repeat;
+
   /*background-image: linear-gradient(rgb(104, 145, 162), rgb(400,400,400));*/
     background-image: url("http://webapp/img/after.jpg");
+
+  
 }
 
 .card-container.card {

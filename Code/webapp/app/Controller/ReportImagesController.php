@@ -95,8 +95,7 @@ class ReportImagesController extends AppController {
                             return $this->redirect('/home');
                         }
                     }
-                    
-                    return $this->redirect('/reportimages/add/'.$report_id);
+                    return $this->redirect('/report_images/add/'.$report_id);
                     
                 }                
                                 
@@ -107,7 +106,7 @@ class ReportImagesController extends AppController {
                         if(!$success){ return; }
                 }else{
                     //if image not set, need to reassign image in the db in order to not crash the system
-                    return $this->redirect('/reportimages/add/'.$report_id);
+                    return $this->redirect('/report_images/add/'.$report_id);
                 }
 
                     
@@ -121,13 +120,14 @@ class ReportImagesController extends AppController {
                 }                
                 
                 
-                return $this->redirect('/reportimages/add/'.$report_id);
+                return $this->redirect('/report_images/add/'.$report_id);
             }
             
             //send images to view            
             $this->set('images',$this->ReportImage->find('all', array('conditions' => array('ReportImage.report_id' => $report_id))));
             
             $this->set('report_id',$report_id);
+            
 	}
         
         private function resetGpsInfo() {
@@ -151,6 +151,7 @@ class ReportImagesController extends AppController {
                 $newmapmarker = array('MapMarker' => array(
                     'id' => $report_id,
                     'name' => $this->Session->read('Auth.User.first_name').' '.$this->Session->read('Auth.User.last_name'),
+                    'date' => $this->getReportDate($report_id),
                     'latitude' => $this->Session->read('Users.lat'),
                     'longitude' => $this->Session->read('Users.lng'),
                     'type' => 'not_rated',
@@ -172,6 +173,15 @@ class ReportImagesController extends AppController {
                 return $this->redirect('/home');
             }
         }
+        
+        private function getReportDate($id) {
+            $this->loadModel('Report');
+            $result = $this->Report->find('first', array(
+                             'conditions' => array('id' => $id)
+                             ));
+            return $result['Report']['created'];
+        }
+
 
 
         private function uploadImages($report_id=NULL){

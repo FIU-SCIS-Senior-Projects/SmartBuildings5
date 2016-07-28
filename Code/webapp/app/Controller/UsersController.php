@@ -9,12 +9,6 @@ App::import('Vendor', 'ImageTool', array('file' => 'ImageTool' . DS . 'ImageTool
  * @property PaginatorComponent $Paginator
  */
 class UsersController extends AppController {
-
-    var $name = 'Users';
-    var $helpers = array('Html', 'Form', 'Time');
-    var $uses = array('User');
-    var $allowCookie = true;
-    var $cookieTerm = '0';
 /**
  * Components
  *
@@ -52,13 +46,13 @@ class UsersController extends AppController {
                                                 ));
                                 
                                 //attempt to login user
-                                $this->login();
-				
+                                $this->loginforRegistration();
 			} else {
 				$this->Session->setFlash(__('The user could not be saved. Please, try again.'), 'alert', array(
                                                         'plugin' => 'BoostCake',
                                                         'class' => 'alert-danger'
                                                 ));
+                                $this->set('user_role',$this->request->data['user_role']);
 			}
 		}
                 
@@ -66,6 +60,45 @@ class UsersController extends AppController {
                 $this->set('roles', $this->User->Role->find('list', array('conditions' => array('not' => array('Role.id' => 3)))));
 
 	}
+        
+        private function loginforRegistration() {            
+            
+            //if already logged-in, redirect
+            if($this->Auth->loggedIn()){
+                return $this->redirect($this->Auth->redirectUrl());      
+            }
+            
+            if ($this->request->is('post')) {        
+                
+                if ($this->Auth->login()) {
+                    
+                    $ACTIVE=1;$PENDING=2;$INACTIVE=3;
+                    //check if acc status is pending for approval
+                    if($this->Auth->user('account_status_id') == $PENDING){
+                        $this->Session->setFlash(__('This account is pending for approval'), 'alert', array(
+                                                                                    'plugin' => 'BoostCake',
+                                                                                    'class' => 'alert-danger'
+                                                                            ));
+                        return $this->logout();                     
+                    }else if($this->Auth->user('account_status_id') == $INACTIVE){
+                        $this->Session->setFlash(__('This account is inactive'),'alert', array(
+                                                                        'plugin' => 'BoostCake',
+                                                                        'class' => 'alert-danger'
+                                                                ));                    
+                        return $this->logout();                      
+                    }
+                    return $this->redirect('/home');
+//                    return $this->redirect($this->referer());
+
+                }
+                
+                $this->Session->setFlash(__('Invalid username or password'), 'alert', array(
+                                                                                'plugin' => 'BoostCake',
+                                                                                'class' => 'alert-danger'
+                                                                        ));
+                    
+            }
+        }
 
         
         public function login() {            

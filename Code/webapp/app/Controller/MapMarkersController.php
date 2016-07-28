@@ -115,8 +115,9 @@ class MapMarkersController extends AppController {
                 
                 if ($this->request->is('post')) {   
                     //getting filter request
-                    //print_r($this->request->data);
-                    $result = $this->processFilter($this->request->data['MapMarker']);
+                    //print_r($this->request->data); 
+                    $result = $this->processFilter($this->request->data['MapMarker'],
+                                                   $this->request->data['reportrange']);
 //                    if(empty($result)){
 //                        $result = $this->MapMarker->find('all');
 //                    }
@@ -124,6 +125,10 @@ class MapMarkersController extends AppController {
                     // Select all the rows in the markers table
                     $result = $this->MapMarker->find('all');
                 } 
+                
+                if ($this->request->is('get')) { 
+                    $this->set('landing_about',true);
+                }
                 
                 
                 // Start XML file, create parent node
@@ -144,6 +149,7 @@ class MapMarkersController extends AppController {
                         $newnode = $parnode->appendChild($node);
                         $newnode->setAttribute("id", $mapmarker['id']);
                         $newnode->setAttribute("name",$mapmarker['name']);
+                        $newnode->setAttribute("date",date('F j, Y',strtotime(str_replace('-','/', $mapmarker['date']))));
                         $newnode->setAttribute("lat", $mapmarker['latitude']);
                         $newnode->setAttribute("lng", $mapmarker['longitude']);
                         $newnode->setAttribute("type", $mapmarker['type']);
@@ -157,7 +163,14 @@ class MapMarkersController extends AppController {
 
 	}
         
-        public function processFilter($array) {
+        public function processFilter($array,$date) {
+            
+            $fromTo=array();      
+            if(!empty($date)){
+                $fromTo = explode("-", $date);
+                $fromTo[0] = date('Y-m-d',strtotime($fromTo[0])).' 00:00:00';
+                $fromTo[1] = date('Y-m-d',strtotime($fromTo[1])).' 23:00:00';
+            }
             // this cycle echoes all associative array
             $fieldsToQuery = array();
             $markersToFind = array();
@@ -167,36 +180,15 @@ class MapMarkersController extends AppController {
             {
               if ($value == true) {
                     $field = $key;
-                    
-                    if($field == 'images'){
-                        //look for reports that have images...
-//                        $checkImages = true;
-                        $this->loadModel('ReportImage');
-                        $imagesResult = $this->ReportImage->find('all',array(
-                        'fields'=>array('DISTINCT report_id')));
-                        //print_r($imagesResult);
-                        foreach ($imagesResult as $images) {
-                            foreach ($images as $image) {
-                                foreach ($image as $key => $value) {
-                                    if($key == 'report_id'){
-                                        $markersToFind['id'] = $value;
-                                    }
-
-                                }
-                            }
-                        }
+                    if($field == 'electricity' ||
+                       $field == 'water' ||
+                       $field == 'road_access' ||
+                       $field == 'telecommunication'){
+                        $fieldsToQuery[$field] = false;
                     }else{
-                        if($field == 'electricity' ||
-                           $field == 'water' ||
-                           $field == 'road_access' ||
-                           $field == 'telecommunication'){
-                            $fieldsToQuery[$field] = false;
-                        }else{
-                            $fieldsToQuery[$field] = true;
-                        }
-                        
+                        $fieldsToQuery[$field] = true;
                     }
-                    
+                        
                 }
             }
             
@@ -212,10 +204,48 @@ class MapMarkersController extends AppController {
 //                return array();
 //            }
             
-            if(!empty($fieldsToQuery)){
+            if(!empty($fieldsToQuery) && empty($date)){
                 $this->loadModel('Report');
                 $reportResult = $this->Report->find('all', array(//'conditions' => $fieldsToQuery//array('electricity'=>false)
                                  'conditions' => array('or' => $fieldsToQuery)
+                                 ));
+
+                //print_r($reportResult);
+
+                foreach ($reportResult as $reports) {
+                    foreach ($reports as $report) {
+                        foreach ($report as $key => $value) {
+                            if($key == 'id'){
+                                array_push($markersToFind,$value);
+                            }
+
+                        }
+                    }
+                }
+            }else if(!empty($fieldsToQuery) && !empty($date)){
+                $this->loadModel('Report');
+                $reportResult = $this->Report->find('all', array(//'conditions' => $fieldsToQuery//array('electricity'=>false)
+                                 'conditions' => array('or' => $fieldsToQuery,'created >=' => $fromTo[0],'created <=' => $fromTo[1])
+                                 ));
+
+                //print_r($reportResult);
+
+                foreach ($reportResult as $reports) {
+                    foreach ($reports as $report) {
+                        foreach ($report as $key => $value) {
+                            if($key == 'id'){
+                                array_push($markersToFind,$value);
+                            }
+
+                        }
+                    }
+                }
+            }else if(!empty($date)){
+//                print_r($fromTo);
+                
+                $this->loadModel('Report');
+                $reportResult = $this->Report->find('all', array(//'conditions' => $fieldsToQuery//array('electricity'=>false)
+                                 'conditions' => array('created >=' => $fromTo[0],'created <=' => $fromTo[1])
                                  ));
 
                 //print_r($reportResult);
