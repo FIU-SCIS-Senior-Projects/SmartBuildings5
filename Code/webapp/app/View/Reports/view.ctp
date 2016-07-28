@@ -4,7 +4,7 @@
    echo $this->Html->css('blueimp-gallery.min');
     echo $this->Html->css('blueimp-gallery-indicator');
     echo $this->Html->css('report-image-view');
-    echo $this->Html->css('register'); ?>
+//    echo $this->Html->css('register'); ?>
 
   <div class="container">
         <div class="panel-heading">
@@ -22,7 +22,7 @@
       
       
      <nav> 
-          <h2 class="title text-center">Life Line Services Conditions: </h2> 
+          <h2 class="title text-center ">Life Line Services Conditions: </h2> 
            <div class="card card-container" >
                  
             <strong> <?php echo __('Electricity:')   ?></strong> <?php echo h($report['Report']['electricity']); ?>
@@ -65,6 +65,11 @@
                <?php echo h($report['Report']['comments']); ?>
 			&nbsp;
                 </div>
+          <h2 class="title text-center">Date of the Assessment: </h2> 
+           <div class="card card-container" >
+                 
+            <strong> <?php echo __('Date:')   ?></strong> <?php echo h($report['Report']['created']); ?>
+          
                     </nav>
 
           <article>
@@ -128,6 +133,7 @@
   
 </div>
           </article>
+            <br>  <br>  <br>  <br>  <br>  <br>
             <hr /> 
      
         
@@ -138,6 +144,7 @@
           
           
          <div>
+                <br>   <br>   <br>    <br>   <br>
           <h2 class="title text-center">Evaluation:</h2> 
            <div class="card card-container">
 

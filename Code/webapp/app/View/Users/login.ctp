@@ -10,7 +10,7 @@
         <div class="panel-heading">
             <div class="panel-title text-center">
                      <h1 class="title">Login</h1>
-                     <!--<hr />-->
+                     <hr />
              </div>
         </div>
         <div class="card card-container">

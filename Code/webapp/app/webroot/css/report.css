@@ -1,4 +1,9 @@
 
+ body, html {
+    height: 100%;
+    background-repeat: no-repeat;
+    background-image: linear-gradient(rgb(104, 145, 162), rgb(255,255,255));
+}
 .container-fluid {
     width:800px;
 }
@@ -119,3 +124,4 @@ hr {
 span.glyphicon {
     font-size: 1.3em;
 }
+ 

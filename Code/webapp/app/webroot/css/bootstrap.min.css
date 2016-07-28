@@ -19,8 +19,10 @@ html {
 }
 body {
     height: 100%;
+    width: 100%;
     background-repeat: no-repeat;
-    background-image: linear-gradient(rgb(104, 145, 162), rgb(255,255,255));
+    /*background-image: linear-gradient(rgb(104, 145, 162), rgb(255,255,255));*/
+    background-image: url("http://webapp/img/after.jpg");
     margin: 0;
 }
 article,
@@ -7025,4 +7027,9 @@ a.list-group-item-danger.active:focus {
 }
 .popover {
   color: #2c3e50;
+}
+
+
+.active {
+    background-color: #1E90FF;
 }
