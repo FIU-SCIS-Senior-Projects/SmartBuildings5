@@ -2,6 +2,7 @@
 <?php 
 
     echo $this->Html->css('report'); 
+    echo $this->Html->css('report-add'); 
 //    echo $this->Html->css('bootstrap-datetimepicker.min');
     
     
@@ -9,8 +10,11 @@
 ?>
 <?php echo $this->Form->create('Report', array('inputDefaults' => array('label' => false))); ?>
 
+<!--<div class="card">
+<div class="card-content">-->
 
-<div class="container-fluid">
+
+<div class="card card-container">
         <div class="panel-heading">
             <div class="panel-title text-center">
                      <h1 class="title">Create Mapping Report</h1>
@@ -19,9 +23,9 @@
         </div>
 
     <h3>Lifeline Services Conditions</h3>
-        <span >
+        <h5 >
         Please select life line services disrupted
-        </span>
+        </h5>
         <div class="row">
             <div class="funkyradio">
                 <div class="funkyradio-success">
@@ -67,9 +71,9 @@
         <hr/>
         
         <h3>Emergency Response Needs</h3>
-        <span >
+        <h5 >
             Please select the emergency needs in your community
-        </span>
+        </h5>
         <div class="row">
             <div class="funkyradio">
                 <div class="funkyradio-success">
@@ -118,9 +122,9 @@
         
         <!--<div class="bootstrap-iso">-->
         <h3>Date of Mapping</h3>
-        <span >
+        <h5 >
             Select the date of the disaster (if applicable) 
-        </span>
+        </h5>
         <div class="row">
           <div class="col-xs-6">
              <div class="input-group">
@@ -138,11 +142,11 @@
         <hr/>
 
         <div class="form-group">
-            <label for="ReportComments">Comments:</label>
+            <h3 for="ReportComments">Comments:</h3>
             <textarea class="form-control" rows="5" name="data[Report][comments]" id="ReportComments"></textarea>
         </div>
         
-        <button type="submit" class="btn btn-primary">Next</button>
+        <button type="submit" class="btn btn-success">Next</button>
         
         <br><br><br>
 </div>
@@ -158,7 +162,7 @@
 <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>-->
 
-
+   
 <script>
     $(document).ready(function(){
         var date_input=$('input[name="date"]'); //our date input has the name "date"
@@ -172,3 +176,5 @@
     })
 </script>
 
+<!--</div>
+</div>-->

@@ -1,4 +1,4 @@
-<?php echo $this->Html->css('profile'); ?>    
+<?php echo $this->Html->css('profile'); ?>  
 
 <div class="container" >
   <h1 class="page-header">Edit Profile</h1>
@@ -8,7 +8,7 @@
     <div class="col-md-4 col-sm-6 col-xs-12">
       <div class="text-center">
           <?php if(!empty($image['User']['profile_image'])):?>
-             <img src="<?php echo FULL_BASE_URL.'/img/'.$image['User']['profile_image']?>" class="avatar img-circle img-thumbnail" alt="avatar" >
+             <img src="<?php echo FULL_BASE_URL.'/img/User/'.$image['User']['profile_image']?>" class="avatar img-circle img-thumbnail" alt="avatar" >
           <?php endif;?>        
         <h6>Upload a different photo...</h6>
         <?php echo $this->Form->input('profile_image', array('class'=>'text-center center-block well well-sm','type'=>'file'));?>
@@ -16,6 +16,7 @@
     </div>
             
     <!-- edit form column -->
+    <!--<div class="card card-container">-->
     <div class="col-md-8 col-sm-6 col-xs-12 personal-info">
       <?php echo $this->Session->flash(); ?>
       <h3>Personal info</h3>
@@ -77,11 +78,12 @@
         <div class="form-group">
           <label class="col-md-3 control-label"></label>
           <div class="col-md-8">
-            <?php echo $this->Form->submit('Save',array('class'=>'btn btn-primary'))?>
+            <?php echo $this->Form->submit('Save',array('class'=>'btn btn-success'))?>
           </div>
         </div>
       </form>
     </div>
+  <!--</div>-->
     <?php echo $this->Form->end();?>
   </div>
 </div>

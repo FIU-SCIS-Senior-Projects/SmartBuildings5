@@ -1,12 +1,17 @@
-<font face="Times New Roman"><div class="reports view">
- <?php 
-   echo $this->Html->css('reportView'); 
-   echo $this->Html->css('blueimp-gallery.min');
-    echo $this->Html->css('blueimp-gallery-indicator');
-    echo $this->Html->css('report-image-view');
-//    echo $this->Html->css('register'); ?>
 
-  <div class="container">
+<div class="reports view">
+ <?php 
+    echo $this->Html->css('reportView'); 
+    echo $this->Html->css('blueimp-gallery.min');
+    echo $this->Html->css('blueimp-gallery-indicator');
+//    echo $this->Html->css('report-image-view');
+    ?>
+    
+    <!--<div class="card">-->
+    <!--<div class="card-content">-->
+
+  <!--<div class="container">--> 
+      <?php echo $this->Session->flash(); ?>
         <div class="panel-heading">
             <div class="panel-title text-center">
                    <h1 class="title">View Report</h1>
@@ -14,10 +19,13 @@
              </div>
         </div> 
      
-        <?php echo $this->Session->flash(); ?>
+       
       
-      
-      
+      <h2 class="title text-center">Mapping Date: </h2> 
+           <div class="card card-container" >
+                 
+            <strong> <?php echo __('Date:')   ?></strong> <?php echo h($report['Report']['created']); ?>  
+           </div>
       
       
       
@@ -65,10 +73,7 @@
                <?php echo h($report['Report']['comments']); ?>
 			&nbsp;
                 </div>
-          <h2 class="title text-center">Date of the Assessment: </h2> 
-           <div class="card card-container" >
-                 
-            <strong> <?php echo __('Date:')   ?></strong> <?php echo h($report['Report']['created']); ?>
+        
           
                     </nav>
 
@@ -133,7 +138,7 @@
   
 </div>
           </article>
-            <br>  <br>  <br>  <br>  <br>  <br>
+            
             <hr /> 
      
         
@@ -144,7 +149,7 @@
           
           
          <div>
-                <br>   <br>   <br>    <br>   <br>
+                <br>   
           <h2 class="title text-center">Evaluation:</h2> 
            <div class="card card-container">
 
@@ -209,7 +214,7 @@
  </div>
             </div>  
           
-                  </div> 
+                  <!--</div>--> 
 
         </body>
     <?php endif;?>
@@ -264,7 +269,11 @@
 </div>  
           </div>
 <?php endif;?>    
-</div> </font>
+</div>
+<!--</div>
+    </div>-->
+
+
  
 
 

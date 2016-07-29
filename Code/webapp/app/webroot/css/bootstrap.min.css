@@ -22,7 +22,7 @@ body {
     width: 100%;
     background-repeat: no-repeat;
     /*background-image: linear-gradient(rgb(104, 145, 162), rgb(255,255,255));*/
-    background-image: url("http://webapp/img/after.jpg");
+    background-image: url("http://ec2-107-22-140-190.compute-1.amazonaws.com/img/after.jpg");
     margin: 0;
 }
 article,

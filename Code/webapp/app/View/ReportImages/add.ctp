@@ -4,6 +4,7 @@
     echo $this->Html->css('blueimp-gallery.min');
     echo $this->Html->css('blueimp-gallery-indicator');
     echo $this->Html->css('report-image');
+    echo $this->Html->css('card');
     
     echo $this->Form->create('ReportImage',array('inputDefaults'=>array('label'=>false),'type' => 'file'));
 ?>
@@ -43,6 +44,7 @@
             height : 1000px;
         }
     </style>
+    <div class="card card-container" >    
     <center>
         <div class="panel-heading">
             <!--<div class="panel-title text-center">-->
@@ -50,16 +52,17 @@
                      <!--<hr />-->
              <!--</div>-->
         </div> 
+    </center>
         <span >
         Please upload photos with GPS information of the building or damaged facilities related to this report
         </span>
-    </center>   
-    
+       
+ <br/> <br/>       
 <?php // echo $this->Session->flash(); ?>   
     
 
 <?php if(!empty($images)): ?>    
-<div class="card card-container">
+<div class="card">
 <!-- The container for the list of example images -->
 <div id="links" >
     
@@ -74,6 +77,7 @@
         <?php endif;?>
     <?php endforeach;?>
             
+</div>
 </div>
 <?php endif;?>
 
@@ -97,9 +101,10 @@
             float: left;   
         }  
     </style>
-</div>
+
 <br>
-<div class="card card-container-input">
+<!--<div class="card card-container-input">-->
+<center>
 <div>
    <div class="left"><?php echo $this->Form->input('report_image.', array('type'=>'file','multiple'=>true));?></div>
    <div class="right"><?php echo $this->Form->submit(__('Upload'), array('id'=>'upload','name' => 'btn','onclick' =>'startLoading()')); ?></div>
@@ -109,16 +114,15 @@
     <?php echo $this->Form->input('lat',array('placeholder' => 'latitude'));?>
     <?php echo $this->Form->input('lng',array('placeholder' => 'longitude'));?>
 <?php endif;?>
-</div>
+<!--</div>-->
 <br><br><br>
-<center>
     <div class="r">
-        <?php echo $this->Form->submit(__('Complete'),array('id'=>'complete','name' => 'btn','class'=>'btn btn-primary')); ?>
+        <?php echo $this->Form->submit(__('Complete'),array('id'=>'complete','name' => 'btn','class'=>'btn btn-success')); ?>
     </div>
 </center>   
 
 <div id="divLoading"></div>
-
+</div>
 <script>
 function startLoading() {
     $("div#divLoading").addClass('show');
