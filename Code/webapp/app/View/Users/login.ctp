@@ -9,7 +9,11 @@
     <div class="container">
         <div class="panel-heading">
             <div class="panel-title text-center">
-                     <h1 class="title">Login</h1>
+                 <font color="white">     
+                <h1 class="title">
+                         
+                        
+                         Login</h1> </font>
                      <hr />
              </div>
         </div>

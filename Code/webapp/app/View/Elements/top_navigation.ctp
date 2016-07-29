@@ -15,14 +15,43 @@
     </ul>
   </div>
 </nav>-->
+
 <style>
   .active {
     background-color: #1E90FF;
 }  
+.topleft {
+    position: absolute;
+    top: 8px;
+    right: 16px;
+    font-size: 18px;
+}
     
 </style>    
 
+<!--<div align="top">
+    
+   
+                  
+                  <center>  
 
+ 
+                      
+                      <br>
+                      <h2> <font color="white">
+                       Disaster Reconnaissance Assessment Mapping Application 
+                       </font>
+                   </h2>
+                  
+                
+                      </center>
+                  
+                
+               
+        
+
+    
+    </div>-->
 <div class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
@@ -32,8 +61,9 @@
                
             </button>
             
-           
-                <?php echo $this->Html->image("globe.png", array( 'url' => '/home' ));?>
+          <div class="topleft"> <?php echo $this->Html->image("logo.png", array( 'url' => '/home','class'=> 'img-circle' ));?></div>
+                <?php // echo $this->Html->image("globe.png", array( 'url' => '/home' ));?>
+            
             
             
 
@@ -45,23 +75,19 @@
         
         <div class="navbar-collapse collapse">
             
+           
             
-            
-            
-            <ul class="nav navbar-nav navbar-right"> 
-              <li style="float:right">  
-               
-         </li>
+            <ul class="nav navbar-nav navbar-left"> 
+             
+                
                 <?php if($this->Session->check('Auth.User')):?>
            
                
                    
                     <li>
-<<<<<<< HEAD
+
                         <a href="/reports/add">Create Map Report</a>
-=======
-                        <a href="/reports/add">Create Report</a>
->>>>>>> f6925f68d8a44c1a2806ab7294b141d0043065e1
+
                     </li>
                     
              
@@ -82,7 +108,7 @@
                  
    
           <!--Only allow evaluator user to view the evaluation section-->
-    //<?php if($this->Session->read('Auth.User.role_id') == 1):?> 
+    //<?php if($this->Session->read('Auth.User.role_id') == 3):?> 
           <li>
                     //<?php echo $this->Html->link(__('Add Evaluator'),array('controller'=>'users','action'=>'add_evaluator'))?>
                  </li>
@@ -98,6 +124,8 @@
            <li ><a  class="active" href="/Users/about">About</a>
                     </li> 
           </ul>
+            
+            
       </div>
 
       </div>
