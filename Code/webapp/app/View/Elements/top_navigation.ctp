@@ -135,19 +135,18 @@
    
           <!--Only allow evaluator user to view the evaluation section-->
 
-    <?php if($this->Session->read('Auth.User.role_id') == 3):?> 
+            <?php if($this->Session->read('Auth.User.role_id') == 3):?> 
 
-          <li>
-                    <?php // echo $this->Html->link(__('Add Evaluator'),array('controller'=>'users','action'=>'add_evaluator'))?>
+                <li>
+                    <?php echo $this->Html->link(__('Pending Evaluators'),array('controller'=>'users','action'=>'add_evaluator'))?>
                  </li>
            <?php endif;?>
                  
-                 <li>
-                    <?php echo $this->Html->link(__('Logout'),array('controller'=>'users','action'=>'logout'))?>
-                 </li>
+            <li>
+               <?php echo $this->Html->link(__('Logout'),array('controller'=>'users','action'=>'logout'))?>
+            </li>
                  
              
-            </li>
             <?php endif;?>
            <li ><a   href="/Users/about">About</a>
                     </li> 
