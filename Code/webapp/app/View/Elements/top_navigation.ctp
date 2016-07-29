@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 
 <!--
 <div class="logo"></div>
@@ -89,7 +89,7 @@
                
             </button>
             
-          <div class="topleft"> <?php echo $this->Html->image("logo.png", array( 'url' => '/home','class'=> 'img-circle' ));?></div>
+          <div class="topleft"> <?php echo $this->Html->image("lastLogo.png", array( 'url' => '/home','class'=> 'img-circle' ));?></div>
                 <?php // echo $this->Html->image("globe.png", array( 'url' => '/home' ));?>
             
             
