@@ -329,7 +329,11 @@
         map = new google.maps.Map(document.getElementById('map'), {            
         center: center_loc,
         zoom: 2,
-        disableDoubleClickZoom: true
+        disableDoubleClickZoom: true,
+        mapTypeControlOptions: {
+              style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+              position: google.maps.ControlPosition.TOP_RIGHT
+          },
           
         });
         var infoWindow = new google.maps.InfoWindow;
