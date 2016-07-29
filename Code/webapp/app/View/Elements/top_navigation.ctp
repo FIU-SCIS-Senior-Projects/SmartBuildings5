@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 
 <!--
 <div class="logo"></div>
