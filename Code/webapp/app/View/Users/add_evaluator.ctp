@@ -74,6 +74,38 @@
 p{
     text-align: justify;
 }
+
+        #divLoading
+        {
+            display : none;
+        }
+        #divLoading.show
+        {
+            display : block;
+            position : fixed;
+            z-index: 100;
+            background-image : url('<?php echo FULL_BASE_URL.'/img/loading.gif'?>');
+            background-color: #000000;
+            opacity : 0.6;
+            background-repeat : no-repeat;
+            background-position : center;
+            left : 0;
+            bottom : 0;
+            right : 0;
+            top : 0;
+        }
+        #loadinggif.show
+        {
+            left : 50%;
+            top : 50%;
+            position : absolute;
+            z-index : 101;
+            width : 32px;
+            height : 32px;
+            margin-left : -16px;
+            margin-top : -16px;
+        }
+
 </style>
     <?php echo $this->Form->create('User',array('class'=>'form-horizontal','inputDefaults'=>array('label'=>false)));?>
     <div class="card card-container ev" >
@@ -125,7 +157,7 @@ p{
                                         <div class="funkyradio-success">
                                             <div class="col-xs-6 ">
                                                 <input type="radio" name="<?php echo $User['User']['id'] ?>" id="<?php echo $User['User']['id'].'_approved'?>" value="approved" checked/>
-                                                <label for="<?php echo $User['User']['id'].'_approved'?>">Approve</label>
+                                                <label for="<?php echo $User['User']['id'].'_approved'?>">Approved</label>
                                             </div>
                                         </div>
                                         <div class="funkyradio-danger">
@@ -144,7 +176,7 @@ p{
         <br>
         <?php if(!empty($this->request->data)): ?>
             <center>
-                <?php echo $this->Form->submit(__('Submit'),array('class'=>'btn btn-success')); ?>
+                <?php echo $this->Form->submit(__('Submit'),array('class'=>'btn btn-success','onclick' =>'startLoading()')); ?>
             </center>
         <?php else: ?>
             <center>
@@ -153,3 +185,12 @@ p{
         <?php endif ?>
         </div>
  <?php echo $this->Form->end();?>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<div id="divLoading"></div>
+</div>
+<script>
+function startLoading() {
+    $("div#divLoading").addClass('show');
+}
+</script>
