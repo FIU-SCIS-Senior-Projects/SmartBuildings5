@@ -106,6 +106,8 @@ class ReportsController extends AppController {
                         $result['Report']['shelter'] = 'No';
                     }
                     
+                    $result['Report']['created'] = date('F j, Y',strtotime(str_replace('-','/', $result['Report']['created'])));                    
+                            
                     $this->set('report',$result);
                     
                     //send images to view  
