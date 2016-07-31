@@ -329,7 +329,11 @@
         map = new google.maps.Map(document.getElementById('map'), {            
         center: center_loc,
         zoom: 2,
-        disableDoubleClickZoom: true
+        disableDoubleClickZoom: true,
+        mapTypeControlOptions: {
+              style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+              position: google.maps.ControlPosition.TOP_RIGHT
+          },
           
         });
         var infoWindow = new google.maps.InfoWindow;
@@ -876,8 +880,8 @@
 
                             <div class="card-action">
                                 <p> 
-                                    Click on a marker on the map. The pop up window will how the date
-                                    and name of the person who create report. Click on "View Report" link
+                                    Click on a marker on the map. The pop up window will the date
+                                    and name of the person who created the report. Click on "View Report" link
                                     to open the full report.
                                 </p>
                             </div>                            
@@ -908,11 +912,11 @@
 
                             <div class="card-action">
                                 <p>
-                                   Double click anywhere on the map start report marker selection. You can
-                                   resize and move the selection circle to select report markers in any area.
+                                   Double click anywhere on the map to start marker selection. You can
+                                   resize and move the selection circle to select report markers.
                                    Click on the "Apply Selection" button in the upper middle of the map. You 
-                                   will be able to see the grouped statistics in the form of a pie chart about
-                                   the selected reports.
+                                   will be able to see the grouped statistics about the selected reports
+                                   in the form of a pie chart.
                                 </p>
                             </div>                            
                         </div>
@@ -926,8 +930,8 @@
 
                             <div class="card-action">
                                 <p>
-                                   In the report page you can evaluate the conditions of the report. Navigate
-                                   to the Evaluation section, view the photos uploaded and evaluate the facility's
+                                   In the view report page you can evaluate the conditions of the report. Navigate
+                                   to the evaluation section. You may view the photos uploaded and evaluate the facility's
                                    condition by choosing safe, minor damage, major damage, or Insufficient Information.
                                 </p>
                             </div>                            

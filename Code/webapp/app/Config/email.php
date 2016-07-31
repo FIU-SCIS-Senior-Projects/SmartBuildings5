@@ -46,7 +46,7 @@ class EmailConfig {
 
 	public $gmail = array(
 		'transport' => 'Smtp',
-		'from' => array('smartbuildings5@gmail.com' => 'Disaster Helper'),
+		'from' => array('smartbuildings5@gmail.com' => 'DRAMA'),
 		'host' => 'ssl://smtp.gmail.com',
 		'port' => 465,
 		'timeout' => 30,

@@ -145,7 +145,7 @@
         <!--Only allow logged in user to view the evaluation section-->
 <?php if($this->Session->check('Auth.User')):?>    
           <!--Only allow evaluator user to view the evaluation section-->
-    <?php if($this->Session->read('Auth.User.role_id') == 2):?> 
+    <?php if($this->Session->read('Auth.User.role_id') == 2 || $this->Session->read('Auth.User.role_id') == 3):?> 
           
           
          <div>

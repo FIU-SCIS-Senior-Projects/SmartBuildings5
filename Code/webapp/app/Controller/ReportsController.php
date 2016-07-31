@@ -106,6 +106,8 @@ class ReportsController extends AppController {
                         $result['Report']['shelter'] = 'No';
                     }
                     
+                    $result['Report']['created'] = date('F j, Y',strtotime(str_replace('-','/', $result['Report']['created'])));                    
+                            
                     $this->set('report',$result);
                     
                     //send images to view  
@@ -164,7 +166,9 @@ class ReportsController extends AppController {
  * @return void
  */
 	public function add() {
-		if ($this->request->is('post')) {
+		if ($this->request->is('post')) {                    
+                    
+                    $comments = $this->request->data['Report']['comments'];
                     
                     //parse result to boolean
                     while ($val = current($this->request->data['Report'])) {
@@ -180,9 +184,8 @@ class ReportsController extends AppController {
                     if(!empty($this->request->data("date"))){
                         $this->request->data["Report"]["created"] = $this->request->data("date")." ".date("H:i:s");
                     }    
-//			$this->Report->create();
-//                        echo ;
-//                        return;
+                   $this->request->data['Report']['comments'] = $comments;
+                    
                     $uid = $this->Session->read('Auth.User.id');
                     $this->request->data['Report']['user_id'] = $uid;
                     if ($this->Report->save($this->request->data)) {

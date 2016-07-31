@@ -421,6 +421,22 @@ class UsersController extends AppController {
         return false;
     }
     
+    function __sendEvaluatorEmail($user = null) {
+        if (!empty($user['User']['id'])) {
+            //print_r($user);
+            
+            $Email = new CakeEmail('gmail');
+            $Email->to ($user['User']['email']);
+            $Email->subject ('Your account has been approved - DO NOT REPLY');
+            $Email->viewVars(array('User' => $user));
+            $Email->template('evaluator_approved');
+            $Email->emailFormat('html');
+            $Email->send();
+            return true;
+        }
+        return false;
+    }
+    
    function about(){
        
         
@@ -428,6 +444,52 @@ class UsersController extends AppController {
    
    function add_evaluator(){
        
+       if ($this->request->is('get')) {
+           $this->request->data = $this->User->find('all',array('conditions'=>array('User.role_id'=>2,'User.account_status_id'=>2),
+                                                                'fields'=>array('id','first_name','last_name','company','position','company_url')));
+       
+       }
+       
+       if ($this->request->is(array('post', 'put'))) {
+           //if($this->request->data['user_role'] == 'mapper')
+//           print_r($this->request->data);
+           
+            $data = $this->request->data;
+            $success =true;
+            foreach ($data as $key => $value) {
+               $this->request->data =array();
+               $this->request->data['User']['id'] = $key;                                       
+                if($value == 'approved'){
+                    $this->request->data['User']['account_status_id'] = 1;
+                }else{
+                    $this->request->data['User']['account_status_id'] = 2;
+                }
+                if ($this->User->save($this->request->data)) 
+                {
+                    if($value == 'approved'){
+                        $user= $this->User->find('first',array('conditions'=>array('User.id'=>$key)));
+                        $this->__sendEvaluatorEmail($user);
+                    }
+                }
+                else{$success = false;}
+                
+
+            }
+            
+            if($success){
+                $this->Session->setFlash(__('Evaluators have been approved!'), 'alert', array(
+                                                'plugin' => 'BoostCake',
+                                                'class' => 'alert-success'
+                                        ));
+            }else{
+                $this->Session->setFlash(__('Evaluators could not be approved'), 'alert', array(
+                                                'plugin' => 'BoostCake',
+                                                'class' => 'alert-danger'
+                                        ));
+            }
+            
+            return $this->redirect('/users/add_evaluator');
+       }
        
    }
 }

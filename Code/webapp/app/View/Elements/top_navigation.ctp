@@ -1,5 +1,4 @@
 
-
 <!--
 <div class="logo"></div>
 <nav class="navbar navbar-default">
@@ -23,8 +22,8 @@
 }  
 .topleft {
     position: absolute;
-    top: 8px;
-    right: 16px;
+    top: 60px;
+    left: 0px;
     font-size: 18px;
     color: #1E90FF;
 }
@@ -56,6 +55,9 @@ li2{
 @keyframes mymove {
     from {left: 0px;}
     to {left: 200px;}
+}
+.navbar-nav li a {
+ /*line-height: 50px;*/
 }
     
 </style>    
@@ -112,77 +114,73 @@ li2{
     </div>-->
 <div class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <!--<a class="navbar-brand" href="#">-->
+                    <?php // echo $this->Html->image("lastLogo.png", array( 'url' => '/home','class'=> 'img-circle' ));?>
+                <!--</a>-->
+                <div class="topleft"> <?php echo $this->Html->image("lastLogo.png", array( 'url' => '/home','class'=> 'img-circle' ));?></div>
+                <?php // echo $this->Html->image("globe.png", array( 'url' => '/home' ));?>
+          </div>
+<!--        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse" aria-expanded="false">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                
             </button>
             
-          <div class="topleft"> <?php echo $this->Html->image("lastLogo.png", array( 'url' => '/home','class'=> 'img-circle' ));?></div>
-                <?php // echo $this->Html->image("globe.png", array( 'url' => '/home' ));?>
-            
-            
-            
-
-           
-
-           
-        </div>
+          
+        </div>-->
          <!--Collect the nav links, forms, and other content for toggling--> 
         
-        <div class="navbar-collapse collapse">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             
-           
-            
-            <ul class="nav navbar-nav navbar-left"> 
-             
-                
-                <?php if($this->Session->check('Auth.User')):?>
-           
-               
-                    <li>
+        <ul class="nav navbar-nav navbar-left">  
+<li class= "active"> <a> Disaster Reconnaissance Assessment and Mapping Application</a> </li >
+            </ul>
+            <ul class="nav navbar-nav navbar-right"> 
+              <li>
 
-                        <a href="/reports/add">Create Report</a>
-
-                    </li>
-             
-           
-        <?php endif;?>
-                    
-            <?php if(!$this->Session->check('Auth.User')):?>
-            <li><?php echo $this->Html->link(__('Login'),array('controller'=>'users','action'=>'login'))?></li>
+                <?php echo $this->Html->link(__('Map'),array('controller'=>'map_markers','action'=>'index'))?>
+            </li> 
+             <?php if(!$this->Session->check('Auth.User')):?>                
+                <li>
+                    <?php echo $this->Html->link(__('Login'),array('controller'=>'users','action'=>'login'))?>
+                </li>
             <?php else: ?>
+                <li>
+                    <a href="/reports/add">Create Report</a>
+                </li>
+                <!--Only allow evaluator user to view the evaluation section-->
+                <?php if($this->Session->read('Auth.User.role_id') == 3):?> 
+                    <li>
+                        <?php echo $this->Html->link(__('Pending Evaluators'),array('controller'=>'users','action'=>'add_evaluator'))?>
+                    </li>
+                <?php endif;?>
+                <li>
+                    <?php echo $this->Html->link(__('Profile'),array('controller'=>'users','action'=>'profile'))?>
+                </li>
+                <li>
+                    <?php echo $this->Html->link(__('Logout'),array('controller'=>'users','action'=>'logout'))?>
+                </li>
+            <?php endif;?>
+                <li> 
+                    <a href="/users/about">About</a>
+                </li>
+                    
+            <?php // if(!$this->Session->check('Auth.User')):?>
             
+            <?php // else: ?>
 <!--            <li >
               <a href="#" ><?php // echo $this->Session->read('Auth.User.first_name').', '. $this->Session->read('Auth.User.last_name');?> <b class="caret"></b></a>
             -->
-                 <li>
-                    <?php echo $this->Html->link(__('Profile'),array('controller'=>'users','action'=>'profile'))?>
-                 </li>
-                 
-                 
-   
-          <!--Only allow evaluator user to view the evaluation section-->
-
-    <?php if($this->Session->read('Auth.User.role_id') == 3):?> 
-
-          <li>
-                    <?php // echo $this->Html->link(__('Add Evaluator'),array('controller'=>'users','action'=>'add_evaluator'))?>
-                 </li>
-           <?php endif;?>
-                 
-                 <li>
-                    <?php echo $this->Html->link(__('Logout'),array('controller'=>'users','action'=>'logout'))?>
-                 </li>
-                 
-             
-           
-            <?php endif;?>
-           <li ><a   href="/Users/about">About</a>
-                    </li> 
+            <?php // endif;?>
                     
-                    <li2> <a> Disaster Reconnaissance Assessment and Mapping Application</a> </li2 >
                    
           </ul>
             
@@ -193,6 +191,14 @@ li2{
    
 </div>
 
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script type="text/javascript">
+$("#bs-example-navbar-collapse-1 > ul > li > a").on("click", function(){
+//   $(".nav").find(".active").removeClass("active");
+   $(this).parent.parent.parent.parent.addClass("active");
+   alert("hello");
+});
+</script> -->
 <!--<header role="banner">
   <img id="logo-main" src="http://webapp/img/logos.png" width="200" alt="Logo Thing main logo">
 <nav id="navbar-primary" class="navbar navbar-default" role="navigation">
