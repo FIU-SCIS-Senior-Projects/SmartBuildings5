@@ -26,6 +26,36 @@
     top: 8px;
     right: 16px;
     font-size: 18px;
+    color: #1E90FF;
+}
+li2{
+    
+    
+    width: 600px;
+    height: 120px;
+    /*background: red;*/
+    position: relative;
+    -webkit-animation: mymove 5s infinite; /* Chrome, Safari, Opera */
+    animation: mymove 5s infinite;
+/*    -webkit-animation-name: mymove;   Chrome, Safari, Opera 
+    -webkit-animation-duration: 5s ;   Chrome, Safari, Opera 
+    animation-name: mymove;
+    animation-duration: 10s ;*/
+    text-align:initial;
+    font-size: 29.5px;
+    color:#FFFFFF;
+    
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes mymove {
+    from {left: 0px;}
+    to {left: 200px;}
+}
+
+@keyframes mymove {
+    from {left: 0px;}
+    to {left: 200px;}
 }
     
 </style>    
@@ -147,10 +177,13 @@
                  </li>
                  
              
-            </li>
+           
             <?php endif;?>
            <li ><a   href="/Users/about">About</a>
                     </li> 
+                    
+                    <li2> <a> Disaster Reconnaissance Assessment and Mapping Application</a> </li2 >
+                   
           </ul>
             
             
