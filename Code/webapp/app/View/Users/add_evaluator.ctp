@@ -156,13 +156,13 @@ p{
                                     <div class="funkyradio">
                                         <div class="funkyradio-success">
                                             <div class="col-xs-6 ">
-                                                <input type="radio" name="<?php echo $User['User']['id'] ?>" id="<?php echo $User['User']['id'].'_approved'?>" value="approved" checked/>
-                                                <label for="<?php echo $User['User']['id'].'_approved'?>">Approved</label>
+                                                <input type="radio" name="<?php echo $User['User']['id'] ?>" id="<?php echo $User['User']['id'].'_approved'?>" value="approved" />
+                                                <label for="<?php echo $User['User']['id'].'_approved'?>">Approve</label>
                                             </div>
                                         </div>
                                         <div class="funkyradio-danger">
                                             <div class="col-xs-6 ">
-                                            <input type="radio" name="<?php echo $User['User']['id'] ?>" id="<?php echo $User['User']['id'].'_decline'?>" value="decline"/>
+                                            <input type="radio" name="<?php echo $User['User']['id'] ?>" id="<?php echo $User['User']['id'].'_decline'?>" value="decline" checked/>
                                             <label for="<?php echo $User['User']['id'].'_decline'?>">Decline</label>
                                             </div>
                                         </div>
