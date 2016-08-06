@@ -4284,11 +4284,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   border-width: 1px 0 0;
 }
 .navbar-brand {
-  float: left;
-  padding: 19.5px 15px;
-  font-size: 19px;
-  line-height: 21px;
-  height: 60px;
+  font-size: 20px;
+  line-height: 1;
 }
 .navbar-brand:hover,
 .navbar-brand:focus {
@@ -6775,7 +6772,7 @@ button.close {
   color: #18bc9c;
 }
 .navbar-brand {
-  line-height: 1;
+  line-height: 3;
 }
 .btn {
   border-width: 2px;

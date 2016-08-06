@@ -68,12 +68,15 @@
 p{
     text-align: justify;
 }
+
+
 </style>
     <div class="card card-container" >
         <div class="panel-heading">
                 <div class="panel-title text-center">
-                    <h2 class="title">DRAMA</h2>
-                    <p><b>D</b>isaster <b>R</b>econnaissance <b>A</b>ssessment <b>M</b>apping <b>A</b>pplication</p>                    
+                    <h2 class="title">Disaster ReConnect</h2>
+                    <!--<p><b>D</b>isaster <b>R</b>econnaissance <b>A</b>ssessment <b>M</b>apping <b>A</b>pplication</p>-->                    
+                    <p>Disaster Reconnaissance and Response Mapping and Assessment App</p>                    
                 </div>
             </div>
                 <div class="row">

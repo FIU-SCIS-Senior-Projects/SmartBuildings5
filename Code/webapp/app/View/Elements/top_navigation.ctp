@@ -57,8 +57,13 @@ li2{
     to {left: 200px;}
 }
 .navbar-nav li a {
- /*line-height: 50px;*/
+/* line-height: 50px;*/
 }
+/*
+.nav navbar-nav navbar-right{
+    line-width: 50px;
+}*/
+
     
 </style>    
 
@@ -112,6 +117,15 @@ li2{
 
     
     </div>-->
+<!--<div class="navbar navbar-fixed-top">
+   <div class="navbar-inner">
+     <div class="container">
+        <a class="navbar-brand" href="#"> 
+            <?php // echo $this->Html->image("logo.png", array( 'url' => '/home' ));?>
+        </a>
+     </div>
+   </div>
+ </div>-->
 <div class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container">
           <div class="navbar-header">
@@ -121,10 +135,10 @@ li2{
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <!--<a class="navbar-brand" href="#">-->
-                    <?php // echo $this->Html->image("lastLogo.png", array( 'url' => '/home','class'=> 'img-circle' ));?>
-                <!--</a>-->
-                <div class="topleft"> <?php echo $this->Html->image("lastLogo.png", array( 'url' => '/home','class'=> 'img-circle' ));?></div>
+                <a class="navbar-brand" href="#">
+                    <?php echo $this->Html->image("logo.png", array( 'url' => '/home' ));?>
+                </a>
+                <!--<div class="topleft"> <?php // echo $this->Html->image("lastLogo.png", array( 'url' => '/home','class'=> 'img-circle' ));?></div>-->
                 <?php // echo $this->Html->image("globe.png", array( 'url' => '/home' ));?>
           </div>
 <!--        <div class="navbar-header">
@@ -140,36 +154,36 @@ li2{
         
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             
-        <ul class="nav navbar-nav navbar-left">  
+<!--        <ul class="nav navbar-nav navbar-left">  
 <li class= "active"> <a> Disaster Reconnaissance Assessment and Mapping Application</a> </li >
-            </ul>
+            </ul>-->
             <ul class="nav navbar-nav navbar-right"> 
-              <li>
-
+              <li class= "active">
+                  
                 <?php echo $this->Html->link(__('Map'),array('controller'=>'map_markers','action'=>'index'))?>
             </li> 
              <?php if(!$this->Session->check('Auth.User')):?>                
-                <li>
+                <li class= "active">
                     <?php echo $this->Html->link(__('Login'),array('controller'=>'users','action'=>'login'))?>
                 </li>
             <?php else: ?>
-                <li>
+                <li class= "active">
                     <a href="/reports/add">Create Report</a>
                 </li>
                 <!--Only allow evaluator user to view the evaluation section-->
                 <?php if($this->Session->read('Auth.User.role_id') == 3):?> 
-                    <li>
+                    <li class= "active">
                         <?php echo $this->Html->link(__('Pending Evaluators'),array('controller'=>'users','action'=>'add_evaluator'))?>
                     </li>
                 <?php endif;?>
-                <li>
+                <li class= "active">
                     <?php echo $this->Html->link(__('Profile'),array('controller'=>'users','action'=>'profile'))?>
                 </li>
-                <li>
+                <li class= "active">
                     <?php echo $this->Html->link(__('Logout'),array('controller'=>'users','action'=>'logout'))?>
                 </li>
             <?php endif;?>
-                <li> 
+                <li class= "active"> 
                     <a href="/users/about">About</a>
                 </li>
                     

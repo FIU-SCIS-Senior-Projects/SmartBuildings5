@@ -6,7 +6,7 @@
     <![endif]-->
     <?php echo $this->Html->charset(); ?>
     <title>
-        DRAMA
+        Disaster ReConnect
     </title>
     <?php
     

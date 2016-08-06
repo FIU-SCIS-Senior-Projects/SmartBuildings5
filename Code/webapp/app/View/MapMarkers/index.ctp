@@ -2,7 +2,7 @@
 <html>
   <head>
       
-    <title>DRAMA</title>
+    <title>Disaster ReConnect</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
 
@@ -840,7 +840,7 @@
         <div class="modal-content">
           <div class="modal-header modal-header-info" >
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h3 class="modal-title">Welcome to <abbr title="Disaster Reconnaissance Assessment Mapping Application">DRAMA</abbr></h3>
+            <h3 class="modal-title">Welcome to <abbr title="Disaster Reconnaissance and Response Mapping and Assessment App">Disaster ReConnect</abbr></h3>
           </div>
           <div class="modal-body-about">
             <div class="panel-heading">
