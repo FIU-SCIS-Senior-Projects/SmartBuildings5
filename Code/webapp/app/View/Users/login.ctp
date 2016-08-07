@@ -9,7 +9,7 @@
     <div class="container">
         <div class="panel-heading">
             <div class="panel-title text-center">
-                 <font color="white">     
+                 <font >     
                 <h1 class="title">
                          
                         
