@@ -15,7 +15,7 @@
         //use different bootstrap css for home
         $action_request = $this->params['controller'] . $this->action;
         if($action_request == 'map_markersindex'){
-            echo $this->Html->css('bootstrap.min.home');
+            echo $this->Html->css('bootstrap.min');
         }else{
             echo $this->Html->css('bootstrap.min');
         }
@@ -47,15 +47,23 @@
 //        }else{
 //        }
 //    ?>
-   
-    <div class="container">
-      <?php echo $this->Session->flash(); ?>
- 
-      <?php echo $this->fetch('content'); ?>
-       
-      
-       
-    </div> <!-- /container -->
+   <?php if($action_request == 'map_markersindex'):?>
+    
+          <?php echo $this->Session->flash(); ?>
+
+          <?php echo $this->fetch('content'); ?>
+    
+    <?php else:?>
+        
+        <div class="container">
+            
+          <?php echo $this->Session->flash(); ?>
+
+          <?php echo $this->fetch('content'); ?>
+
+        </div> <!-- /container -->
+    
+    <?php endif?>
      
      
      

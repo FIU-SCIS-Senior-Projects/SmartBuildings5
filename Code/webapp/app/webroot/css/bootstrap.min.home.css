@@ -1588,8 +1588,8 @@ pre code {
 }
 .container {
   margin-right: auto;
-  margin-right: auto;
-  /*padding-left: 65px;*/
+  margin-left: auto;
+  padding-left: 15px;
   padding-right: 15px;
 }
 @media (min-width: 768px) {
@@ -4283,7 +4283,11 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     
   font-size: 20px;
   line-height: 1;  
-  padding: 95px;
+/*  margin-left: auto;
+  padding-left: auto;*/
+  /*padding: 100px;*/
+  
+
 /*  padding: 10px;*/
   /*
   float: left;
